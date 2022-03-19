@@ -1,0 +1,7 @@
+displayName = Fisherman NPC
+author = Rijam
+version = 0.1.17
+homepage = https://discord.gg/t63JzNHzvu
+hideCode = false
+hideResources = false
+includeSource = true

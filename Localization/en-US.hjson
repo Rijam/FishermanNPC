@@ -1,0 +1,284 @@
+Mods: {
+	FishermanNPC: {
+		Config: {
+			Server: {
+				LabelBig: Fisherman NPC Server Options
+				Header: "[c/00FF00:Server Options]"
+				Label1: "[i:3122]   Sell Fisherman NPC Modded Items"
+				Tooltip1:
+					'''
+					This option toggles if the Fisherman will sell the custom items added by this mod.
+					  When On: The Fisherman WILL sell the custom items added by this mod.
+					  When Off: The Fisherman WILL NOT sell the custom items added by this mod.
+					    Turn Off to remove the modded items.
+					Default value: On
+					'''
+				Label2: "[i:2002]   Sell Bait"
+				Tooltip2:
+					'''
+					This option toggles if the Fisherman will sell bait.
+					  When On: The Fisherman WILL sell bait.
+					  When Off: The Fisherman WILL NOT sell bait.
+					    Turn Off to remove bait from the shop.
+					Default value: On
+					'''
+				Label3: "[i:2290]   Sell Fish"
+				Tooltip3:
+					'''
+					This option toggles if the Fisherman will sell fish.
+					  When On: The Fisherman WILL sell fish.
+					  When Off: The Fisherman WILL NOT sell fish.
+					    Turn Off to remove fish from the shop.
+					Default value: On
+					'''
+				Label4: "[i:2291]   Sell Fishing Rods"
+				Tooltip4:
+					'''
+					This option toggles if the Fisherman will sell fishing rods.
+					  When On: The Fisherman WILL sell fishing rods.
+					  When Off: The Fisherman WILL NOT sell fishing rods.
+					    Turn Off to remove fishing rods from the shop.
+					Default value: On
+					'''
+				Label5: "[i:3120]   Sell Extra Items"
+				Tooltip5:
+					'''
+					This option toggles if the Fisherman will sell extra items such as:
+					fishing accessories, Fish Finder parts, and vanity items.
+					  When On: The Fisherman will sell extra items.
+					  When Off: The Fisherman WILL NOT sell extra items.
+					    Turn Off to remove extra items from the shop.
+					Default value: On
+					'''
+				Label6: "[i:87]   Shop Price Scaling"
+				Tooltip6:
+					'''
+					This option sets the scaling for the prices in the Fisherman's shop.
+					  50 means half the normal price.
+					  200 means double the normal price.
+					    Change this value if you want the shop to be cheaper or more expensive.
+					Default value: 100
+					'''
+				Label8: "[i:1991]   Catch Fisherman"
+				Tooltip8:
+					'''
+					This option toggles if the Fisherman added by this mod can be
+					caught with a Bug Net (Fargo's Mutant Mod style).
+					  When On: The Fisherman CAN be caught.
+					  When Off: The Fisherman CAN NOT be caught.
+					    Turn On to catch the Fisherman.
+					Default value: Off
+					Requires a Reload.
+					'''
+				Label7: "[i:784]   Load Debug Items"
+				Tooltip7:
+					'''
+					This option toggles if the debug items will be loaded.
+					  When On: The debug items WILL be loaded.
+					  When Off: The debug items WILL NOT be loaded.
+					    Turn On to load the debug items.
+					This currently affects:
+						Angler Quest Changer
+					Default value: Off
+					Requires a Reload.
+					'''
+			}
+		}
+
+		NPCName: {
+			Fisherman: Fisherman
+		}
+
+		NPCDialog: {
+			Fisherman: {
+				DefaultChat1: Greetings. Care to do some fishin'?
+				DefaultChat2: I got all the supplies you'd need if you want to do some fishin'.
+				DefaultChat3: Fishing rods? Bait? Hooks? You want it?
+				DefaultChat4: Make sure you have bait on your hook.
+				DefaultChat5: Ahoy there. My name is
+				DefaultChat6: There are all sorts of strange fish in these waters; see what you can catch!
+				DefaultChatRare: Hm... I seem to have misplaced my rod...
+				Hurt: That's gonna leave a mark.
+				DayTime: A nice sunny day today.
+				DayTimeRaining: Rain is the perfect time to do some fishin'!
+				NightTime: Time to get some shut-eye.
+				NightTimeRaining: Careful out there. There's a nasty storm out tonight!
+				Homeless: Could you provide me with a vessel of some sort? A man needs a place to sleep!
+				HasHome: Now I can really set up shop! Make sure you purchase some goods!
+				PlayerHasWings: Aye, I saw a large fish with wings once...
+				PlayerHasLadyBug: I wouldn't use that lady bug as bait if I were you. There are tales of an evil curse being put on you if you do...
+				Party1: That's the biggest catch I've seen yet! Time to celebrate.
+				Party2: I cooked me up some Bumblebee Tuna. Those things are tasty!
+				BloodMoon: I hear that there are some crazy creatures swimming in the water tonight. Fish them up!
+				HowDidIGetHere: Some sort of storm must've pushed me off course. I know I didn't intend on being here at this time.
+				SellNothing: A mysterious force told me not to sell anything. They said to check the "config", whatever that is.
+
+				RijamsMod: {
+					InterTravel: is nice and all, but I don't trust her around my stash of fish!
+					Harpy: sometimes helps me scout ahead on my fishing journies. Very helpful!
+				}
+
+				AnglerInfo1: is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed
+				AnglerInfo2: for him.
+				AnglerQuest1: So far you have completed
+				AnglerQuest2: quests for
+				AnglerQuest3: the Angler.
+				AnglerQuest4: I think it is time for you to start!
+				AnglerQuest5: Keep at it!
+				AnglerQuest6: Great job! Keep going!
+				AnglerQuest7: Nice job, son! You have completed
+				AnglerQuest8: Nice job, lass! You have completed
+				AnglerQuest9: Why not keep going?
+				AnglerHappiness1: No I'm not
+				AnglerHappiness2: the Angler's father, but I'll gladly watch over him!
+				PirateHappiness1: I wouldn't trust
+				PirateHappiness2: the Pirate. I've had my fair share of run-ins with pirates.
+				PrincessHappiness: the Princess has offered to get me a fancy new vessel. How kind of her!
+				TruffleNormal1: I occasionally take Glowing Mushrooms to use as bait. I don't think
+				TruffleNormal2: knows that I do that, so don't tell 'em!
+				TruffleHappiness1: I'm friends with
+				TruffleHappiness2: the Truffle. Glowing Mushrooms make good bait!
+				NurseHappiness1: I dislike
+				NurseHappiness2: the Nurse. She always bugs me for check-ups that I don't need.
+				MechanicHappiness: the Mechanic is always here to help me when me ship needs repairs.
+
+				ThoriumMod: {
+					Diverman1: Now
+					Diverman2: is the kind of guy I respect!
+				}
+
+				CalamityMod: {
+					SeaKing: Amidias is such an interesting person. I hope he doesn't mind me fishin'.
+					Warn1: Careful with mermaids, son, not all of them are friendly.
+					Warn2: Careful with mermaids, lass, not all of them are friendly.
+				}
+
+				SGAmod: {
+					Sharkvern: A Shark-what? That is truly a freak of nature.
+				}
+
+				FargosMutant: {
+					Mutant1: The wings that
+					Mutant2: have remind me of something else...
+				}
+
+				NoFishingQuests: {
+					AnglerShop1: It seems like
+					AnglerShop2: has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
+				}
+
+				PbonesUtilities: {
+					MysteriousTrader: I heard rumors of a blue hooded man who sells valuables...
+				}
+
+				TorchSeller: {
+					TorchMan: really lightens my spirits when I'm around them.
+				}
+			}
+			Pirate: {
+					ExtraChat1: Arr, that
+					ExtraChat2: the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
+				}
+			Zoologist: {
+					ExtraChat1: I keep telling
+					ExtraChat2: the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
+				}
+			Angler: {
+					ExtraChat1: Yeah? What about
+					ExtraChat2: the Fisherman? He's alright I guess. Back to work with you!
+				}
+			Truffle: {
+					ExtraChat1: the Fisherman is nice to me. He doesn't seem to want to eat me.
+				}
+			Princess: {
+					ExtraChat1: the Fisherman catches all sorts of tasty fish for the town!
+				}
+		}
+
+		Bestiary: {
+			Fisherman: {
+				General: A commercial fisherman from abroad, the Fisherman is skilled in his profession. He will sell you many fishing related items.
+				Happiness:
+					'''
+					Love: Ocean, Angler
+					Like: Forest, Princess, Truffle, Mechanic
+					Dislike: Desert, Pirate, Nurse
+					Hate: None
+					'''
+			}
+		}
+
+		TownNPCMood: {
+			Fisherman: {
+				Content: Everything is swell.
+				NoHome: Could you provide me with a vessel of some sort? A man needs a place to sleep!
+				LoveSpace: I enjoy the open space, just like the vast ocean.
+				FarFromHome: Man overboard! I am too far from my home!
+				DislikeCrowded: I would prefer some more personal space.
+				HateCrowded: Fishing is supposed to be relaxing, but I can't focus with everyone around here!
+				LikeBiome: "There are plenty of fish to catch in {BiomeName}."
+				LoveBiome: "I love {BiomeName}, it's the best place to do some fishin'!"
+				DislikeBiome: "The lack of water in {BiomeName} makes fishin' harder than it should be."
+				HateBiome: "Davy Jones, {BiomeName} is not a safe place!"
+				LikeNPC: "I view {NPCName} as one of me crew members. They're a trustworthy person."
+				LikeNPC_Princess: "{NPCName} has offered to get me a fancy new vessel. How kind of her!"
+				LoveNPC: "No I'm not {NPCName}'s father, but I'll gladly watch over him!"
+				DislikeNPC: "I don't like being around {NPCName}. They are not the kind of person I associate myself with."
+				HateNPC: "I hate {NPCName}. They insult me and my trade."
+			}
+		}
+
+		ItemName: {
+			PlasticWormLure: Plastic Worm Lure
+			Mealworm: Mealworm
+			RedWorm: Red Worm
+			GlowingMushroomChunk: Glowing Mushroom Chunk
+			BaitBox: Bait Box
+			Fisherman_Vanity_Shirt: Fisherman's Shirt
+			Fisherman_Vanity_Pants: Fisherman's Pants
+			RecyclingMachine: Recycling Machine
+		}
+
+		ItemTooltip: {
+			PlasticWormLure: "'Not the best bait'"
+			GlowingMushroomChunk: "'Not tasty enough to attract large beasts'"
+			BaitBox:
+				'''
+				Contains a bunch of bait!
+				Right click to open
+				'''
+			RecyclingMachine:
+				'''
+				Converts trash items into more useful items
+				'It's unlike anything you've ever seen.'
+				'''
+		}
+
+		ProjectileName: {
+			HarpoonSpear: Harpoon Spear
+		}
+
+		TileName: {
+			RecyclingMachine: Recycling Machine
+		}
+
+		MapObject: {
+			RecyclingMachine: Recycling Machine
+		}
+
+		UI: {
+			Fisherman: {
+				Shop1: Bait & Fish
+				Shop2: Rods & Extras
+				CapturedSpawnText: The Fisherman has spawned!
+			}
+		}
+	}
+}
+// Language.GetText("TownNPCMood_Princess.LoveNPC_Guide")
+Terraria: {
+	TownNPCMood_Princess: {
+		LoveNPC_Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
+	}
+
+}

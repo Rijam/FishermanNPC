@@ -1,0 +1,96 @@
+0.1 - Release (August 1, 2021)
+
+0.1.1 - Update 1 (August 2, 2021)
+	* Added mod homepage
+	* Increased the price of Can of Worms from 1g to 2g 50s
+	* Fixed issue with the Fisherman's gore
+
+0.1.2 - Update 2 (August 2, 2021)
+	* Fixed an issue where the Fisherman would sell the Flounder anywhere but the desert (It should've only been in the desert)
+	* Fisherman now only sells the Sitting Duck's Fishing Pole after Skeletron, just like the Traveling Merchant.
+	* Fisherman now sells the Chum Caster (during Blood Moon, 25g) and Scarab Fishing Rod (After EoC has been defeated and in the desert, 25g)
+	* Increased the cost of all of the fishing rods. It is now cheaper to buy the Mechanics Rod and Sitting Ducks Fishing Rod from the Mechanic and Traveling Merchant.
+
+0.1.3 - Update 3 (August 4, 2021)
+	* Added some dialog for the Zoologist, Angler, Pirate, Princess, and Truffle talking about the Fisherman. These will be moved to happiness quotes once happiness is implemented.
+	* Added config options to disable certain shop items that the Fisherman sells.
+	* Added Glowing Mushroom Chunk bait item. 66% bait power. Sold in Hardmode if the Truffle is present.
+	* Reorganized the order of bait in the shop based on bait power.
+	* Fisherman vanity outfit is now only sold if the Clothier is present.
+	* Now sells Lavaflies after EoW or BoC has been defeated.
+	* Now sells the Fisherman's Pocket Guide, Weather Radio, and Sextant.
+	* Plastic Worm Lure is now White rarity.
+
+0.1.4 - Update 4 (August 5, 2021)
+	* Added a config option to change the shop prices. From half the normal price to double the normal price.
+	
+0.1.5 - Update 5 (August 9, 2021)
+	* The mod's source code will now be included when extracting the mod. Open source!
+	* Switched all of the mod's text to use localization. This means translating the mod to a different language is now possible. Please contact me if you would like to translate text.
+	* Fisherman now sells the Honeyfin while in the jungle.
+	
+0.1.6 - Update 6 (August 11, 2021)
+	* Fixed a small issue where the Fisherman could be summoned with both the King and Queen Statue, instead of just the King Statue.
+	* Added some item icons to the config menu to make it a little more fancy.
+	* Adjusted the tooltip of each config option to contain more information.
+	* Separated the shop into two shops.
+	* Now sells Chum Buckets and Lava Proof Fishing Hook.
+	* Now sells Fishing Potions, Crate Potions, and Sonar Potions.
+	* Now sells more bait types: Hell Butterfly, Firefly, Magma Snail, Buggy.
+	* Will now sell the both evil fishing rods after Moon Lord has been defeated.
+	* (Added happiness, but it is not implemented in tML yet)
+	* Created a wiki page! https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
+	
+0.1.7 - Update 7 (August 23, 2021)
+	* Fisherman now properly spawns after a tModLoader bug was fixed.
+	* Lang file was converted to HJson.
+
+0.1.8 - Update 8 (September 9, 2021)
+	* Added some cross mod dialog to the Fisherman.
+	* Added localization for the other Town NPC dialog.
+	* Added a debug item that lets you change how many Angler quests you have completed. This item is not obtainable in the normal game and must be spawned in.
+	
+0.1.9 - Update 9 (September 25, 2021)
+	* Fisherman now sells addition extra items every 5 Angler quests that have been completed with different moon cycle conditions. Basically more items are available if you do more Angler quests.
+	* Updated the sprite of the Bait Box.
+	* Adjusted the rarity of some of the quotes to be consistent with other quotes.
+	* Removed obsolete DrawHands code on the Fisherman's Shirt.
+	* Removed a lot of unused code to reduce file size.
+
+0.1.10 - Update 10 (October 12, 2021)
+	* Added Angler armor set to the Fisherman's shop. Sold after the corresponding number of Angler quests have been completed.
+	* Added a caught Fisherman summoning item a la Fargo's Mutant Mod's caught Town NPCs. (Currently unobtainable, though.)
+	* Made a few super minor tweaks to the Fisherman's Shirt and Pants vanity items while equipped.
+	* Added a Recycling Machine. Turn trash items into something more useful. Sold by the Fisherman.
+	* Updated mod icon
+
+0.1.11 - Update 11 (October 31, 2021)
+	* Fixed the Bait Box and Recycling Machine by replacing QuickSpawnItem() with QuickSpawnItemDirect()
+
+0.1.12 - Update 12 (November 9, 2021)
+	* Upgraded to .NET 6 just in case it was needed
+	* Fixed text on the captured Fisherman item
+	* Updated the color of the Angler Quest Changer debug item
+	* Added a config option to enable/disable loading the captured Fisherman item and the Angler Quest Changer debug item.
+
+0.1.13 - Update 13 (November 28, 2021)
+	* Added localization for the Fisherman's shop buttons
+	* Items held in the cursor can now be used on the Recycling Machine
+
+0.1.14 - Update 14 (December 5, 2021)
+	* The Fisherman's shop config options can be changed without having to reload!
+	* The Fisherman can be picked up with a Bug Net if the config is turned on.
+
+0.1.15 - Update 15 (January 16, 2022)
+	* Updated the Fisherman's Pants item sprite
+	* Town NPC Happiness implemented!
+
+0.1.16 - Update 16 (January 26, 2022)
+	* Added missing DislikeCrowded quote
+	* Updated BiomeID to PrimaryBiomeID
+	* Fixed the increased placement range on the Caught Fisherman (now it actually works)
+	* Changed Enable/Disable to On/Off in the config descriptions
+
+0.1.17 - Update 17 (March 2, 2022)
+	* Updated NPC Happiness to the new format
+	* Added new IEntitySource

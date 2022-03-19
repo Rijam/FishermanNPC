@@ -1,0 +1,15 @@
+Fisherman NPC adds a new Town NPC that sells fishing related items. He will arrive once the Angler has been rescued and there are at least 5 Town NPCs.
+He sells bait, fish, fishing rods, and other fishing related items.
+Includes configuration options to disable certain items in the Fisherman's shop and to change the shop prices.
+
+See a complete shop list and other information on this mod's wiki page!
+https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
+
+Mod version: v0.1.17
+	- Updated NPC Happiness to the new format
+	- Added new IEntitySource
+
+Known issues:
+	- Doesn't change to the hatless sprite for parties (Not implemented in 1.4 tML yet)
+	- Princess has messed up happiness dialog for the Fisherman (tML bug)
+	- Fisherman sells Pylons for free (tML bug I assume)
