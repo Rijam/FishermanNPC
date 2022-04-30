@@ -94,3 +94,9 @@
 0.1.17 - Update 17 (March 2, 2022)
 	* Updated NPC Happiness to the new format
 	* Added new IEntitySource
+
+0.1.18 - Update 18 (April 30, 2022)
+	* Replaced TownNPCName hook with new SetNPCNameList hook
+	* Fisherman now switches to his hatless sprite during a party!
+	* Changed homepage to the wiki page.
+	* Updated IEntitySources

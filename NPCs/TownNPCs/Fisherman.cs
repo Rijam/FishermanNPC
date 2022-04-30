@@ -10,6 +10,10 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
@@ -18,8 +22,6 @@ namespace FishermanNPC.NPCs.TownNPCs
 	{
 		private static bool shop1;
 		private static bool shop2;
-		//public override string Texture => "FishermanNPC/NPCs/TownNPCs/Fisherman";
-		//public override string[] AltTextures => new[] { "FishermanNPC/NPCs/TownNPCs/Fisherman_Alt_1" }; //Not implemented in 1.4 tML yet
 
 		public override void SetStaticDefaults()
 		{
@@ -30,7 +32,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			NPCID.Sets.AttackType[Type] = 1;
 			NPCID.Sets.AttackTime[Type] = 90;
 			NPCID.Sets.AttackAverageChance[Type] = 30;
-			NPCID.Sets.HatOffsetY[Type] = 4;
+			NPCID.Sets.HatOffsetY[Type] = 3;
 
 			// Influences how the NPC looks in the Bestiary
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new (0)
@@ -81,10 +83,6 @@ namespace FishermanNPC.NPCs.TownNPCs
 				new FlavorTextBestiaryInfoElement("Mods.FishermanNPC.Bestiary.Fisherman.Happiness")
 			});
 		}
-		/*public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-		{
-			return true;
-		}*/
 
 		public override void HitEffect(int hitDirection, double damage)
 		{
@@ -92,16 +90,16 @@ namespace FishermanNPC.NPCs.TownNPCs
 			{
 				if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Head_alt").Type, 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Head_alt").Type, 1f);
 				}
 				else
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Head").Type, 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Head").Type, 1f);
 				}
 				for (int k = 0; k < 2; k++)
 				{
-					Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Arm").Type, 1f);
-					Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Leg").Type, 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Arm").Type, 1f);
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("FishermanNPC/Fisherman_Gore_Leg").Type, 1f);
 				}
 			}
 		}
@@ -118,10 +116,17 @@ namespace FishermanNPC.NPCs.TownNPCs
 			}
 		}
 
-		public override string TownNPCName()
+		public override ITownNPCProfile TownNPCProfile()
 		{
-			string[] names = { "Willy", "Mark", "Charles", "Richard", "Michael", "Davis", "Ray", "Max", "Sherman", "Ike", "Pete", "Hermann", "Colin", "Paul", "Nathaniel", "Malcolm", "Keith", "Jarrell", "Isaac", "Spencer" };
-			return Main.rand.Next(names);
+			return new FishermanProfile();
+		}
+
+		public override List<string> SetNPCNameList()
+		{
+			return new List<string>()
+			{
+				"Willy", "Mark", "Charles", "Richard", "Michael", "Davis", "Ray", "Max", "Sherman", "Ike", "Pete", "Hermann", "Colin", "Paul", "Nathaniel", "Malcolm", "Keith", "Jarrell", "Isaac", "Spencer"
+			};
 		}
 
 		public override string GetChat()
@@ -345,6 +350,15 @@ namespace FishermanNPC.NPCs.TownNPCs
 				if (torchMan >= 0)
 				{
 					chat.Add(Main.npc[torchMan].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Fisherman.TorchSeller.TorchMan"), 0.25);
+					//{Name} really lightens my spirits when I'm around them.
+				}
+			}
+			if (ModLoader.TryGetMod("BossesAsNPCs", out Mod bossesAsNPCs))
+			{
+				int dukeFishron = NPC.FindFirstNPC(bossesAsNPCs.Find<ModNPC>("DukeFishron").Type);
+				if (dukeFishron >= 0)
+				{
+					chat.Add(Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Fisherman.BossesAsNPCs.DukeFishron"), 0.25);
 					//{Name} really lightens my spirits when I'm around them.
 				}
 			}
@@ -1034,5 +1048,23 @@ namespace FishermanNPC.NPCs.TownNPCs
 			scale = 1f;
 			closeness = 7;
 		}
+	}
+	public class FishermanProfile : ITownNPCProfile
+	{
+		public int RollVariation() => 0;
+		public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+
+		public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
+		{
+			if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+				return ModContent.Request<Texture2D>("FishermanNPC/NPCs/TownNPCs/Fisherman");
+
+			if (npc.altTexture == 1)
+				return ModContent.Request<Texture2D>("FishermanNPC/NPCs/TownNPCs/Fisherman_Alt_1");
+
+			return ModContent.Request<Texture2D>("FishermanNPC/NPCs/TownNPCs/Fisherman");
+		}
+
+		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("FishermanNPC/NPCs/TownNPCs/Fisherman_Head");
 	}
 }

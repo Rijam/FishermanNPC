@@ -112,12 +112,6 @@ Mods: {
 				BloodMoon: I hear that there are some crazy creatures swimming in the water tonight. Fish them up!
 				HowDidIGetHere: Some sort of storm must've pushed me off course. I know I didn't intend on being here at this time.
 				SellNothing: A mysterious force told me not to sell anything. They said to check the "config", whatever that is.
-
-				RijamsMod: {
-					InterTravel: is nice and all, but I don't trust her around my stash of fish!
-					Harpy: sometimes helps me scout ahead on my fishing journies. Very helpful!
-				}
-
 				AnglerInfo1: is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed
 				AnglerInfo2: for him.
 				AnglerQuest1: So far you have completed
@@ -174,6 +168,15 @@ Mods: {
 				TorchSeller: {
 					TorchMan: really lightens my spirits when I'm around them.
 				}
+
+				BossesAsNPCs: {
+					DukeFishron: Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to some one like him!
+				}
+
+				RijamsMod: {
+					InterTravel: is nice and all, but I don't trust her around my stash of fish!
+					Harpy: sometimes helps me scout ahead on my fishing journies. Very helpful!
+				}
 			}
 			Pirate: {
 					ExtraChat1: Arr, that
@@ -228,6 +231,13 @@ Mods: {
 			}
 		}
 
+		TownNPCMood_Princess: {
+			LoveNPC_Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
+			LoveNPC_FishermanNPC: {
+				Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
+			}
+		}
+
 		ItemName: {
 			PlasticWormLure: Plastic Worm Lure
 			Mealworm: Mealworm
@@ -279,6 +289,10 @@ Mods: {
 Terraria: {
 	TownNPCMood_Princess: {
 		LoveNPC_Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
+		LoveNPC_FishermanNPC: {
+			Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
+		}
+
 	}
 
 }

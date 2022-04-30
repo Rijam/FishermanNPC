@@ -13,10 +13,6 @@ namespace FishermanNPC.Items
 	//and code adapted from Alchemist NPC (BrewerHorcrux.cs and similar)
 	public class CaughtFisherman : ModItem
 	{
-		/*public override bool IsLoadingEnabled(Mod mod)
-		{
-			return ModContent.GetInstance<FishermanNPCConfigServer>().LoadDebugItems;
-		}*/
 		public override string Texture => "FishermanNPC/NPCs/TownNPCs/Fisherman";
 		public override void SetStaticDefaults()
 		{

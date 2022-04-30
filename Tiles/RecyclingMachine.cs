@@ -51,15 +51,15 @@ namespace FishermanNPC.Tiles
 				 
 				if (Main.rand.Next(4) <= 2) //75% chance: 0, 1, 2, but not 3
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Silk, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Silk, Main.rand.Next(1, 3));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Leather, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Leather, Main.rand.Next(1, 3));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.GreenThread, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.GreenThread, Main.rand.Next(1, 3));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.FishingSeaweed && player.HasItem(ItemID.FishingSeaweed)) || Main.mouseItem.type == ItemID.FishingSeaweed)
@@ -77,23 +77,23 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.Next(4) <= 2) //75% chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(1, 2));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(1, 2));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.BlinkrootSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.BlinkrootSeeds, Main.rand.Next(1, 2));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.ShiverthornSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.ShiverthornSeeds, Main.rand.Next(1, 2));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.WaterleafSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.WaterleafSeeds, Main.rand.Next(1, 2));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.TinCan && player.HasItem(ItemID.TinCan)) || Main.mouseItem.type == ItemID.TinCan)
@@ -111,15 +111,15 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.Next(2) == 0) //50% chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.TinOre, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.TinOre, Main.rand.Next(1, 2));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after the 50% chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.CopperOre, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.CopperOre, Main.rand.Next(1, 2));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Bottle, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Bottle, Main.rand.Next(1, 2));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.Coal && player.HasItem(ItemID.Coal)) || Main.mouseItem.type == ItemID.Coal)
@@ -137,15 +137,15 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.Next(4) <= 2) //75% chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.StoneBlock, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.StoneBlock, Main.rand.Next(1, 3));
 				}
 				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Hook, 1);
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Hook, 1);
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_TileInteraction(i, j), ItemID.Geode, 1);
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Geode, 1);
 				}
 			}
 			return true;

@@ -48,39 +48,39 @@ namespace FishermanNPC.Items.Fishing
 				random = Main.rand.Next(9);
 				if (random == 8)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ModContent.ItemType<RedWorm>(), Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ModContent.ItemType<RedWorm>(), Main.rand.Next(0, 3));
 				}
 				if (random == 7)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ModContent.ItemType<Mealworm>(), Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ModContent.ItemType<Mealworm>(), Main.rand.Next(0, 3));
 				}
 				if (random == 6)
                 {
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ModContent.ItemType<PlasticWormLure>(), Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ModContent.ItemType<PlasticWormLure>(), Main.rand.Next(0, 3));
 				}
 				if (random == 5)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.Snail, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.Snail, Main.rand.Next(0, 3));
 				}
 				if (random == 4)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.EnchantedNightcrawler, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.EnchantedNightcrawler, Main.rand.Next(0, 3));
 				}
 				if (random == 3)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.Worm, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.Worm, Main.rand.Next(0, 3));
 				}
 				if (random == 2)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.MasterBait, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.MasterBait, Main.rand.Next(0, 3));
 				}
 				if (random == 1)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.JourneymanBait, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.JourneymanBait, Main.rand.Next(0, 3));
 				}
 				if (random == 0)
 				{
-					player.QuickSpawnItemDirect(player.GetItemSource_OpenItem(Type), ItemID.ApprenticeBait, Main.rand.Next(0, 3));
+					player.QuickSpawnItemDirect(player.GetSource_OpenItem(Type), ItemID.ApprenticeBait, Main.rand.Next(0, 3));
 				}
 			}
 		}
