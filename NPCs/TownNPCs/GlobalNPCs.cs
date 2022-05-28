@@ -15,35 +15,35 @@ namespace FishermanNPC.NPCs.TownNPCs
 			switch (npc.type)
 			{		
 				case NPCID.Pirate:
-					if (Main.rand.Next(0, 4) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
 						chat = Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Pirate.ExtraChat1") + " " + Main.npc[fisherman].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Pirate.ExtraChat2");
 						//Arr, that {Name} the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 					}
 					break;
 				case NPCID.BestiaryGirl: //Zoologist
-					if (Main.rand.Next(0, 4) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
 						chat = Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Zoologist.ExtraChat1") + " " + Main.npc[fisherman].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Zoologist.ExtraChat2");
 						//I keep telling {Name} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
 					}
 					break;
 				case NPCID.Angler:
-					if (Main.rand.Next(0, 4) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
 						chat = Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Angler.ExtraChat1") + " " + Main.npc[fisherman].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Angler.ExtraChat2");
 						//Yeah? What about {Name} the Fisherman? He's alright I guess. Back to work with you!
 					}
 					break;
 				case NPCID.Truffle:
-					if (Main.rand.Next(0, 4) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
 						chat = Main.npc[fisherman].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Truffle.ExtraChat1");
 						//{Name} the Fisherman is nice to me. He doesn't seem to want to eat me.
 					}
 					break;
 				case NPCID.Princess:
-					if (Main.rand.Next(0, 4) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
 						chat = Main.npc[fisherman].GivenName + " " + Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Princess.ExtraChat1");
 						//{Name} the Fisherman catches all sorts of tasty fish for the town!

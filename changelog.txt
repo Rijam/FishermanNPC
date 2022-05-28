@@ -100,3 +100,10 @@
 	* Fisherman now switches to his hatless sprite during a party!
 	* Changed homepage to the wiki page.
 	* Updated IEntitySources
+
+0.1.19 - Updated 19 (May 28, 2022)
+	* Color coded the happiness info in the Bestiary
+	* Fixed the localization for the Princess.
+	* Added some simple Mod.Calls (see the wiki)
+	* Updated NPC.catchItem and Item.makeNPC
+	* Updated PlaySound

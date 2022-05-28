@@ -5,12 +5,12 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.18
-	- Replaced TownNPCName hook with new SetNPCNameList hook
-	- Fisherman now switches to his hatless sprite during a party!
-	- Changed homepage to the wiki page.
-	- Updated IEntitySources
+Mod version: v0.1.19
+	- Color coded the happiness info in the Bestiary
+	- Fixed the localization for the Princess.
+	- Added some simple Mod.Calls (see the wiki)
+	- Updated NPC.catchItem and Item.makeNPC
+	- Updated PlaySound
 
 Known issues:
-	- Princess has messed up happiness dialog for the Fisherman (tML bug)
 	- Fisherman sells Pylons for free (tML bug I assume)

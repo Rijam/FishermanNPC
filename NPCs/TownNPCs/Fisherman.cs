@@ -20,9 +20,6 @@ namespace FishermanNPC.NPCs.TownNPCs
 	[AutoloadHead]
 	public class Fisherman : ModNPC
 	{
-		private static bool shop1;
-		private static bool shop2;
-
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[Type] = 25;
@@ -71,7 +68,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			NPC.knockBackResist = 0.5f;
 			AnimationType = NPCID.Guide;
 			Main.npcCatchable[NPC.type] = ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs;
-			NPC.catchItem = ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs ? (short)ModContent.ItemType<Items.CaughtFisherman>() : (short)-1;
+			NPC.catchItem = ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs ? ModContent.ItemType<Items.CaughtFisherman>() : -1;
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -359,7 +356,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				if (dukeFishron >= 0)
 				{
 					chat.Add(Language.GetTextValue("Mods.FishermanNPC.NPCDialog.Fisherman.BossesAsNPCs.DukeFishron"), 0.25);
-					//{Name} really lightens my spirits when I'm around them.
+					//Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
 				}
 			}
 			/*if (ModLoader.TryGetMod("ExampleMod", out Mod exampleMod))
@@ -400,14 +397,14 @@ namespace FishermanNPC.NPCs.TownNPCs
 			if (firstButton)
 			{
 				shop = true;
-				shop1 = true;
-				shop2 = false;
+				NPCHelper.SetShop1(true);
+				NPCHelper.SetShop2(false);
 			}
 			if (!firstButton)
             {
 				shop = true;
-				shop1 = false;
-				shop2 = true;
+				NPCHelper.SetShop1(false);
+				NPCHelper.SetShop2(true);
 			}
 		}
 		
@@ -421,7 +418,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			//
 			// Bait
 			//
-			if (sellBait && shop1)
+			if (sellBait && NPCHelper.StatusShop1())
 			{
 				if (sellModdedItems)
 				{
@@ -520,7 +517,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			//
 			// Fish
 			//
-			if (sellFish && shop1)
+			if (sellFish && NPCHelper.StatusShop1())
 			{
 				if (Main.player[Main.myPlayer].ZoneDirtLayerHeight || Main.player[Main.myPlayer].ZoneRockLayerHeight || Main.player[Main.myPlayer].ZoneUnderworldHeight || Main.hardMode) //if Underground, Caverns, Underworld, or Hardmode
 				{
@@ -679,7 +676,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			//
 			// Fishing rods
 			//
-			if (sellFishingRods && shop2)
+			if (sellFishingRods && NPCHelper.StatusShop2())
 			{
 				shop.item[nextSlot].SetDefaults(ItemID.ReinforcedFishingPole);
 				shop.item[nextSlot].shopCustomPrice = 50000;
@@ -742,7 +739,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			//
 			// Other
 			//
-			if (sellExtraItems && shop2)
+			if (sellExtraItems && NPCHelper.StatusShop2())
             {
 				if (Main.player[Main.myPlayer].anglerQuestsFinished >= 1)
 				{

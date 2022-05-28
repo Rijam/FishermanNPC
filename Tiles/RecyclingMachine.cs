@@ -38,7 +38,7 @@ namespace FishermanNPC.Tiles
 
 			if ((player.HeldItem.type == ItemID.OldShoe && player.HasItem(ItemID.OldShoe)) || Main.mouseItem.type == ItemID.OldShoe)
 			{
-				SoundEngine.PlaySound(SoundID.Item, i * 16, j * 16, 65);
+				SoundEngine.PlaySound(SoundID.Item65, new Vector2(i * 16, j * 16));
 				
 				if (Main.mouseItem.type == ItemID.OldShoe)
 				{
@@ -64,7 +64,7 @@ namespace FishermanNPC.Tiles
 			}
 			if ((player.HeldItem.type == ItemID.FishingSeaweed && player.HasItem(ItemID.FishingSeaweed)) || Main.mouseItem.type == ItemID.FishingSeaweed)
 			{
-				SoundEngine.PlaySound(SoundID.Item, i * 16, j * 16, 171);
+				SoundEngine.PlaySound(SoundID.Item171, new Vector2(i * 16, j * 16));
 
 				if (Main.mouseItem.type == ItemID.FishingSeaweed)
 				{
@@ -98,7 +98,7 @@ namespace FishermanNPC.Tiles
 			}
 			if ((player.HeldItem.type == ItemID.TinCan && player.HasItem(ItemID.TinCan)) || Main.mouseItem.type == ItemID.TinCan)
 			{
-				SoundEngine.PlaySound(SoundID.Item, i * 16, j * 16, 52);
+				SoundEngine.PlaySound(SoundID.Item52, new Vector2(i * 16, j * 16));
 
 				if (Main.mouseItem.type == ItemID.TinCan)
 				{
@@ -124,7 +124,7 @@ namespace FishermanNPC.Tiles
 			}
 			if ((player.HeldItem.type == ItemID.Coal && player.HasItem(ItemID.Coal)) || Main.mouseItem.type == ItemID.Coal)
 			{
-				SoundEngine.PlaySound(SoundID.Item, i * 16, j * 16, 23);
+				SoundEngine.PlaySound(SoundID.Item23, new Vector2(i * 16, j * 16));
 
 				if (Main.mouseItem.type == ItemID.Coal)
 				{

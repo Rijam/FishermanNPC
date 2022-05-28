@@ -170,7 +170,7 @@ Mods: {
 				}
 
 				BossesAsNPCs: {
-					DukeFishron: Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to some one like him!
+					DukeFishron: Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
 				}
 
 				RijamsMod: {
@@ -203,10 +203,10 @@ Mods: {
 				General: A commercial fisherman from abroad, the Fisherman is skilled in his profession. He will sell you many fishing related items.
 				Happiness:
 					'''
-					Love: Ocean, Angler
-					Like: Forest, Princess, Truffle, Mechanic
-					Dislike: Desert, Pirate, Nurse
-					Hate: None
+					[c/b3f2b3:Love]: Ocean, Angler
+					[c/ddf2b3:Like]: Forest, Princess, Truffle, Mechanic
+					[c/f2e0b3:Dislike]: Desert, Pirate, Nurse
+					[c/f2b5b3:Hate]: None
 					'''
 			}
 		}
@@ -228,13 +228,6 @@ Mods: {
 				LoveNPC: "No I'm not {NPCName}'s father, but I'll gladly watch over him!"
 				DislikeNPC: "I don't like being around {NPCName}. They are not the kind of person I associate myself with."
 				HateNPC: "I hate {NPCName}. They insult me and my trade."
-			}
-		}
-
-		TownNPCMood_Princess: {
-			LoveNPC_Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
-			LoveNPC_FishermanNPC: {
-				Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
 			}
 		}
 
@@ -283,16 +276,14 @@ Mods: {
 				CapturedSpawnText: The Fisherman has spawned!
 			}
 		}
+		Crossmod: {
+			Census: {
+				Fisherman: Rescue the Angler and have at least 5 Town NPCs
+			}
+		}
 	}
 }
-// Language.GetText("TownNPCMood_Princess.LoveNPC_Guide")
-Terraria: {
-	TownNPCMood_Princess: {
-		LoveNPC_Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
-		LoveNPC_FishermanNPC: {
-			Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
-		}
 
-	}
-
+TownNPCMood_Princess: {
+	LoveNPC_FishermanNPC/Fisherman: "{NPCName} catches all sorts of tasty fish for the town!"
 }
