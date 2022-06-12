@@ -85,19 +85,30 @@ Mods: {
 			}
 		}
 
+		Common: {
+			// The following words are used for the Bestiary happiness text.
+			Forest: Forest
+			Ocean: Ocean
+			Desert: Desert
+			None: None
+		}
+
 		NPCName: {
 			Fisherman: Fisherman
 		}
 
 		NPCDialog: {
+			// {0} will be replaced with other text (usually the name of another NPC). It is important that you keep {0} somewhere in the string.
+			// If a line starts with {0}, the line must be in quotes.
 			Fisherman: {
-				DefaultChat1: Greetings. Care to do some fishin'?
-				DefaultChat2: I got all the supplies you'd need if you want to do some fishin'.
-				DefaultChat3: Fishing rods? Bait? Hooks? You want it?
-				DefaultChat4: Make sure you have bait on your hook.
-				DefaultChat5: Ahoy there. My name is
-				DefaultChat6: There are all sorts of strange fish in these waters; see what you can catch!
-				DefaultChatRare: Hm... I seem to have misplaced my rod...
+				Default1: Greetings. Care to do some fishin'?
+				Default2: I got all the supplies you'd need if you want to do some fishin'.
+				Default3: Fishing rods? Bait? Hooks? You want it?
+				Default4: Make sure you have bait on your hook.
+				Default5: There are all sorts of strange fish in these waters; see what you can catch!
+				Default6: "Ahoy there. My name is {0}"
+				Rare1: Hm... I seem to have misplaced my rod...
+				Rare2: You were paying way too much for worms. I'm your new worm guy.
 				Hurt: That's gonna leave a mark.
 				DayTime: A nice sunny day today.
 				DayTimeRaining: Rain is the perfect time to do some fishin'!
@@ -112,33 +123,23 @@ Mods: {
 				BloodMoon: I hear that there are some crazy creatures swimming in the water tonight. Fish them up!
 				HowDidIGetHere: Some sort of storm must've pushed me off course. I know I didn't intend on being here at this time.
 				SellNothing: A mysterious force told me not to sell anything. They said to check the "config", whatever that is.
-				AnglerInfo1: is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed
-				AnglerInfo2: for him.
-				AnglerQuest1: So far you have completed
-				AnglerQuest2: quests for
-				AnglerQuest3: the Angler.
-				AnglerQuest4: I think it is time for you to start!
-				AnglerQuest5: Keep at it!
-				AnglerQuest6: Great job! Keep going!
-				AnglerQuest7: Nice job, son! You have completed
-				AnglerQuest8: Nice job, lass! You have completed
-				AnglerQuest9: Why not keep going?
-				AnglerHappiness1: No I'm not
-				AnglerHappiness2: the Angler's father, but I'll gladly watch over him!
-				PirateHappiness1: I wouldn't trust
-				PirateHappiness2: the Pirate. I've had my fair share of run-ins with pirates.
-				PrincessHappiness: the Princess has offered to get me a fancy new vessel. How kind of her!
-				TruffleNormal1: I occasionally take Glowing Mushrooms to use as bait. I don't think
-				TruffleNormal2: knows that I do that, so don't tell 'em!
-				TruffleHappiness1: I'm friends with
-				TruffleHappiness2: the Truffle. Glowing Mushrooms make good bait!
-				NurseHappiness1: I dislike
-				NurseHappiness2: the Nurse. She always bugs me for check-ups that I don't need.
-				MechanicHappiness: the Mechanic is always here to help me when me ship needs repairs.
+				AnglerInfo: "{0} is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed {1} for him."
+				AnglerQuest1: "So far you have completed {1} quests for {0} the Angler. " // Space is important here. Unless your language doesn't need spaces or something.
+				AnglerQuest2: I think it is time for you to start!
+				AnglerQuest3: Keep at it!
+				AnglerQuest4: Great job! Keep going!
+				AnglerQuest5: Nice job, son! You have completed {1} quests for {0} the Angler. Why not keep going?
+				AnglerQuest6: Nice job, lass! You have completed {1} quests for {0} the Angler. Why not keep going?
+				AnglerHappiness: No I'm not {0} the Angler's father, but I'll gladly watch over him!
+				PirateHappiness: I wouldn't trust {0} the Pirate. I've had my fair share of run-ins with pirates.
+				PrincessHappiness: "{0} the Princess has offered to get me a fancy new vessel. How kind of her!"
+				TruffleNormal: I occasionally take Glowing Mushrooms to use as bait. I don't think {0} knows that I do that, so don't tell 'em!
+				TruffleHappiness: I'm friends with {0} the Truffle. Glowing Mushrooms make good bait!
+				NurseHappiness: I dislike {0} the Nurse. She always bugs me for check-ups that I don't need.
+				MechanicHappiness: "{0} the Mechanic is always here to help me when me ship needs repairs."
 
 				ThoriumMod: {
-					Diverman1: Now
-					Diverman2: is the kind of guy I respect!
+					Diverman: Now {0} is the kind of guy I respect!
 				}
 
 				CalamityMod: {
@@ -152,13 +153,11 @@ Mods: {
 				}
 
 				FargosMutant: {
-					Mutant1: The wings that
-					Mutant2: have remind me of something else...
+					Mutant: The wings that {0} have remind me of something else...
 				}
 
 				NoFishingQuests: {
-					AnglerShop1: It seems like
-					AnglerShop2: has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
+					AnglerShop: It seems like {0} has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
 				}
 
 				PbonesUtilities: {
@@ -174,40 +173,44 @@ Mods: {
 				}
 
 				RijamsMod: {
-					InterTravel: is nice and all, but I don't trust her around my stash of fish!
-					Harpy: sometimes helps me scout ahead on my fishing journies. Very helpful!
+					InterTravel: "{0} is nice and all, but I don't trust her around my stash of fish!"
+					Harpy: "{0} sometimes helps me scout ahead on my fishing journies. Very helpful!"
+					HellTrader: "I let {0} try some different kinds of fish. She seemed to enjoy them!"
+				}
+
+				HelpfulNPCs: {
+					Fisherman2: "{0} may be my competitor, but I can't stay mad at a fellow Fisherman."
 				}
 			}
 			Pirate: {
-					ExtraChat1: Arr, that
-					ExtraChat2: the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
+					ExtraChat: Arr, that {0} the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 				}
 			Zoologist: {
-					ExtraChat1: I keep telling
-					ExtraChat2: the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
+					ExtraChat: I keep telling {0} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
 				}
 			Angler: {
-					ExtraChat1: Yeah? What about
-					ExtraChat2: the Fisherman? He's alright I guess. Back to work with you!
+					ExtraChat: Yeah? What about {0} the Fisherman? He's alright I guess. Back to work with you!
 				}
 			Truffle: {
-					ExtraChat1: the Fisherman is nice to me. He doesn't seem to want to eat me.
+					ExtraChat: "{0} the Fisherman is nice to me. He doesn't seem to want to eat me."
 				}
 			Princess: {
-					ExtraChat1: the Fisherman catches all sorts of tasty fish for the town!
+					ExtraChat: "{0} the Fisherman catches all sorts of tasty fish for the town!"
 				}
 		}
 
 		Bestiary: {
-			Fisherman: {
-				General: A commercial fisherman from abroad, the Fisherman is skilled in his profession. He will sell you many fishing related items.
-				Happiness:
-					'''
-					[c/b3f2b3:Love]: Ocean, Angler
-					[c/ddf2b3:Like]: Forest, Princess, Truffle, Mechanic
-					[c/f2e0b3:Dislike]: Desert, Pirate, Nurse
-					[c/f2b5b3:Hate]: None
-					'''
+			Description: {
+				Fisherman: A commercial fisherman from abroad, the Fisherman is skilled in his profession. He will sell you many fishing related items.
+			}
+			Happiness: {
+				// These are automatically translated from other localization. Leave as is.
+				Fisherman: {
+					Love: "{$Mods.FishermanNPC.Common.Ocean}, {$NPCName.Angler}"
+					Like: "{$Mods.FishermanNPC.Common.Forest}, {$NPCName.Princess}, {$NPCName.Truffle}, {$NPCName.Mechanic}"
+					Dislike: "{$Mods.FishermanNPC.Common.Desert}, {$NPCName.Pirate}, {$NPCName.Nurse}"
+					Hate: "{$Mods.FishermanNPC.Common.None}"
+				}
 			}
 		}
 

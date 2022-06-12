@@ -107,3 +107,8 @@
 	* Added some simple Mod.Calls (see the wiki)
 	* Updated NPC.catchItem and Item.makeNPC
 	* Updated PlaySound
+
+0.1.20 - Updated 20 (June 12, 2022)
+	* Made the localization keys better
+	* Added a few more lines of dialog
+	* Now sells Double Cod at all times in Hardmode (instead just while in the Jungle)

@@ -5,12 +5,10 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.19
-	- Color coded the happiness info in the Bestiary
-	- Fixed the localization for the Princess.
-	- Added some simple Mod.Calls (see the wiki)
-	- Updated NPC.catchItem and Item.makeNPC
-	- Updated PlaySound
+Mod version: v0.1.20
+	- Made the localization keys better
+	- Added a few more lines of dialog
+	- Now sells Double Cod at all times in Hardmode (instead just while in the Jungle)
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

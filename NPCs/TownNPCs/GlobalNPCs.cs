@@ -67,6 +67,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 		public override void SetStaticDefaults()
 		{
 			int fishermanType = ModContent.NPCType<NPCs.TownNPCs.Fisherman>(); // Get Fisherman's type
+			var fishermanHappiness = NPCHappiness.Get(ModContent.NPCType<NPCs.TownNPCs.Fisherman>()); // Get Fisherman's type
 			var anglerHappiness = NPCHappiness.Get(NPCID.Angler); // Get the key into The Angler's happiness
 			var truffleHappiness = NPCHappiness.Get(NPCID.Truffle);
 			var zoologistHappiness = NPCHappiness.Get(NPCID.BestiaryGirl);
@@ -77,6 +78,15 @@ namespace FishermanNPC.NPCs.TownNPCs
 			zoologistHappiness.SetNPCAffection(fishermanType, AffectionLevel.Dislike);
 			pirateHappiness.SetNPCAffection(fishermanType, AffectionLevel.Dislike);
 			//Princess automatically loves the Fisherman
+
+			if (ModLoader.TryGetMod("HelpfulNPCs", out Mod helpfulNPCs))
+			{
+				int fisherman2Type = helpfulNPCs.Find<ModNPC>("FishermanNPC").Type;
+				var fisherman2Happiness = NPCHappiness.Get(helpfulNPCs.Find<ModNPC>("FishermanNPC").Type);
+
+				fisherman2Happiness.SetNPCAffection(fishermanType, AffectionLevel.Like);
+				fishermanHappiness.SetNPCAffection(fisherman2Type, AffectionLevel.Like);
+			}
 		}
 	}
 }
