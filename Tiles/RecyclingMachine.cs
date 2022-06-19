@@ -53,7 +53,7 @@ namespace FishermanNPC.Tiles
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Silk, Main.rand.Next(1, 3));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
+				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Leather, Main.rand.Next(1, 3));
 				}
@@ -79,15 +79,15 @@ namespace FishermanNPC.Tiles
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(1, 2));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
+				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(1, 2));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after
+				else if (Main.rand.NextBool(2)) //50% chance after
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.BlinkrootSeeds, Main.rand.Next(1, 2));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after
+				else if (Main.rand.NextBool(2)) //50% chance after
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.ShiverthornSeeds, Main.rand.Next(1, 2));
 				}
@@ -109,11 +109,11 @@ namespace FishermanNPC.Tiles
 					player.ConsumeItem(ItemID.TinCan);
 				}
 
-				if (Main.rand.Next(2) == 0) //50% chance
+				if (Main.rand.NextBool(2)) //50% chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.TinOre, Main.rand.Next(1, 2));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after the 50% chance
+				else if (Main.rand.NextBool(2)) //50% chance after the 50% chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.CopperOre, Main.rand.Next(1, 2));
 				}
@@ -139,7 +139,7 @@ namespace FishermanNPC.Tiles
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.StoneBlock, Main.rand.Next(1, 3));
 				}
-				else if (Main.rand.Next(2) == 0) //50% chance after the 75% (25%) chance
+				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Hook, 1);
 				}

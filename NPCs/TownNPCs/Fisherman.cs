@@ -81,23 +81,20 @@ namespace FishermanNPC.NPCs.TownNPCs
 			});
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void OnKill()
 		{
-			if (NPC.life <= 0)
+			if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
 			{
-				if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
-				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head_alt").Type, 1f);
-				}
-				else
-				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head").Type, 1f);
-				}
-				for (int k = 0; k < 2; k++)
-				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Arm").Type, 1f);
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Leg").Type, 1f);
-				}
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head_alt").Type, 1f);
+			}
+			else
+			{
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head").Type, 1f);
+			}
+			for (int k = 0; k < 2; k++)
+			{
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Arm").Type, 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Leg").Type, 1f);
 			}
 		}
 
@@ -131,6 +128,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			string path = NPCHelper.DialogPath(Name);
 			WeightedRandom<string> chat = new ();
 
+			bool townNPCsCrossModSupport = ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport;
 			int fisherman = NPC.FindFirstNPC(ModContent.NPCType<Fisherman>());
 
 			for (int i = 1; i <= 5; i++)
@@ -288,7 +286,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				chat.Add(Language.GetTextValue(path + "MechanicHappiness").Replace("{0}", Main.npc[mechanic].GivenName), 0.25);
 				//{Name} the Mechanic is always here to help me when me ship needs repairs.
 			}
-			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium))
+			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
 			{
 				int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
 				if (diverman >= 0)
@@ -297,7 +295,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//Now {Name} is the kind of guy I respect!
 				}
 			}
-			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity))
+			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity) && townNPCsCrossModSupport)
 			{
 				int seaKing = NPC.FindFirstNPC(calamity.Find<ModNPC>("SEAHOE").Type); //Sea King
 				if (seaKing >= 0)
@@ -316,7 +314,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//Careful with mermaids, lass, not all of them are friendly.
 				}
 			}
-			if (ModLoader.TryGetMod("SGAmod", out Mod _)) //SGAmod
+			if (ModLoader.TryGetMod("SGAmod", out Mod _) && townNPCsCrossModSupport) //SGAmod
 			{
 				if (Main.hardMode)
 				{
@@ -324,7 +322,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//A Shark-what? That is truely a freak of nature.
 				}
 			}
-			if (ModLoader.TryGetMod("Fargowiltas", out Mod fargosMutant))
+			if (ModLoader.TryGetMod("Fargowiltas", out Mod fargosMutant) && townNPCsCrossModSupport)
 			{
 				int mutant = NPC.FindFirstNPC(fargosMutant.Find<ModNPC>("Mutant").Type);
 				if (mutant >= 0)
@@ -333,7 +331,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//The wings that {Name} have remind me of something else...
 				}
 			}
-			if (ModLoader.TryGetMod("NoFishingQuests", out Mod _))
+			if (ModLoader.TryGetMod("NoFishingQuests", out Mod _) && townNPCsCrossModSupport)
 			{
 				if (angler >= 0)
 				{
@@ -341,7 +339,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//It seems like {Name} has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
 				}
 			}
-			if (ModLoader.TryGetMod("PboneUtils", out Mod _))
+			if (ModLoader.TryGetMod("PboneUtils", out Mod _) && townNPCsCrossModSupport)
 			{
 				if (Main.dayTime)
 				{
@@ -349,7 +347,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//I heard rumors of a blue hooded man who sells valuables...
 				}
 			}
-			if (ModLoader.TryGetMod("TorchMerchant", out Mod torchSeller))
+			if (ModLoader.TryGetMod("TorchMerchant", out Mod torchSeller) && townNPCsCrossModSupport)
 			{
 				int torchMan = NPC.FindFirstNPC(torchSeller.Find<ModNPC>("TorchSellerNPC").Type);
 				if (torchMan >= 0)
@@ -358,7 +356,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//{Name} really lightens my spirits when I'm around them.
 				}
 			}
-			if (ModLoader.TryGetMod("BossesAsNPCs", out Mod bossesAsNPCs))
+			if (ModLoader.TryGetMod("BossesAsNPCs", out Mod bossesAsNPCs) && townNPCsCrossModSupport)
 			{
 				int dukeFishron = NPC.FindFirstNPC(bossesAsNPCs.Find<ModNPC>("DukeFishron").Type);
 				if (dukeFishron >= 0)
@@ -367,7 +365,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
 				}
 			}
-			/*if (ModLoader.TryGetMod("ExampleMod", out Mod exampleMod))
+			/*if (ModLoader.TryGetMod("ExampleMod", out Mod exampleMod) && townNPCsCrossModSupport)
 			{
 				int examplePerson = NPC.FindFirstNPC(exampleMod.Find<ModNPC>("ExamplePerson").Type);
 				if (examplePerson >= 0)
@@ -376,7 +374,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//
 				}
 			}*/
-			if (ModLoader.TryGetMod("RijamsMod", out Mod rijamsMod))
+			if (ModLoader.TryGetMod("RijamsMod", out Mod rijamsMod) && townNPCsCrossModSupport)
             {
 				int interTravel = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("InterstellarTraveler").Type);
 				if (interTravel >= 0)
@@ -397,7 +395,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//I let {0} try some different kinds of fish. She seemed to enjoy them!
 				}
 			}
-			if (ModLoader.TryGetMod("HelpfulNPCs", out Mod helpfulNPCs))
+			if (ModLoader.TryGetMod("HelpfulNPCs", out Mod helpfulNPCs) && townNPCsCrossModSupport)
 			{
 				int fisherman2 = NPC.FindFirstNPC(helpfulNPCs.Find<ModNPC>("FishermanNPC").Type);
 				if (fisherman2 >= 0)

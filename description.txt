@@ -5,10 +5,9 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.20
-	- Made the localization keys better
-	- Added a few more lines of dialog
-	- Now sells Double Cod at all times in Hardmode (instead just while in the Jungle)
+Mod version: v0.1.21
+	- Fixed the extra dialog for vanilla Town NPCs not displaying properly.
+	- Added a config option to enable/disable the Fisherman's cross mod dialog, happiness, (and selling cross mod items for the future).
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

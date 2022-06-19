@@ -59,6 +59,18 @@ Mods: {
 					    Change this value if you want the shop to be cheaper or more expensive.
 					Default value: 100
 					'''
+				Label9: "[i:3121]   Fisherman Cross Mod Support"
+				Tooltip9:
+					'''
+					This option toggles if the Fisherman will sell items from other mods,
+					if he will have cross mod dialog, and cross mod happiness.
+					  When On: The Fisherman will sell cross mod items.
+					  When Off: The Fisherman WILL NOT sell cross mod items.
+					    Turn Off to remove cross mod items from the shops and dialog.
+					Default value: On
+					Reload not required for dialog and shop items.
+					Reload required for happiness.
+					'''
 				Label8: "[i:1991]   Catch Fisherman"
 				Tooltip8:
 					'''
@@ -106,7 +118,7 @@ Mods: {
 				Default3: Fishing rods? Bait? Hooks? You want it?
 				Default4: Make sure you have bait on your hook.
 				Default5: There are all sorts of strange fish in these waters; see what you can catch!
-				Default6: "Ahoy there. My name is {0}"
+				Default6: "Ahoy there. My name is {0}."
 				Rare1: Hm... I seem to have misplaced my rod...
 				Rare2: You were paying way too much for worms. I'm your new worm guy.
 				Hurt: That's gonna leave a mark.
@@ -183,19 +195,19 @@ Mods: {
 				}
 			}
 			Pirate: {
-					ExtraChat: Arr, that {0} the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
+					ExtraChat: Arr, that {0} the {$Mods.FishermanNPC.NPCName.Fisherman} is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 				}
 			Zoologist: {
-					ExtraChat: I keep telling {0} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
+					ExtraChat: I keep telling {0} the {$Mods.FishermanNPC.NPCName.Fisherman} the dangers of over-fishing and he just shrugs me off! What nerve!
 				}
 			Angler: {
-					ExtraChat: Yeah? What about {0} the Fisherman? He's alright I guess. Back to work with you!
+					ExtraChat: Yeah? What about {0} the {$Mods.FishermanNPC.NPCName.Fisherman}? He's alright I guess. Back to work with you!
 				}
 			Truffle: {
-					ExtraChat: "{0} the Fisherman is nice to me. He doesn't seem to want to eat me."
+					ExtraChat: "{0} the {$Mods.FishermanNPC.NPCName.Fisherman} is nice to me. He doesn't seem to want to eat me."
 				}
 			Princess: {
-					ExtraChat: "{0} the Fisherman catches all sorts of tasty fish for the town!"
+					ExtraChat: "{0} the {$Mods.FishermanNPC.NPCName.Fisherman} catches all sorts of tasty fish for the town!"
 				}
 		}
 

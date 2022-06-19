@@ -65,6 +65,13 @@ namespace FishermanNPC
 		[Slider]
 		public int ShopPriceScaling { get; set; }
 
+		[Label("$Mods.FishermanNPC.Config.Server.Label9")]
+		//Fisherman Cross Mod Support
+		[Tooltip("$Mods.FishermanNPC.Config.Server.Tooltip9")]
+		//This option toggles if the Fisherman will sell items from other mods, if he will have cross mod dialog, and cross mod happiness.
+		[DefaultValue(true)]
+		public bool TownNPCsCrossModSupport { get; set; }
+
 		[Label("$Mods.FishermanNPC.Config.Server.Label8")]
 		//Load Debug Items
 		[Tooltip("$Mods.FishermanNPC.Config.Server.Tooltip8")]

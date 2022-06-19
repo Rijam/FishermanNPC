@@ -112,3 +112,7 @@
 	* Made the localization keys better
 	* Added a few more lines of dialog
 	* Now sells Double Cod at all times in Hardmode (instead just while in the Jungle)
+
+0.1.21 - Update 21 (June 18, 2022)
+	* Fixed the extra dialog for vanilla Town NPCs not displaying properly
+	* Added a config option to enable/disable the Fisherman's cross mod dialog, happiness, (and selling cross mod items for the future).

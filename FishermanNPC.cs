@@ -46,6 +46,8 @@ namespace FishermanNPC
 					return ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems;
 				case "shopMulti":
 					return (ModContent.GetInstance<FishermanNPCConfigServer>().ShopPriceScaling / 100f);
+				case "TownNPCsCrossModSupport":
+					return ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport;
 				case "CatchNPCs":
 					return ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs;
 				case "GetStatusShop1":
