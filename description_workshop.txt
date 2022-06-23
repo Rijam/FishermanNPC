@@ -1,4 +1,4 @@
-[c/ffff00:Fisherman NPC adds a new Town NPC] that sells fishing related items. He will arrive once the Angler has been rescued and there are at least 5 Town NPCs.
+[b] Fisherman NPC adds a new Town NPC that sells fishing related items. [/b] He will arrive once the Angler has been rescued and there are at least 5 Town NPCs.
 He sells bait, fish, fishing rods, and other fishing related items.
 Includes configuration options to disable certain items in the Fisherman's shop and to change the shop prices.
 

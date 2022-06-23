@@ -436,6 +436,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			bool sellFish = ModContent.GetInstance<FishermanNPCConfigServer>().SellFish;
 			bool sellFishingRods = ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods;
 			bool sellExtraItems = ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems;
+			bool townNPCsCrossModSupport = ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport;
 			//
 			// Bait
 			//
@@ -524,6 +525,15 @@ namespace FishermanNPC.NPCs.TownNPCs
 					shop.item[nextSlot].SetDefaults(ItemID.TruffleWorm);
 					shop.item[nextSlot].shopCustomPrice = 150000;
 					nextSlot++;
+				}
+				if (ModLoader.TryGetMod("CalamityMod", out Mod calamity) && townNPCsCrossModSupport)
+				{
+					if ((bool)calamity.Call("GetBossDowned", "oldduke"))
+					{
+						shop.item[nextSlot].SetDefaults(calamity.Find<ModItem>("BloodwormItem").Type);
+						shop.item[nextSlot].shopCustomPrice = 500000;
+						nextSlot++;
+					}
 				}
 				shop.item[nextSlot].SetDefaults(ItemID.CanOfWorms);
 				shop.item[nextSlot].shopCustomPrice = 25000;

@@ -17,7 +17,7 @@ namespace FishermanNPC.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault((string)Language.GetText("Mods.FishermanNPC.NPCName.Fisherman"));
-			Tooltip.SetDefault("'" + Language.GetText("Mods.FishermanNPC.NPCDialog.Fisherman.DefaultChat1") + "'");
+			Tooltip.SetDefault("'" + Language.GetText(NPCs.NPCHelper.DialogPath("Fisherman") + "Default1") + "'");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 25));
 		}
 

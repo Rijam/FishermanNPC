@@ -116,3 +116,7 @@
 0.1.21 - Update 21 (June 18, 2022)
 	* Fixed the extra dialog for vanilla Town NPCs not displaying properly
 	* Added a config option to enable/disable the Fisherman's cross mod dialog, happiness, (and selling cross mod items for the future).
+
+0.1.22 - Update 22 (June 23, 2022)
+	* Fixed the dialog on the Captured Fisherman
+	* Fisherman will now sell the Bloodworm from Calamity if Old Duke has been defeated.
