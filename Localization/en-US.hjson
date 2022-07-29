@@ -199,6 +199,7 @@ Mods: {
 				}
 			Zoologist: {
 					ExtraChat: I keep telling {0} the {$Mods.FishermanNPC.NPCName.Fisherman} the dangers of over-fishing and he just shrugs me off! What nerve!
+					ExtraChatTransformed: "{0} the {$Mods.FishermanNPC.NPCName.Fisherman} DESTROY environment!"
 				}
 			Angler: {
 					ExtraChat: Yeah? What about {0} the {$Mods.FishermanNPC.NPCName.Fisherman}? He's alright I guess. Back to work with you!
@@ -290,6 +291,9 @@ Mods: {
 				Shop2: Rods & Extras
 				CapturedSpawnText: The Fisherman has spawned!
 			}
+			// "Love" and "Hate" are already translated from vanilla's random world name generator
+			Like : Like
+			Dislike : Dislike
 		}
 		Crossmod: {
 			Census: {

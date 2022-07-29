@@ -5,9 +5,10 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.22
-	- Fixed the dialog on the Captured Fisherman
-	- Fisherman will now sell the Bloodworm from Calamity if Old Duke has been defeated.
+Mod version: v0.1.23
+	- Added different dialog to the Zoologist while she is transformed.
+	- Cross mod shop items are now much safer. The game will no longer throw an error if the item is not found.
+	- Fixed "Like" and "Dislike" text in the Bestiary for the Fisherman.
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

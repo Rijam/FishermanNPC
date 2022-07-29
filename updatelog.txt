@@ -120,3 +120,8 @@
 0.1.22 - Update 22 (June 23, 2022)
 	* Fixed the dialog on the Captured Fisherman
 	* Fisherman will now sell the Bloodworm from Calamity if Old Duke has been defeated.
+
+0.1.23 - Update 23 (July 28, 2022)
+	* Added different dialog to the Zoologist while she is transformed.
+	* Cross mod shop items are now much safer. The game will no longer throw an error if the item is not found.
+	* Fixed "Like" and "Dislike" text in the Bestiary for the Fisherman.

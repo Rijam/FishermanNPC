@@ -530,9 +530,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				{
 					if ((bool)calamity.Call("GetBossDowned", "oldduke"))
 					{
-						shop.item[nextSlot].SetDefaults(calamity.Find<ModItem>("BloodwormItem").Type);
-						shop.item[nextSlot].shopCustomPrice = 500000;
-						nextSlot++;
+						NPCHelper.SafelySetCrossModItem(calamity, "BloodwormItem", shop, ref nextSlot, 500000);
 					}
 				}
 				shop.item[nextSlot].SetDefaults(ItemID.CanOfWorms);

@@ -24,8 +24,15 @@ namespace FishermanNPC.NPCs.TownNPCs
 				case NPCID.BestiaryGirl: //Zoologist
 					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
-						//I keep telling {Name} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
+						if (Main.bloodMoon || Main.moonPhase == 0)
+						{
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChatTransformed").Replace("{0}", Main.npc[fisherman].GivenName);
+						}
+						else
+						{
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+							//I keep telling {Name} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
+						}
 					}
 					break;
 				case NPCID.Angler:
