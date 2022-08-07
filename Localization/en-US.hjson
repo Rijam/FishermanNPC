@@ -264,7 +264,7 @@ Mods: {
 			BaitBox:
 				'''
 				Contains a bunch of bait!
-				Right click to open
+				{$CommonItemTooltip.RightClickToOpen}
 				'''
 			RecyclingMachine:
 				'''
@@ -287,8 +287,12 @@ Mods: {
 
 		UI: {
 			Fisherman: {
-				Shop1: Bait & Fish
-				Shop2: Rods & Extras
+				Shop1: Bait
+				Shop2: Fish
+				Shop3: Rods
+				Shop4: Extras
+				CycleShop: Cycle Shop
+				NoShop: Shops are disabled!
 				CapturedSpawnText: The Fisherman has spawned!
 			}
 			// "Love" and "Hate" are already translated from vanilla's random world name generator

@@ -125,3 +125,10 @@
 	* Added different dialog to the Zoologist while she is transformed.
 	* Cross mod shop items are now much safer. The game will no longer throw an error if the item is not found.
 	* Fixed "Like" and "Dislike" text in the Bestiary for the Fisherman.
+
+0.1.24 - Update 24 (August 6, 2022)
+	* Fixed the Fisherman's gore in multiplayer.
+	* Split the shops up into 4 shops.
+	* Fixed Siting Duck's Fishing Pole actually requiring 9 or more Town NPCs to be present.
+	* Added cross mod bait, fish, and fishing rods from Calamity.
+	* Changed the homepage from Fandom to Wiki.gg

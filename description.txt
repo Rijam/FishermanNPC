@@ -3,12 +3,14 @@ He sells bait, fish, fishing rods, and other fishing related items.
 Includes configuration options to disable certain items in the Fisherman's shop and to change the shop prices.
 
 See a complete shop list and other information on this mod's wiki page!
-https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
+https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.23
-	- Added different dialog to the Zoologist while she is transformed.
-	- Cross mod shop items are now much safer. The game will no longer throw an error if the item is not found.
-	- Fixed "Like" and "Dislike" text in the Bestiary for the Fisherman.
+Mod version: v0.1.24
+	- Fixed the Fisherman's gore in multiplayer.
+	- Split the shops up into 4 shops.
+	- Fixed Siting Duck's Fishing Pole actually requiring 9 or more Town NPCs to be present.
+	- Added cross mod bait, fish, and fishing rods from Calamity.
+	- Changed the homepage from Fandom to Wiki.gg
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

@@ -50,10 +50,14 @@ namespace FishermanNPC
 					return ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport;
 				case "CatchNPCs":
 					return ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs;
-				case "GetStatusShop1":
-					return NPCs.NPCHelper.StatusShop1();
-				case "GetStatusShop2":
-					return NPCs.NPCHelper.StatusShop2();
+				case "GetStatusShopCycle":
+					return NPCs.NPCHelper.StatusShopCycle();
+				case "GetStatusShop1": // Legacy
+					Logger.Warn($"Function \"{function}\" has been removed by FishermanNPC. Please use \"GetStatusShopCycle\"");
+					return false;
+				case "GetStatusShop2": // Legacy
+					Logger.Warn($"Function \"{function}\" has been removed by FishermanNPC. Please use \"GetStatusShopCycle\"");
+					return false;
 				default:
 					throw new ArgumentException($"Function \"{function}\" is not defined by FishermanNPC");
 			}

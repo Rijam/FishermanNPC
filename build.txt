@@ -1,7 +1,7 @@
 displayName = Fisherman NPC
 author = Rijam
-version = 0.1.23
-homepage = https://terrariamods.fandom.com/wiki/User:Rijam/Fisherman_NPC
+version = 0.1.24
+homepage = https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 hideCode = false
 hideResources = false
 includeSource = true

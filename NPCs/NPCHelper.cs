@@ -89,41 +89,73 @@ namespace FishermanNPC.NPCs
 			return Main.Configuration.Get("UnlockMusicSwap", false);
 		}
 
-		private static bool shop1;
-		private static bool shop2;
+		private static int shopCycler = 1;
+		// 1 = Bait
+		// 2 = Fish
+		// 3 = Rods
+		// 4 = Extra
 
 		/// <summary>
-		/// Sets the shop1 bool. Set it to the opposite of the SetShop2()
+		/// Sets the shopCycler int.
 		/// </summary>
-		public static void SetShop1(bool tOrF)
+		public static void SetShopCycle(int type)
 		{
-			shop1 = tOrF;
+			shopCycler = type;
 		}
 
 		/// <summary>
-		/// Sets the shop2 bool. Set it to the opposite of the SetShop1()
+		/// Increments the shopCycler int. If it exceeds 4 (>= 5), it will be set to 1 again.
+		/// Will not select the shop if the config for that shop is disabled.
 		/// </summary>
-		public static void SetShop2(bool tOrF)
+		public static void IncrementShopCycle()
 		{
-			shop2 = tOrF;
+			bool sellBait = ModContent.GetInstance<FishermanNPCConfigServer>().SellBait;
+			bool sellFish = ModContent.GetInstance<FishermanNPCConfigServer>().SellFish;
+			bool sellFishingRods = ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods;
+			bool sellExtraItems = ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems;
+
+			shopCycler++;
+			if (!sellBait && shopCycler == 1) // If disabled, go to the next shop.
+			{
+				shopCycler++;
+			}
+			if (!sellFish && shopCycler == 2)
+			{
+				shopCycler++;
+			}
+			if (!sellFishingRods && shopCycler == 3)
+			{
+				shopCycler++;
+			}
+			if (!sellExtraItems && shopCycler == 4)
+			{
+				shopCycler++;
+			}
+
+			if (shopCycler >= 5)
+			{
+				shopCycler = 0;
+				if (sellBait || sellFish || sellFishingRods || sellExtraItems) // Only call if at least one of the shops are enabled.
+				{
+					IncrementShopCycle();
+				}
+			}
 		}
 
 		/// <summary>
-		/// Gets if shop1 is open.
+		/// Gets the current shop selected.
 		/// </summary>
-		/// <returns>bool</returns>
-		public static bool StatusShop1()
+		public static int StatusShopCycle()
 		{
-			return shop1;
+			return shopCycler;
 		}
 
 		/// <summary>
-		/// Gets if shop2 is open.
+		/// Gets if the player is in the Underground, Caverns, or Underworld layers.
 		/// </summary>
-		/// <returns>bool</returns>
-		public static bool StatusShop2()
+		public static bool ZoneAnyUnderground(Player player)
 		{
-			return shop2;
+			return player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneUnderworldHeight;
 		}
 
 		/// <summary>
@@ -217,6 +249,26 @@ namespace FishermanNPC.NPCs
 			{
 				ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
 			}
+		}
+
+		/// <summary>
+		/// Counts all of the Town NPCs in the world. Town Pets, Old Man, Traveling Merchant, and Skeleton Merchant are not included.
+		/// </summary>
+		public static int CountTownNPCs()
+		{
+			int counter = 0;
+			for (int i = 0; i < Main.maxNPCs; i++)
+			{
+				NPC nPC = Main.npc[i];
+				if (nPC.active && nPC.townNPC)
+				{
+					if (nPC.type != NPCID.OldMan || nPC.type != NPCID.TravellingMerchant || nPC.type != NPCID.SkeletonMerchant || !NPCID.Sets.ActsLikeTownNPC[nPC.type] || NPCID.Sets.IsTownPet[nPC.type])
+					{
+						counter++;
+					}
+				}
+			}
+			return counter;
 		}
 	}
 }
