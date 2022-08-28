@@ -81,9 +81,9 @@ namespace FishermanNPC.NPCs.TownNPCs
 			});
 		}
 
-		public override void OnKill()
+		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (Main.netMode != NetmodeID.Server)
+			if (Main.netMode != NetmodeID.Server && NPC.life < 0)
 			{
 				if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
 				{
@@ -221,73 +221,73 @@ namespace FishermanNPC.NPCs.TownNPCs
 			{
 				int questsCompleted = Main.LocalPlayer.anglerQuestsFinished;
 				string questsCompletedString = questsCompleted.ToString();
-				chat.Add(Language.GetTextValue(path + "AnglerInfo").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString), 0.25);
+				chat.Add(Language.GetTextValue(path + "AnglerInfo", Main.npc[angler].GivenName, questsCompletedString), 0.25);
 				//{Name} is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed # for him.
 				if (questsCompleted == 0)
                 {
-					chat.Add(Language.GetTextValue(path + "AnglerQuest1").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString) + Language.GetTextValue(path + "AnglerQuest2"), 0.5);
+					chat.Add(Language.GetTextValue(path + "AnglerQuest1", Main.npc[angler].GivenName, questsCompletedString) + Language.GetTextValue(path + "AnglerQuest2"), 0.5);
 					//So far you have completed # quests for {Name} the Angler. I think it is time for you to start!
 				}
 				if (questsCompleted > 0)
 				{
-					chat.Add(Language.GetTextValue(path + "AnglerQuest1").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString) + Language.GetTextValue(path + "AnglerQuest3"), 0.5);
+					chat.Add(Language.GetTextValue(path + "AnglerQuest1", Main.npc[angler].GivenName, questsCompletedString) + Language.GetTextValue(path + "AnglerQuest3"), 0.5);
 					//So far you have completed # quests for {Name} the Angler. Keep at it!
 				}
 				if (questsCompleted >= 10)
 				{
-					chat.Add(Language.GetTextValue(path + "AnglerQuest1").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString) + Language.GetTextValue(path + "AnglerQuest4"), 0.5);
+					chat.Add(Language.GetTextValue(path + "AnglerQuest1", Main.npc[angler].GivenName, questsCompletedString) + Language.GetTextValue(path + "AnglerQuest4"), 0.5);
 					//So far you have completed # quests for {Name} the Angler. Great job! Keep going!
 				}
 				if (Main.LocalPlayer.Male && questsCompleted >= 30)
 				{
-					chat.Add(Language.GetTextValue(path + "AnglerQuest5").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString), 0.5);
+					chat.Add(Language.GetTextValue(path + "AnglerQuest5", Main.npc[angler].GivenName, questsCompletedString), 0.5);
 					//Nice job, son! You have completed # quests for {Name} the Angler. Why not keep going?
 				}
 				else if (!Main.LocalPlayer.Male && questsCompleted >= 30)
                 {
-					chat.Add(Language.GetTextValue(path + "AnglerQuest6").Replace("{0}", Main.npc[angler].GivenName).Replace("{1}", questsCompletedString), 0.5);
+					chat.Add(Language.GetTextValue(path + "AnglerQuest6", Main.npc[angler].GivenName, questsCompletedString), 0.5);
 					//Nice job, lass! You have completed # quests for {Name} the Angler. Why not keep going?
 				}
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "AnglerHappiness").Replace("{0}", Main.npc[angler].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "AnglerHappiness", Main.npc[angler].GivenName), 0.25);
 				//No I'm not {Name} the Angler's father, but I'll gladly watch over him!
 			}
 			int pirate = NPC.FindFirstNPC(NPCID.Pirate);
 			if (pirate >= 0)
 			{
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "PirateHappiness").Replace("{0}", Main.npc[pirate].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "PirateHappiness", Main.npc[pirate].GivenName), 0.25);
 				//I wouldn't trust {Name} the Pirate. I've had my fair share of run-ins with pirates.
 			}
 			int princess = NPC.FindFirstNPC(NPCID.Princess);
 			if (princess >= 0)
 			{
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "PrincessHappiness").Replace("{0}", Main.npc[princess].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "PrincessHappiness", Main.npc[princess].GivenName), 0.25);
 				//{Name} the Princess has offered to get me a fancy new vessel. How kind of her!
 			}
 			int truffle = NPC.FindFirstNPC(NPCID.Truffle);
 			if (truffle >= 0)
 			{
-				chat.Add(Language.GetTextValue(path + "TruffleNormal").Replace("{0}", Main.npc[truffle].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "TruffleNormal", Main.npc[truffle].GivenName), 0.25);
 				//I occasionally take Glowing Mushrooms to use as bait. I don't think {Name} knows that I do that, so don't tell 'em!
 
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "TruffleHappiness").Replace("{0}", Main.npc[truffle].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "TruffleHappiness", Main.npc[truffle].GivenName), 0.25);
 				//I'm friends with {Name} the Truffle. Glowing Mushrooms make good bait!
 			}
 			int nurse = NPC.FindFirstNPC(NPCID.Nurse);
 			if (nurse >= 0)
 			{
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "NurseHappiness").Replace("{0}", Main.npc[nurse].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "NurseHappiness", Main.npc[nurse].GivenName), 0.25);
 				//I dislike {Name} the Nurse. She always bugs me for check-ups that I don't need.
 			}
 			int mechanic = NPC.FindFirstNPC(NPCID.Mechanic);
 			if (mechanic >= 0)
 			{
 				//happiness quote
-				chat.Add(Language.GetTextValue(path + "MechanicHappiness").Replace("{0}", Main.npc[mechanic].GivenName), 0.25);
+				chat.Add(Language.GetTextValue(path + "MechanicHappiness", Main.npc[mechanic].GivenName), 0.25);
 				//{Name} the Mechanic is always here to help me when me ship needs repairs.
 			}
 			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
@@ -295,7 +295,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
 				if (diverman >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman").Replace("{0}", Main.npc[diverman].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman", Main.npc[diverman].GivenName), 0.25);
 					//Now {Name} is the kind of guy I respect!
 				}
 			}
@@ -331,7 +331,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int mutant = NPC.FindFirstNPC(fargosMutant.Find<ModNPC>("Mutant").Type);
 				if (mutant >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "FargosMutant.Mutant").Replace("{0}", Main.npc[mutant].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "FargosMutant.Mutant", Main.npc[mutant].GivenName), 0.25);
 					//The wings that {Name} have remind me of something else...
 				}
 			}
@@ -339,7 +339,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			{
 				if (angler >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "NoFishingQuests.AnglerShop").Replace("{0}", Main.npc[angler].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "NoFishingQuests.AnglerShop", Main.npc[angler].GivenName), 0.25);
 					//It seems like {Name} has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
 				}
 			}
@@ -356,17 +356,20 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int torchMan = NPC.FindFirstNPC(torchSeller.Find<ModNPC>("TorchSellerNPC").Type);
 				if (torchMan >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "TorchSeller.TorchMan").Replace("{0}", Main.npc[torchMan].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "TorchSeller.TorchMan", Main.npc[torchMan].GivenName), 0.25);
 					//{Name} really lightens my spirits when I'm around them.
 				}
 			}
 			if (ModLoader.TryGetMod("BossesAsNPCs", out Mod bossesAsNPCs) && townNPCsCrossModSupport)
 			{
-				int dukeFishron = NPC.FindFirstNPC(bossesAsNPCs.Find<ModNPC>("DukeFishron").Type);
-				if (dukeFishron >= 0)
+				if (bossesAsNPCs.TryFind<ModNPC>("DukeFishron", out ModNPC dukeFishron))
 				{
-					chat.Add(Language.GetTextValue(path + "BossesAsNPCs.DukeFishron"), 0.25);
-					//Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
+					int dukeFishronType = NPC.FindFirstNPC(dukeFishron.Type);
+					if (dukeFishronType >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "BossesAsNPCs.DukeFishron"), 0.25);
+						//Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
+					}
 				}
 			}
 			/*if (ModLoader.TryGetMod("ExampleMod", out Mod exampleMod) && townNPCsCrossModSupport)
@@ -383,19 +386,19 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int interTravel = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("InterstellarTraveler").Type);
 				if (interTravel >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.InterTravel").Replace("{0}", Main.npc[interTravel].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "RijamsMod.InterTravel", Main.npc[interTravel].GivenName), 0.25);
 					//{Name} is nice and all, but I don't trust her around my stash of fish!
 				}
 				int harpy = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("Harpy").Type);
 				if (harpy >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.Harpy").Replace("{0}", Main.npc[harpy].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "RijamsMod.Harpy", Main.npc[harpy].GivenName), 0.25);
 					//{Name} sometimes helps me scout ahead on my fishing journeys. Very helpful!
 				}
 				int hellTrader = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("HellTrader").Type);
 				if (hellTrader >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.HellTrader").Replace("{0}", Main.npc[hellTrader].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "RijamsMod.HellTrader", Main.npc[hellTrader].GivenName), 0.25);
 					//I let {0} try some different kinds of fish. She seemed to enjoy them!
 				}
 			}
@@ -404,7 +407,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int fisherman2 = NPC.FindFirstNPC(helpfulNPCs.Find<ModNPC>("FishermanNPC").Type);
 				if (fisherman2 >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "HelpfulNPCs.Fisherman2").Replace("{0}", Main.npc[fisherman2].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "HelpfulNPCs.Fisherman2", Main.npc[fisherman2].GivenName), 0.25);
 					//{0} may be my competitor, but I can't stay mad at a fellow Fisherman.
 				}
 			}
