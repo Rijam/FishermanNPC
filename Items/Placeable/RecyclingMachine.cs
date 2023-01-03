@@ -10,7 +10,7 @@ namespace FishermanNPC.Items.Placeable
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 28;
 			Item.height = 40;
@@ -26,7 +26,7 @@ namespace FishermanNPC.Items.Placeable
 
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 	}
 }

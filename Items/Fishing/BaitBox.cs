@@ -8,16 +8,19 @@ namespace FishermanNPC.Items.Fishing
 {
 	public class BaitBox : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			SacrificeTotal = 2;
+		}
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 24;
 			Item.height = 24;
 			Item.value = 50000;
 			Item.rare = ItemRarityID.Orange;
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
 		}
 
 		public override bool CanRightClick()

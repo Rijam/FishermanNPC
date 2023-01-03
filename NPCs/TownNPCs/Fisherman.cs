@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Linq.Expressions;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
@@ -295,7 +296,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
 				if (diverman >= 0)
 				{
-					chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman", Main.npc[diverman].GivenName), 0.25);
+					chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman", Main.npc[diverman].FullName), 0.25);
 					//Now {Name} is the kind of guy I respect!
 				}
 			}
@@ -786,6 +787,14 @@ namespace FishermanNPC.NPCs.TownNPCs
 						}
 					}
 				}
+				if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
+				{
+					if (player.ZoneUnderworldHeight || player.ZoneRockLayerHeight || true)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "MagmaGill", shop, ref nextSlot);
+						NPCHelper.SafelySetCrossModItem(thorium, "FlamingCrackGut", shop, ref nextSlot);
+					}
+				}
 			}
 			//
 			// Fishing rods
@@ -879,6 +888,36 @@ namespace FishermanNPC.NPCs.TownNPCs
 					if ((bool)calamity3.Call("GetBossDowned", "devourerofgods"))
 					{
 						NPCHelper.SafelySetCrossModItem(calamity3, "TheDevourerofCods", shop, ref nextSlot);
+					}
+				}
+				if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
+				{
+					int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
+					if (diverman >= 0)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "MarineCatcher", shop, ref nextSlot);
+					}
+					if (player.ZoneBeach)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "CartlidgedCatcher", shop, ref nextSlot);
+					}
+					if (NPC.downedBoss3)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "GraniteControlRod", shop, ref nextSlot);
+						NPCHelper.SafelySetCrossModItem(thorium, "ChampionCatcher", shop, ref nextSlot);
+					}
+					if (Main.hardMode)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "GeodeGatherer", shop, ref nextSlot);
+					}
+					// Bruh, Thorium doesn't have downed boss mod calls.
+					if (diverman >= 0 && NPC.downedPlantBoss)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "RlyehLostRod", shop, ref nextSlot);
+					}
+					if (player.anglerQuestsFinished >= 30 && NPC.downedPlantBoss)
+					{
+						NPCHelper.SafelySetCrossModItem(thorium, "TerrariumFisher", shop, ref nextSlot);
 					}
 				}
 			}

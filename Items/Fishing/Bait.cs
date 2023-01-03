@@ -10,7 +10,7 @@ namespace FishermanNPC.Items.Fishing
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 10;
 			Item.height = 22;
@@ -21,7 +21,7 @@ namespace FishermanNPC.Items.Fishing
 
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+			SacrificeTotal = 5;
 		}
 	}
 
@@ -41,7 +41,7 @@ namespace FishermanNPC.Items.Fishing
 
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+			SacrificeTotal = 5;
 		}
 	}
 	public class RedWorm : ModItem
@@ -49,7 +49,7 @@ namespace FishermanNPC.Items.Fishing
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 18;
 			Item.height = 24;
@@ -60,7 +60,7 @@ namespace FishermanNPC.Items.Fishing
 
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+			SacrificeTotal = 5;
 		}
 	}
 	public class GlowingMushroomChunk : ModItem
@@ -68,7 +68,7 @@ namespace FishermanNPC.Items.Fishing
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 16;
 			Item.height = 14;
@@ -79,7 +79,7 @@ namespace FishermanNPC.Items.Fishing
 
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+			SacrificeTotal = 5;
 		}
 	}
 }

@@ -135,3 +135,9 @@
 
 0.1.25 - Update 25 (August 27, 2022)
 	* Actually fixed the Town NPCs' gore in multiplayer.
+
+0.1.26 - Update 26 (January 3, 2023)
+	* Updated item max stacks to 9999.
+	* Buffed the Recycling Machine now that you can use the trash in an Extractinator (in 1.4.4).
+	* Added support for Thorium.
+	* Added support for Wikithis.

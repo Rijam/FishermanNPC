@@ -1,3 +1,4 @@
+using FishermanNPC.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -45,21 +46,21 @@ namespace FishermanNPC.Tiles
 					Main.mouseItem.stack--; //:grimacing:
 				}
 				else if (player.HeldItem.type == ItemID.OldShoe)
-                {
+				{
 					player.ConsumeItem(ItemID.OldShoe);
 				}
 				 
 				if (Main.rand.Next(4) <= 2) //75% chance: 0, 1, 2, but not 3
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Silk, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Silk, Main.rand.Next(3, 8));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Leather, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Leather, Main.rand.Next(5, 13));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.GreenThread, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.GreenThread, Main.rand.Next(6, 10));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.FishingSeaweed && player.HasItem(ItemID.FishingSeaweed)) || Main.mouseItem.type == ItemID.FishingSeaweed)
@@ -77,23 +78,23 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.Next(4) <= 2) //75% chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(5, 8));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(5, 10));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.BlinkrootSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.BlinkrootSeeds, Main.rand.Next(5, 10));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.ShiverthornSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.ShiverthornSeeds, Main.rand.Next(5, 10));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.WaterleafSeeds, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.WaterleafSeeds, Main.rand.Next(5, 10));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.TinCan && player.HasItem(ItemID.TinCan)) || Main.mouseItem.type == ItemID.TinCan)
@@ -111,15 +112,15 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.NextBool(2)) //50% chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.TinOre, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.TinOre, Main.rand.Next(8, 16));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after the 50% chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.CopperOre, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.CopperOre, Main.rand.Next(8, 16));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Bottle, Main.rand.Next(1, 2));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Bottle, Main.rand.Next(4, 8));
 				}
 			}
 			if ((player.HeldItem.type == ItemID.Coal && player.HasItem(ItemID.Coal)) || Main.mouseItem.type == ItemID.Coal)
@@ -137,17 +138,76 @@ namespace FishermanNPC.Tiles
 
 				if (Main.rand.Next(4) <= 2) //75% chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.StoneBlock, Main.rand.Next(1, 3));
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.StoneBlock, Main.rand.Next(10, 30));
 				}
 				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Hook, 1);
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Hook, Main.rand.Next(1, 5));
 				}
 				else
 				{
-					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Geode, 1);
+					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Geode, Main.rand.Next(1, 5));
 				}
 			}
+
+			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport)
+			{
+				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
+				int scorchedBone = NPCHelper.SafelyGetCrossModItem(thorium, "ScorchedBone");
+				if ((player.HeldItem.type == igneousRock && player.HasItem(igneousRock) || Main.mouseItem.type == igneousRock) && igneousRock > 0)
+				{
+					SoundEngine.PlaySound(SoundID.Item22, new Vector2(i * 16, j * 16));
+
+					if (Main.mouseItem.type == igneousRock)
+					{
+						Main.mouseItem.stack--;
+					}
+					else if (player.HeldItem.type == igneousRock)
+					{
+						player.ConsumeItem(igneousRock);
+					}
+
+					if (Main.rand.Next(4) <= 2)
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Obsidian, Main.rand.Next(5, 21));
+					}
+					else if (Main.rand.NextBool(2))
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.HellfireArrow, Main.rand.Next(5, 16));
+					}
+					else
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.MagmaStone);
+					}
+				}
+				if ((player.HeldItem.type == scorchedBone && player.HasItem(scorchedBone) || Main.mouseItem.type == scorchedBone) && scorchedBone > 0)
+				{
+					SoundEngine.PlaySound(SoundID.Item127, new Vector2(i * 16, j * 16));
+
+					if (Main.mouseItem.type == scorchedBone)
+					{
+						Main.mouseItem.stack--;
+					}
+					else if (player.HeldItem.type == scorchedBone)
+					{
+						player.ConsumeItem(scorchedBone);
+					}
+
+					if (Main.rand.Next(4) <= 2)
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.AshBlock, Main.rand.Next(10, 30));
+					}
+					else if (Main.rand.NextBool(2))
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.BoneSword);
+					}
+					else
+					{
+						player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Fireblossom, Main.rand.Next(1, 5));
+					}
+				}
+			}
+
 			return true;
 		}
 
@@ -171,6 +231,23 @@ namespace FishermanNPC.Tiles
 			else if (player.HeldItem.type == ItemID.Coal && player.HasItem(ItemID.Coal))
 			{
 				player.cursorItemIconID = ItemID.Coal;
+			}
+			else if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport)
+			{
+				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
+				int scorchedBone = NPCHelper.SafelyGetCrossModItem(thorium, "ScorchedBone");
+				if (player.HeldItem.type == igneousRock && player.HasItem(igneousRock) && igneousRock > 0)
+				{
+					player.cursorItemIconID = igneousRock;
+				}
+				else if (player.HeldItem.type == scorchedBone && player.HasItem(scorchedBone) && igneousRock > 0)
+				{
+					player.cursorItemIconID = scorchedBone;
+				}
+				else
+				{
+					player.cursorItemIconID = ModContent.ItemType<Items.Placeable.RecyclingMachine>();
+				}
 			}
 			else
 			{

@@ -10,8 +10,7 @@ namespace FishermanNPC.Items.Armor.Vanity
 	{
 		public override void SetStaticDefaults()
 		{
-			base.SetStaticDefaults();
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -28,7 +27,7 @@ namespace FishermanNPC.Items.Armor.Vanity
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{

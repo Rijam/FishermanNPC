@@ -25,7 +25,7 @@ namespace FishermanNPC.Items
 			Item.color = Color.RoyalBlue;
 			Item.width = 14;
 			Item.height = 14;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.White;
 			Item.value = 0;
 			Item.useStyle = ItemUseStyleID.EatFood;

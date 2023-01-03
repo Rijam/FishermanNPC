@@ -1,4 +1,5 @@
 using FishermanNPC.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -11,6 +12,18 @@ namespace FishermanNPC
 	{
 		internal static FishermanNPCConfigServer ConfigServer;
 		internal static FishermanNPC Instance;
+
+		public override void Load()
+		{
+			if (ModLoader.TryGetMod("Wikithis", out Mod wikithis) && !Main.dedServ)
+			{
+				// Special thanks to Wikithis for having an outdated mod calls description -_-
+				// Actual special thanks to Confection Rebaked for having the correct format.
+				wikithis.Call("AddModURL", this, "terrariamods.wiki.gg$User:Rijam/Fisherman_NPC");
+				wikithis.Call("AddWikiTexture", this, ModContent.Request<Texture2D>("FishermanNPC/icon_small"));
+			}
+		}
+
 		public override void Unload()
 		{
 			ConfigServer = null;
