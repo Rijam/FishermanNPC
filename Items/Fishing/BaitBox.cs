@@ -10,12 +10,11 @@ namespace FishermanNPC.Items.Fishing
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 2;
+			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults()
 		{
-
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.consumable = true;
 			Item.width = 24;
 			Item.height = 24;

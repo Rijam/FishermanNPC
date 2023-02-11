@@ -21,7 +21,7 @@ namespace FishermanNPC.Tiles
 			TileObjectData.newTile.Origin = new Point16(1, 2);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(171, 87, 0), Language.GetText("Mods.FishermanNPC.MapObject.RecyclingMachine"));
+			AddMapEntry(new Color(171, 87, 0), Language.GetText("Mods.FishermanNPC.Tiles.RecyclingMachine.MapEntry"));
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -76,11 +76,11 @@ namespace FishermanNPC.Tiles
 					player.ConsumeItem(ItemID.FishingSeaweed);
 				}
 
-				if (Main.rand.Next(4) <= 2) //75% chance
+				if (Main.rand.NextBool(2)) //50% chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Acorn, Main.rand.Next(5, 8));
 				}
-				else if (Main.rand.NextBool(2)) //50% chance after the 75% (25%) chance
+				else if (Main.rand.NextBool(2)) //50% chance after the 50% chance
 				{
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.DaybloomSeeds, Main.rand.Next(5, 10));
 				}
@@ -149,6 +149,7 @@ namespace FishermanNPC.Tiles
 					player.QuickSpawnItemDirect(player.GetSource_TileInteraction(i, j), ItemID.Geode, Main.rand.Next(1, 5));
 				}
 			}
+
 
 			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport)
 			{

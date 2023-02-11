@@ -7,9 +7,7 @@ https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
 Mod version: v0.1.26
 	- Updated item max stacks to 9999.
-	- Buffed the Recycling Machine now that you can use the trash in an Extractinator (in 1.4.4).
-	- Added support for Thorium.
-	- Added support for Wikithis.
+	- Buffed the Recycling Machine now that you can use the trash in an Extractinator.
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

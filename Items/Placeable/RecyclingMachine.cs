@@ -7,10 +7,15 @@ namespace FishermanNPC.Items.Placeable
 {
 	public class RecyclingMachine : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			Item.ResearchUnlockCount = 1;
+		}
+
 		public override void SetDefaults()
 		{
 
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.consumable = true;
 			Item.width = 28;
 			Item.height = 40;
@@ -22,11 +27,6 @@ namespace FishermanNPC.Items.Placeable
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.createTile = ModContent.TileType<Tiles.RecyclingMachine>();
-		}
-
-		public override void SetStaticDefaults()
-		{
-			SacrificeTotal = 1;
 		}
 	}
 }

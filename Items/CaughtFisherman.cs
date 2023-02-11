@@ -16,9 +16,10 @@ namespace FishermanNPC.Items
 		public override string Texture => "FishermanNPC/NPCs/TownNPCs/Fisherman";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault((string)Language.GetText("Mods.FishermanNPC.NPCName.Fisherman"));
-			Tooltip.SetDefault("'" + Language.GetText(NPCs.NPCHelper.DialogPath("Fisherman") + "Default1") + "'");
+			// DisplayName.SetDefault((string)Language.GetText("Mods.FishermanNPC.NPCName.Fisherman"));
+			// Tooltip.SetDefault("'" + Language.GetText(NPCs.NPCHelper.DialogPath("Fisherman") + "Default1") + "'");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 25));
+			Item.ResearchUnlockCount = 3;
 		}
 
 		public override void SetDefaults()
@@ -34,7 +35,7 @@ namespace FishermanNPC.Items
 			Item.noUseGraphic = true;
 			Item.consumable = true;
 			Item.UseSound = SoundID.Item44;
-			Item.makeNPC = (short)ModContent.NPCType<Fisherman>();
+			Item.makeNPC = ModContent.NPCType<Fisherman>();
 			Item.tileBoost += 20;
 		}
 
@@ -46,25 +47,18 @@ namespace FishermanNPC.Items
 
 		public override void OnConsumeItem(Player player)
 		{
-
-			/*if (!ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs && Main.netMode == NetmodeID.SinglePlayer) //So it still spawns the Town NPC if the config is off. If it is on, it automatically does this.
-			{
-				Vector2 mousePos = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
-				NPC.NewNPC((int)mousePos.X, (int)mousePos.Y, ModContent.NPCType<Fisherman>());
-				//NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, ModContent.NPCType<Fisherman>(), 0f, 0f, 0f, 0, 0, 0);
-			}*/
 			SpawnText();
 		}
 		private static void SpawnText()
         {
-			string chatmessage = Language.GetTextValue("Mods.FishermanNPC.UI.Fisherman.CapturedSpawnText");
+			string chatMessage = Language.GetTextValue("Mods.FishermanNPC.UI.Fisherman.CapturedSpawnText");
 			if (Main.netMode != NetmodeID.Server)
 			{
-				Main.NewText(chatmessage, 50, 125, 255);
+				Main.NewText(chatMessage, 50, 125, 255);
 			}
 			else
 			{
-				NetworkText text = NetworkText.FromLiteral(chatmessage);
+				NetworkText text = NetworkText.FromLiteral(chatMessage);
 				ChatHelper.BroadcastChatMessage(text, new Color(50, 125, 255));
 			}
 		}

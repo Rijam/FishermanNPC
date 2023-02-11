@@ -12,47 +12,48 @@ namespace FishermanNPC.NPCs.TownNPCs
 		public override void GetChat(NPC npc, ref string chat)
 		{
 			int fisherman = NPC.FindFirstNPC(ModContent.NPCType<Fisherman>());
+			int fishermanCount = NPC.CountNPCS(ModContent.NPCType<Fisherman>());
 			switch (npc.type)
 			{		
 				case NPCID.Pirate:
-					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Pirate") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Pirate") + "ExtraChat", Main.npc[fisherman].GivenName);
 						//Arr, that {Name} the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 					}
 					break;
 				case NPCID.BestiaryGirl: //Zoologist
-					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
 						if (Main.bloodMoon || Main.moonPhase == 0)
 						{
-							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChatTransformed").Replace("{0}", Main.npc[fisherman].GivenName);
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChatTransformed", Main.npc[fisherman].GivenName);
 						}
 						else
 						{
-							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat", Main.npc[fisherman].GivenName);
 							//I keep telling {Name} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
 						}
 					}
 					break;
 				case NPCID.Angler:
-					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Angler") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Angler") + "ExtraChat", Main.npc[fisherman].GivenName);
 						//Yeah? What about {Name} the Fisherman? He's alright I guess. Back to work with you!
 					}
 					break;
 				case NPCID.Truffle:
-					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Truffle") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Truffle") + "ExtraChat", Main.npc[fisherman].GivenName);
 						//{Name} the Fisherman is nice to me. He doesn't seem to want to eat me.
 					}
 					break;
 				case NPCID.Princess:
-					if (Main.rand.Next(0, 6) == 0 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) > 0)
+					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Princess") + "ExtraChat").Replace("{0}", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Princess") + "ExtraChat", Main.npc[fisherman].GivenName);
 						//{Name} the Fisherman catches all sorts of tasty fish for the town!
 					}
 					break;
@@ -90,11 +91,13 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 			if (ModLoader.TryGetMod("HelpfulNPCs", out Mod helpfulNPCs) && townNPCsCrossModSupport)
 			{
-				int fisherman2Type = helpfulNPCs.Find<ModNPC>("FishermanNPC").Type;
-				var fisherman2Happiness = NPCHappiness.Get(helpfulNPCs.Find<ModNPC>("FishermanNPC").Type);
+				if (helpfulNPCs.TryFind<ModNPC>("FishermanNPC", out ModNPC fisherman2ModNPC))
+				{
+					var fisherman2Happiness = NPCHappiness.Get(fisherman2ModNPC.Type);
 
-				fisherman2Happiness.SetNPCAffection(fishermanType, AffectionLevel.Like);
-				fishermanHappiness.SetNPCAffection(fisherman2Type, AffectionLevel.Like);
+					fisherman2Happiness.SetNPCAffection(fishermanType, AffectionLevel.Like);
+					fishermanHappiness.SetNPCAffection(fisherman2ModNPC.Type, AffectionLevel.Like);
+				}
 			}
 		}
 	}

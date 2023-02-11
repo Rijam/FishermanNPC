@@ -24,6 +24,7 @@ namespace FishermanNPC
 			}
 		}
 
+
 		public override void Unload()
 		{
 			ConfigServer = null;

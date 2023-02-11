@@ -141,3 +141,9 @@
 	* Buffed the Recycling Machine now that you can use the trash in an Extractinator (in 1.4.4).
 	* Added support for Thorium.
 	* Added support for Wikithis.
+
+0.1.27 - Update 26 (? ?, 2023)
+	* Added Shimmered variant of the Fisherman.
+	* Fisherman now sells Fishing Bobber after 2 or more Angler quests have been completed.
+	* Seeds from recycling Seaweed are more common now.
+	* Made cross mod dialog even safer.

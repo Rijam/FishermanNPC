@@ -16,8 +16,8 @@ namespace FishermanNPC.Items
 		public override string Texture => "Terraria/Images/Item_" + ItemID.BlueSolution;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("[c/ff0000:Debug] - Angler Quest Changer");
-			Tooltip.SetDefault("Changes the number of Angler quests you have completed\nLeft click to add one\nRight click to remove one");
+			// DisplayName.SetDefault("[c/ff0000:Debug] - Angler Quest Changer");
+			// Tooltip.SetDefault("Changes the number of Angler quests you have completed\nLeft click to add one\nRight click to remove one");
 		}
 
 		public override void SetDefaults()

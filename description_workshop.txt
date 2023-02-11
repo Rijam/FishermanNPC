@@ -5,11 +5,8 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.1.26
-	- Updated item max stacks to 9999.
-	- Buffed the Recycling Machine now that you can use the trash in an Extractinator (in 1.4.4).
-	- Added support for Thorium.
-	- Added support for Wikithis.
+Mod version: v0.1.25
+	- Actually fixed the Town NPCs' gore in multiplayer.
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

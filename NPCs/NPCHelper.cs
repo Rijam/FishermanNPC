@@ -262,7 +262,7 @@ namespace FishermanNPC.NPCs
 				NPC nPC = Main.npc[i];
 				if (nPC.active && nPC.townNPC)
 				{
-					if (nPC.type != NPCID.OldMan || nPC.type != NPCID.TravellingMerchant || nPC.type != NPCID.SkeletonMerchant || !NPCID.Sets.ActsLikeTownNPC[nPC.type] || NPCID.Sets.IsTownPet[nPC.type])
+					if (nPC.type != NPCID.OldMan || nPC.type != NPCID.TravellingMerchant || nPC.type != NPCID.SkeletonMerchant || !NPCID.Sets.ActsLikeTownNPC[nPC.type] || !NPCID.Sets.IsTownPet[nPC.type])
 					{
 						counter++;
 					}

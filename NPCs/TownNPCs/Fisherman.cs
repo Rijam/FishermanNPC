@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Linq.Expressions;
+using System.Xml;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
@@ -31,6 +31,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			NPCID.Sets.AttackTime[Type] = 90;
 			NPCID.Sets.AttackAverageChance[Type] = 30;
 			NPCID.Sets.HatOffsetY[Type] = 3;
+			NPCID.Sets.ShimmerTownTransform[NPC.type] = true;
 
 			// Influences how the NPC looks in the Bestiary
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new (0)
@@ -86,32 +87,48 @@ namespace FishermanNPC.NPCs.TownNPCs
 		{
 			if (Main.netMode != NetmodeID.Server && NPC.life < 0)
 			{
-				if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
+				if (NPC.IsShimmerVariant)
 				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head_alt").Type, 1f);
+					if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Alt_Shimmered").Type, 1f);
+					}
+					else
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Shimmered").Type, 1f);
+					}
+					for (int k = 0; k < 2; k++)
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Arm_Shimmered").Type, 1f);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Leg_Shimmered").Type, 1f);
+					}
 				}
 				else
 				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Head").Type, 1f);
-				}
-				for (int k = 0; k < 2; k++)
-				{
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Arm").Type, 1f);
-					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Gore_Leg").Type, 1f);
+					if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Alt").Type, 1f);
+					}
+					else
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head").Type, 1f);
+					}
+					for (int k = 0; k < 2; k++)
+					{
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Arm").Type, 1f);
+						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Leg").Type, 1f);
+					}
 				}
 			}
 		}
 
-		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+		public override bool CanTownNPCSpawn(int numTownNPCs)
 		{
 			if (NPC.savedAngler && numTownNPCs >= 5 && NPC.CountNPCS(ModContent.NPCType<Fisherman>()) < 1)
 			{
 				return true;
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 
 		public override ITownNPCProfile TownNPCProfile()
@@ -121,9 +138,20 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 		public override List<string> SetNPCNameList()
 		{
-			return new List<string>()
+			List<string> maleNames =  new()
 			{
 				"Willy", "Mark", "Charles", "Richard", "Michael", "Davis", "Ray", "Max", "Sherman", "Ike", "Pete", "Hermann", "Colin", "Paul", "Nathaniel", "Malcolm", "Keith", "Jarrell", "Isaac", "Spencer"
+			};
+			List<string> femaleNames = new()
+			{
+				"Catherine", "Connie", "Elizabeth", "Vicky", "Wilma", "Cindy", "Rosalind", "Michelle", "Colleen", "Elsie", "Josephine", "Sharlene", "Rose", "Carolyn", "Nancy", "Lana", "Jody", "Claire", "Christine", "Deborah"
+			};
+
+			return NPC.townNpcVariationIndex switch
+			{
+				0 => maleNames,
+				1 => femaleNames, // Shimmered. Doesn't seem to work because NPC.townNpcVariationIndex isn't set when choosing a name?
+				_ => maleNames
 			};
 		}
 
@@ -192,7 +220,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				//I wouldn't use that lady bug as bait if I were you. There are tales of an evil curse being put on you if you do...
 			}
 			if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
-            {
+			{
 				chat.Add(Language.GetTextValue(path + "Party1"), 2.0);
 				//That's the biggest catch I've seen yet! Time to celebrate.
 				chat.Add(Language.GetTextValue(path + "Party2"), 2.0);
@@ -225,7 +253,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				chat.Add(Language.GetTextValue(path + "AnglerInfo", Main.npc[angler].GivenName, questsCompletedString), 0.25);
 				//{Name} is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed # for him.
 				if (questsCompleted == 0)
-                {
+				{
 					chat.Add(Language.GetTextValue(path + "AnglerQuest1", Main.npc[angler].GivenName, questsCompletedString) + Language.GetTextValue(path + "AnglerQuest2"), 0.5);
 					//So far you have completed # quests for {Name} the Angler. I think it is time for you to start!
 				}
@@ -245,7 +273,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 					//Nice job, son! You have completed # quests for {Name} the Angler. Why not keep going?
 				}
 				else if (!Main.LocalPlayer.Male && questsCompleted >= 30)
-                {
+				{
 					chat.Add(Language.GetTextValue(path + "AnglerQuest6", Main.npc[angler].GivenName, questsCompletedString), 0.5);
 					//Nice job, lass! You have completed # quests for {Name} the Angler. Why not keep going?
 				}
@@ -293,30 +321,36 @@ namespace FishermanNPC.NPCs.TownNPCs
 			}
 			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
 			{
-				int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
-				if (diverman >= 0)
+				if (thorium.TryFind<ModNPC>("Diverman", out ModNPC divermanModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman", Main.npc[diverman].FullName), 0.25);
-					//Now {Name} is the kind of guy I respect!
+					int diverman = NPC.FindFirstNPC(divermanModNPC.Type);
+					if (diverman >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "ThoriumMod.Diverman", Main.npc[diverman].FullName), 0.25);
+						//Now {Name} is the kind of guy I respect!
+					}
 				}
 			}
 			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity) && townNPCsCrossModSupport)
 			{
-				int seaKing = NPC.FindFirstNPC(calamity.Find<ModNPC>("SEAHOE").Type); //Sea King
-				if (seaKing >= 0)
+				if (calamity.TryFind<ModNPC>("SEAHOE", out ModNPC seaKingModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "CalamityMod.SeaKing"), 0.25);
-					//Amidias is such an interesting person. I hope he doesn't mind me fishin'.
-				}
-				if (Main.LocalPlayer.Male)
-				{
-					chat.Add(Language.GetTextValue(path + "CalamityMod.Warn1"), 0.25);
-					//Careful with mermaids, son, not all of them are friendly.
-				}
-				else
-				{
-					chat.Add(Language.GetTextValue(path + "CalamityMod.Warn2"), 0.25);
-					//Careful with mermaids, lass, not all of them are friendly.
+					int seaKing = NPC.FindFirstNPC(seaKingModNPC.Type); //Sea King
+					if (seaKing >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "CalamityMod.SeaKing"), 0.25);
+						//Amidias is such an interesting person. I hope he doesn't mind me fishin'.
+					}
+					if (Main.LocalPlayer.Male)
+					{
+						chat.Add(Language.GetTextValue(path + "CalamityMod.Warn1"), 0.25);
+						//Careful with mermaids, son, not all of them are friendly.
+					}
+					else
+					{
+						chat.Add(Language.GetTextValue(path + "CalamityMod.Warn2"), 0.25);
+						//Careful with mermaids, lass, not all of them are friendly.
+					}
 				}
 			}
 			if (ModLoader.TryGetMod("SGAmod", out Mod _) && townNPCsCrossModSupport) //SGAmod
@@ -324,16 +358,19 @@ namespace FishermanNPC.NPCs.TownNPCs
 				if (Main.hardMode)
 				{
 					chat.Add(Language.GetTextValue(path + "SGAmod.Sharkvern"), 0.25);
-					//A Shark-what? That is truely a freak of nature.
+					//A Shark-what? That is truly a freak of nature.
 				}
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out Mod fargosMutant) && townNPCsCrossModSupport)
 			{
-				int mutant = NPC.FindFirstNPC(fargosMutant.Find<ModNPC>("Mutant").Type);
-				if (mutant >= 0)
+				if (fargosMutant.TryFind<ModNPC>("Mutant", out ModNPC mutantModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "FargosMutant.Mutant", Main.npc[mutant].GivenName), 0.25);
-					//The wings that {Name} have remind me of something else...
+					int mutant = NPC.FindFirstNPC(mutantModNPC.Type);
+					if (mutant >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "FargosMutant.Mutant", Main.npc[mutant].GivenName), 0.25);
+						//The wings that {Name} have remind me of something else...
+					}
 				}
 			}
 			if (ModLoader.TryGetMod("NoFishingQuests", out Mod _) && townNPCsCrossModSupport)
@@ -354,12 +391,16 @@ namespace FishermanNPC.NPCs.TownNPCs
 			}
 			if (ModLoader.TryGetMod("TorchMerchant", out Mod torchSeller) && townNPCsCrossModSupport)
 			{
-				int torchMan = NPC.FindFirstNPC(torchSeller.Find<ModNPC>("TorchSellerNPC").Type);
-				if (torchMan >= 0)
+				if (torchSeller.TryFind<ModNPC>("TorchSellerNPC", out ModNPC torchSellerModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "TorchSeller.TorchMan", Main.npc[torchMan].GivenName), 0.25);
-					//{Name} really lightens my spirits when I'm around them.
+					int torchMan = NPC.FindFirstNPC(torchSellerModNPC.Type);
+					if (torchMan >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "TorchSeller.TorchMan", Main.npc[torchMan].GivenName), 0.25);
+						//{Name} really lightens my spirits when I'm around them.
+					}
 				}
+
 			}
 			if (ModLoader.TryGetMod("BossesAsNPCs", out Mod bossesAsNPCs) && townNPCsCrossModSupport)
 			{
@@ -373,43 +414,46 @@ namespace FishermanNPC.NPCs.TownNPCs
 					}
 				}
 			}
-			/*if (ModLoader.TryGetMod("ExampleMod", out Mod exampleMod) && townNPCsCrossModSupport)
-			{
-				int examplePerson = NPC.FindFirstNPC(exampleMod.Find<ModNPC>("ExamplePerson").Type);
-				if (examplePerson >= 0)
-				{
-					chat.Add(Main.npc[examplePerson].GivenName + " Text", 0.25);
-					//
-				}
-			}*/
 			if (ModLoader.TryGetMod("RijamsMod", out Mod rijamsMod) && townNPCsCrossModSupport)
-            {
-				int interTravel = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("InterstellarTraveler").Type);
-				if (interTravel >= 0)
+			{
+				if (rijamsMod.TryFind<ModNPC>("InterstellarTraveler", out ModNPC intTravModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.InterTravel", Main.npc[interTravel].GivenName), 0.25);
-					//{Name} is nice and all, but I don't trust her around my stash of fish!
+					int interTravel = NPC.FindFirstNPC(intTravModNPC.Type);
+					if (interTravel >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "RijamsMod.InterTravel", Main.npc[interTravel].GivenName), 0.25);
+						//{Name} is nice and all, but I don't trust her around my stash of fish!
+					}
 				}
-				int harpy = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("Harpy").Type);
-				if (harpy >= 0)
+				if (rijamsMod.TryFind<ModNPC>("Harpy", out ModNPC harpyModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.Harpy", Main.npc[harpy].GivenName), 0.25);
-					//{Name} sometimes helps me scout ahead on my fishing journeys. Very helpful!
+					int harpy = NPC.FindFirstNPC(harpyModNPC.Type);
+					if (harpy >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "RijamsMod.Harpy", Main.npc[harpy].GivenName), 0.25);
+						//{Name} sometimes helps me scout ahead on my fishing journeys. Very helpful!
+					}
 				}
-				int hellTrader = NPC.FindFirstNPC(rijamsMod.Find<ModNPC>("HellTrader").Type);
-				if (hellTrader >= 0)
+				if (rijamsMod.TryFind<ModNPC>("HellTrader", out ModNPC hellTraderModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "RijamsMod.HellTrader", Main.npc[hellTrader].GivenName), 0.25);
-					//I let {0} try some different kinds of fish. She seemed to enjoy them!
+					int hellTrader = NPC.FindFirstNPC(hellTraderModNPC.Type);
+					if (hellTrader >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "RijamsMod.HellTrader", Main.npc[hellTrader].GivenName), 0.25);
+						//I let {0} try some different kinds of fish. She seemed to enjoy them!
+					}
 				}
 			}
 			if (ModLoader.TryGetMod("HelpfulNPCs", out Mod helpfulNPCs) && townNPCsCrossModSupport)
 			{
-				int fisherman2 = NPC.FindFirstNPC(helpfulNPCs.Find<ModNPC>("FishermanNPC").Type);
-				if (fisherman2 >= 0)
+				if (helpfulNPCs.TryFind<ModNPC>("FishermanNPC", out ModNPC fisherman2ModNPC))
 				{
-					chat.Add(Language.GetTextValue(path + "HelpfulNPCs.Fisherman2", Main.npc[fisherman2].GivenName), 0.25);
-					//{0} may be my competitor, but I can't stay mad at a fellow Fisherman.
+					int fisherman2 = NPC.FindFirstNPC(fisherman2ModNPC.Type);
+					if (fisherman2 >= 0)
+					{
+						chat.Add(Language.GetTextValue(path + "HelpfulNPCs.Fisherman2", Main.npc[fisherman2].GivenName), 0.25);
+						//{0} may be my competitor, but I can't stay mad at a fellow Fisherman.
+					}
 				}
 			}
 			return chat;
@@ -441,7 +485,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				NPCHelper.StatusShopCycle();
 			}
 			if (!firstButton)
-            {
+			{
 				shop = false;
 				NPCHelper.IncrementShopCycle();
 			}
@@ -493,7 +537,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				shop.item[nextSlot].shopCustomPrice = 3500;
 				nextSlot++;
 				if (NPC.downedBoss2)//EoW or BoC
-                {
+				{
 					shop.item[nextSlot].SetDefaults(ItemID.Lavafly);//25%
 					shop.item[nextSlot].shopCustomPrice = 5000;
 					nextSlot++;
@@ -925,7 +969,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			// Other
 			//
 			if (sellExtraItems && NPCHelper.StatusShopCycle() == 4)
-            {
+			{
 				if (player.anglerQuestsFinished >= 1)
 				{
 					shop.item[nextSlot].SetDefaults(ItemID.FishingPotion);
@@ -936,6 +980,12 @@ namespace FishermanNPC.NPCs.TownNPCs
 					nextSlot++;
 					shop.item[nextSlot].SetDefaults(ItemID.SonarPotion);
 					shop.item[nextSlot].shopCustomPrice = 5000;
+					nextSlot++;
+				}
+				if (player.anglerQuestsFinished >= 2)
+				{
+					shop.item[nextSlot].SetDefaults(ItemID.FishingBobber);
+					shop.item[nextSlot].shopCustomPrice = 25000;
 					nextSlot++;
 				}
 				if (player.anglerQuestsFinished >= 5) 
@@ -1188,22 +1238,27 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 		public override bool CanGoToStatue(bool toKingStatue)
 		{
-			return toKingStatue;
+			return NPC.townNpcVariationIndex switch
+			{
+				0 => toKingStatue,
+				1 => !toKingStatue, // Shimmered
+				_ => toKingStatue
+			};
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
 		{
 			if (!Main.hardMode)
 			{
-			damage = 25;
+				damage = 25;
 			}
 			if (Main.hardMode && !NPC.downedMoonlord)
 			{
-			damage = 30;
+				damage = 30;
 			}
 			if (NPC.downedMoonlord)
 			{
-			damage = 35;
+				damage = 35;
 			}
 			knockback = 6f;
 		}
@@ -1233,20 +1288,37 @@ namespace FishermanNPC.NPCs.TownNPCs
 	}
 	public class FishermanProfile : ITownNPCProfile
 	{
+		private string Namespace => GetType().Namespace.Replace('.', '/');
+		private string NPCName => (GetType().Name.Split("Profile")[0]).Replace('.', '/');
+		private string Path => (Namespace + "/" + NPCName);
+
 		public int RollVariation() => 0;
 		public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
 
 		public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
 		{
 			if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
-				return ModContent.Request<Texture2D>((GetType().Namespace + "." + GetType().Name.Split("Profile")[0]).Replace('.', '/'));
+			{
+				return ModContent.Request<Texture2D>(Path);
+			}
 
 			if (npc.altTexture == 1)
-				return ModContent.Request<Texture2D>((GetType().Namespace + "." + GetType().Name.Split("Profile")[0]).Replace('.', '/') + "_Alt_1");
+			{
+				if (npc.IsShimmerVariant)
+				{
+					return ModContent.Request<Texture2D>(Namespace + "/Shimmered/" + NPCName + "_Alt");
+				}
+				return ModContent.Request<Texture2D>(Path + "_Alt");
+			}
 
-			return ModContent.Request<Texture2D>((GetType().Namespace + "." + GetType().Name.Split("Profile")[0]).Replace('.', '/'));
+			if (npc.IsShimmerVariant)
+			{
+				return ModContent.Request<Texture2D>(Namespace + "/Shimmered/" + NPCName);
+			}
+
+			return ModContent.Request<Texture2D>(Path);
 		}
 
-		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot((GetType().Namespace + "." + GetType().Name.Split("Profile")[0]).Replace('.', '/') + "_Head");
+		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot(Path + "_Head");
 	}
 }
