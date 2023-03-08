@@ -12,15 +12,21 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Xml;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
 	[AutoloadHead]
 	public class Fisherman : ModNPC
 	{
+		private static int ShimmerHeadIndex;
+		private static Profiles.StackedNPCProfile NPCProfile;
+
+		public override void Load()
+		{
+			// Adds our Shimmer Head to the NPCHeadLoader.
+			ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, GetType().Namespace.Replace('.', '/') + "/Shimmered/" + Name + "_Head");
+		}
+
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[Type] = 25;
@@ -53,6 +59,11 @@ namespace FishermanNPC.NPCs.TownNPCs
 				.SetNPCAffection(NPCID.Nurse, AffectionLevel.Dislike)
 				//Princess is automatically set
 			; // < Mind the semicolon!
+
+			NPCProfile = new Profiles.StackedNPCProfile(
+				new Profiles.DefaultNPCProfile(Texture, NPCHeadLoader.GetHeadSlot(HeadTexture), Texture + "_Alt"),
+				new Profiles.DefaultNPCProfile(GetType().Namespace.Replace('.', '/') + "/Shimmered/" + Name, ShimmerHeadIndex, GetType().Namespace.Replace('.', '/') + "/Shimmered/" + Name + "_Alt")
+			);
 		}
 
 		public override void SetDefaults()
@@ -133,7 +144,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 		public override ITownNPCProfile TownNPCProfile()
 		{
-			return new FishermanProfile();
+			return NPCProfile;
 		}
 
 		public override List<string> SetNPCNameList()
@@ -1285,40 +1296,5 @@ namespace FishermanNPC.NPCs.TownNPCs
 			scale = 1f;
 			closeness = 7;
 		}
-	}
-	public class FishermanProfile : ITownNPCProfile
-	{
-		private string Namespace => GetType().Namespace.Replace('.', '/');
-		private string NPCName => (GetType().Name.Split("Profile")[0]).Replace('.', '/');
-		private string Path => (Namespace + "/" + NPCName);
-
-		public int RollVariation() => 0;
-		public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
-
-		public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
-		{
-			if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
-			{
-				return ModContent.Request<Texture2D>(Path);
-			}
-
-			if (npc.altTexture == 1)
-			{
-				if (npc.IsShimmerVariant)
-				{
-					return ModContent.Request<Texture2D>(Namespace + "/Shimmered/" + NPCName + "_Alt");
-				}
-				return ModContent.Request<Texture2D>(Path + "_Alt");
-			}
-
-			if (npc.IsShimmerVariant)
-			{
-				return ModContent.Request<Texture2D>(Namespace + "/Shimmered/" + NPCName);
-			}
-
-			return ModContent.Request<Texture2D>(Path);
-		}
-
-		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot(Path + "_Head");
 	}
 }
