@@ -12,12 +12,18 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
 	[AutoloadHead]
 	public class Fisherman : ModNPC
 	{
+		private const string shop1Bait = "Bait";
+		private const string shop2Fish = "Fish";
+		private const string shop3Rods = "Rods";
+		private const string shop4Extra = "Extra";
 		private static int ShimmerHeadIndex;
 		private static Profiles.StackedNPCProfile NPCProfile;
 
@@ -94,7 +100,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			});
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hitInfo)
 		{
 			if (Main.netMode != NetmodeID.Server && NPC.life < 0)
 			{
@@ -488,763 +494,300 @@ namespace FishermanNPC.NPCs.TownNPCs
 			button2 = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".CycleShop"); // Cycle Shop
 		}
 
-		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+		public override void OnChatButtonClicked(bool firstButton, ref string shop)
 		{
 			if (firstButton)
 			{
-				shop = true;
-				NPCHelper.StatusShopCycle();
+				switch (NPCHelper.StatusShopCycle())
+				{
+					case 1: shop = shop1Bait; break;
+					case 2: shop = shop2Fish; break;
+					case 3: shop = shop3Rods; break;
+					case 4: shop = shop4Extra; break;
+					default: break;
+				}
 			}
 			if (!firstButton)
 			{
-				shop = false;
+				// shop = false;
 				NPCHelper.IncrementShopCycle();
 			}
 		}
-		
-		public override void SetupShop(Chest shop, ref int nextSlot)
-		{
-			bool sellModdedItems = ModContent.GetInstance<FishermanNPCConfigServer>().SellModdedItems;
-			bool sellBait = ModContent.GetInstance<FishermanNPCConfigServer>().SellBait;
-			bool sellFish = ModContent.GetInstance<FishermanNPCConfigServer>().SellFish;
-			bool sellFishingRods = ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods;
-			bool sellExtraItems = ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems;
-			bool townNPCsCrossModSupport = ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport;
-			Player player = Main.LocalPlayer;
 
+		public override void AddShops()
+		{
 			//
 			// Bait
 			//
-			if (sellBait && NPCHelper.StatusShopCycle() == 1)
+			var npcShop1Bait = new NPCShop(Type, shop1Bait)
+				.Add(new Item(ModContent.ItemType<PlasticWormLure>()) { shopCustomPrice = 50 }, ShopConditions.SellModdedItems)
+				.Add(new Item(ItemID.Snail) { shopCustomPrice = 2000 })
+				.Add(new Item(ItemID.ApprenticeBait) { shopCustomPrice = 2500 })
+				.Add(new Item(ItemID.HellButterfly) { shopCustomPrice = 3000 }, Condition.DownedEowOrBoc)
+				.Add(new Item(ModContent.ItemType<Mealworm>()) { shopCustomPrice = 2800 }, ShopConditions.SellModdedItems)
+				.Add(new Item(ItemID.Firefly) { shopCustomPrice = 3000 })
+				.Add(new Item(ItemID.Worm) { shopCustomPrice = 3500 })
+				.Add(new Item(ItemID.Lavafly) { shopCustomPrice = 5000 }, Condition.DownedEowOrBoc)
+				.Add(new Item(ItemID.JourneymanBait) { shopCustomPrice = 4000 }, Condition.DownedEyeOfCthulhu)
+				.Add(new Item(ModContent.ItemType<RedWorm>()) { shopCustomPrice = 4200 }, Condition.DownedEyeOfCthulhu, ShopConditions.SellModdedItems)
+				.Add(new Item(ItemID.EnchantedNightcrawler) { shopCustomPrice = 4500 }, Condition.DownedEowOrBoc)
+				.Add(new Item(ItemID.MagmaSnail) { shopCustomPrice = 7000 }, Condition.DownedSkeletron)
+				.Add(new Item(ItemID.Buggy) { shopCustomPrice = 5000 }, Condition.DownedQueenBee)
+				.Add(new Item(ItemID.MasterBait) { shopCustomPrice = 6000 }, Condition.Hardmode)
+				.Add(new Item(ModContent.ItemType<GlowingMushroomChunk>()) { shopCustomPrice = 8000 },
+					Condition.Hardmode,
+					Condition.NpcIsPresent(NPCID.Truffle),
+					ShopConditions.SellModdedItems)
+				.Add(new Item(ItemID.TruffleWorm) { shopCustomPrice = 150000 }, Condition.DownedDukeFishron);
+			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity1Bait))
 			{
-				if (sellModdedItems)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<PlasticWormLure>());//5% bait power
-					shop.item[nextSlot].shopCustomPrice = 50;
-					nextSlot++;
-				}
-				shop.item[nextSlot].SetDefaults(ItemID.Snail);//10%
-				shop.item[nextSlot].shopCustomPrice = 2000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ItemID.ApprenticeBait);//15%
-				shop.item[nextSlot].shopCustomPrice = 2500;
-				nextSlot++;
-				if (NPC.downedBoss1)//EoC
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.HellButterfly);//15%
-					shop.item[nextSlot].shopCustomPrice = 3000;
-					nextSlot++;
-				}
-				if (sellModdedItems)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mealworm>());//18%
-					shop.item[nextSlot].shopCustomPrice = 2800;
-					nextSlot++;
-				}
-				shop.item[nextSlot].SetDefaults(ItemID.Firefly);//20%
-				shop.item[nextSlot].shopCustomPrice = 3000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ItemID.Worm);//25%
-				shop.item[nextSlot].shopCustomPrice = 3500;
-				nextSlot++;
-				if (NPC.downedBoss2)//EoW or BoC
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Lavafly);//25%
-					shop.item[nextSlot].shopCustomPrice = 5000;
-					nextSlot++;
-				}
-				if (NPC.downedBoss1)//EoC
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.JourneymanBait);//30%
-					shop.item[nextSlot].shopCustomPrice = 4000;
-					nextSlot++;
-					if (sellModdedItems)
-					{
-						shop.item[nextSlot].SetDefaults(ModContent.ItemType<RedWorm>());//32%
-						shop.item[nextSlot].shopCustomPrice = 4200;
-						nextSlot++;
-					}
-				}
-				if (NPC.downedBoss2)//EoW or BoC
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.EnchantedNightcrawler);//35%
-					shop.item[nextSlot].shopCustomPrice = 4500;
-					nextSlot++;
-				}
-				if (NPC.downedBoss3)//Skeletron
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.MagmaSnail);//35%
-					shop.item[nextSlot].shopCustomPrice = 7000;
-					nextSlot++;
-				}
-				if (NPC.downedQueenBee)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Buggy);//40%
-					shop.item[nextSlot].shopCustomPrice = 5000;
-					nextSlot++;
-				}
-				if (Main.hardMode)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.MasterBait);//50%
-					shop.item[nextSlot].shopCustomPrice = 6000;
-					nextSlot++;
-				}
-				if (Main.hardMode && NPC.CountNPCS(NPCID.Truffle) > 0)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<GlowingMushroomChunk>());//66%
-					shop.item[nextSlot].shopCustomPrice = 8000;
-					nextSlot++;
-				}
-				if (NPC.downedFishron)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.TruffleWorm);
-					shop.item[nextSlot].shopCustomPrice = 150000;
-					nextSlot++;
-				}
-				if (ModLoader.TryGetMod("CalamityMod", out Mod calamity) && townNPCsCrossModSupport)
-				{
-					if (Main.hardMode && ((bool)calamity.Call("GetInZone", player, "crags") || (bool)calamity.Call("GetInZone", player, "astral") || (bool)calamity.Call("GetInZone", player, "sulphursea")))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity, "ArcturusAstroidean", shop, ref nextSlot);
-					}
-					if ((bool)calamity.Call("GetBossDowned", "oldduke"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity, "BloodwormItem", shop, ref nextSlot, 500000);
-					}
-				}
-				shop.item[nextSlot].SetDefaults(ItemID.CanOfWorms);
-				shop.item[nextSlot].shopCustomPrice = 25000;
-				nextSlot++;
-				if (sellModdedItems)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<BaitBox>());
-					shop.item[nextSlot].shopCustomPrice = 50000;
-					nextSlot++;
-				}
+				npcShop1Bait.Add(NPCHelper.SafelyGetCrossModItem(calamity1Bait, "CalamityMod/ArcturusAstroidean"),
+					new Condition("In Brimstone Crag, Astral Infection, or Sulphurous Sea",
+					() => (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "crags")
+						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "astral")
+						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "sulphursea")),
+					ShopConditions.TownNPCsCrossModSupport);
+
+				npcShop1Bait.Add(new Item(NPCHelper.SafelyGetCrossModItem(calamity1Bait, "CalamityMod/BloodwormItem")) { shopCustomPrice = 500000 },
+					new Condition("After defeating The Old Duke",
+					() => (bool)calamity1Bait.Call("GetBossDowned", "oldduke")),
+					ShopConditions.TownNPCsCrossModSupport);
 			}
+			npcShop1Bait.Add(new Item(ItemID.CanOfWorms) { shopCustomPrice = 50000 });
+			npcShop1Bait.Add(new Item(ModContent.ItemType<BaitBox>()) { shopCustomPrice = 50000 }, ShopConditions.SellModdedItems);
+			npcShop1Bait.Register();
+
 			//
 			// Fish
 			//
-			if (sellFish && NPCHelper.StatusShopCycle() == 2)
+			var npcShop2Fish = new NPCShop(Type, shop2Fish)
+				.Add(ItemID.ArmoredCavefish, ShopConditions.AnyUndergroundOrHardmode)
+				.Add(ItemID.AtlanticCod, Condition.InSnow)
+				.Add(ItemID.Bass, new Condition("Not in the desert", () => !Main.LocalPlayer.ZoneDesert))
+				.Add(ItemID.ChaosFish, ShopConditions.AnyUnderground, Condition.InHallow)
+				.Add(ItemID.CrimsonTigerfish, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
+				.Add(ItemID.Damselfish, Condition.InSpace)
+				.Add(ItemID.DoubleCod, ShopConditions.InJungleOrHardmode)
+				.Add(ItemID.Ebonkoi, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
+				.Add(ItemID.FlarefinKoi, ShopConditions.InUnderworldOrHardmode)
+				.Add(ItemID.Flounder, Condition.InDesert)
+				.Add(ItemID.FrostMinnow, Condition.InSnow)
+				.Add(ItemID.Hemopiranha, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
+				.Add(ItemID.Honeyfin, Condition.InJungle)
+				.Add(ItemID.NeonTetra, Condition.InJungle)
+				.Add(ItemID.Obsidifish, ShopConditions.InUnderworldOrHardmode)
+				.Add(ItemID.PrincessFish, Condition.InHallow)
+				.Add(ItemID.Prismite, Condition.Hardmode)
+				.Add(ItemID.RedSnapper, Condition.InBeach)
+				.Add(ItemID.RockLobster, Condition.InDesert)
+				.Add(ItemID.Salmon, Condition.InSpace, Condition.InOverworldHeight)
+				.Add(ItemID.Shrimp, Condition.InBeach)
+				.Add(ItemID.SpecularFish, ShopConditions.AnyUndergroundNotDesert)
+				.Add(ItemID.Stinkfish, ShopConditions.AnyUnderground)
+				.Add(ItemID.Trout, Condition.InBeach)
+				.Add(ItemID.Tuna, Condition.InBeach)
+				.Add(ItemID.VariegatedLardfish, ShopConditions.InJungleOrHardmode);
+			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity2Fish) && ShopConditions.TownNPCsCrossModSupport.IsMet())
 			{
-				if (NPCHelper.ZoneAnyUnderground(player) || Main.hardMode) //if Underground, Caverns, Underworld, or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.ArmoredCavefish);
-					shop.item[nextSlot].shopCustomPrice = 7500; //Fish's prices are based off of their vanilla values. 
-					nextSlot++;
-				}
-				if (player.ZoneSnow) //if Snow biome
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.AtlanticCod);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (!player.ZoneDesert) //if not Desert
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Bass);
-					shop.item[nextSlot].shopCustomPrice = 2500;
-					nextSlot++;
-				}
-				if (NPCHelper.ZoneAnyUnderground(player)) //if Underground, Caverns, Underworld
-				{
-					if (player.ZoneHallow) //if Hallow
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.ChaosFish);
-						shop.item[nextSlot].shopCustomPrice = 150000;
-						nextSlot++;
-					}
-				}
-				if ((NPC.downedBoss2 && WorldGen.crimson) || Main.hardMode) //if EoW/BoC defeated and Crimson world, or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.CrimsonTigerfish);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (player.ZoneSkyHeight) //if Space layer
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Damselfish);
-					shop.item[nextSlot].shopCustomPrice = 15000;
-					nextSlot++;
-				}
-				if (player.ZoneJungle || Main.hardMode) //if Jungle
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.DoubleCod);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if ((NPC.downedBoss2 && !WorldGen.crimson) || Main.hardMode) //if EoW/BoC defeated and Corruption world, or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Ebonkoi);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if (player.ZoneUnderworldHeight || Main.hardMode) //if Underworld or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FlarefinKoi);
-					shop.item[nextSlot].shopCustomPrice = 25000;
-					nextSlot++;
-				}
-				if (player.ZoneDesert) //if Desert
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Flounder);
-					shop.item[nextSlot].shopCustomPrice = 750;
-					nextSlot++;
-				}
-				if (player.ZoneSnow) //if Snow biome
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FrostMinnow);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if ((NPC.downedBoss2 && WorldGen.crimson) || Main.hardMode) //if EoW/BoC defeated and Crimson world, or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Hemopiranha);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if (player.ZoneJungle) //if Jungle
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Honeyfin);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ItemID.NeonTetra);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if (player.ZoneUnderworldHeight || Main.hardMode) //if Underworld or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Obsidifish);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if (player.ZoneHallow) //if Hallow
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.PrincessFish);
-					shop.item[nextSlot].shopCustomPrice = 12500;
-					nextSlot++;
-				}
-				if (Main.hardMode) //if Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Prismite);
-					shop.item[nextSlot].shopCustomPrice = 50000;
-					nextSlot++;
-				}
-				if (player.ZoneBeach) //if Ocean
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.RedSnapper);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (player.ZoneDesert) //if Desert
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.RockLobster);
-					shop.item[nextSlot].shopCustomPrice = 5000;
-					nextSlot++;
-				}
-				if (player.ZoneSkyHeight || player.ZoneOverworldHeight) //if Sky or Surface
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Salmon);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (player.ZoneBeach) //if Ocean
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Shrimp);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if ((NPCHelper.ZoneAnyUnderground(player)) && !player.ZoneDesert) //if Underground or Caverns or Underworld, and not Desert
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.SpecularFish);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (NPCHelper.ZoneAnyUnderground(player)) //if Underground or Caverns or Underworld
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Stinkfish);
-					shop.item[nextSlot].shopCustomPrice = 12500;
-					nextSlot++;
-				}
-				if (player.ZoneBeach) //if Ocean
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Trout);
-					shop.item[nextSlot].shopCustomPrice = 2500;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ItemID.Tuna);
-					shop.item[nextSlot].shopCustomPrice = 3750;
-					nextSlot++;
-				}
-				if (player.ZoneJungle || Main.hardMode) //if Jungle or Hardmode
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.VariegatedLardfish);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-				}
-				if (ModLoader.TryGetMod("CalamityMod", out Mod calamity2) && townNPCsCrossModSupport)
-				{
-					if (Main.hardMode && (bool)calamity2.Call("GetInZone", player, "astral"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity2, "AldebaranAlewife", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "ProcyonidPrawn", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "TwinklingPollox", shop, ref nextSlot);
-					}
-					if ((bool)calamity2.Call("GetInZone", player, "crags"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity2, "BrimstoneFish", shop, ref nextSlot);
-						if ((bool)calamity2.Call("GetBossDowned", "providence"))
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "Bloodfin", shop, ref nextSlot);
-						}
-						if (Main.hardMode)
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "ChaoticFish", shop, ref nextSlot);
-						}
-						NPCHelper.SafelySetCrossModItem(calamity2, "CoastalDemonfish", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "CragBullhead", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "Shadowfish", shop, ref nextSlot);
-					}
-					if ((bool)calamity2.Call("GetInZone", player, "sunkensea"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity2, "CoralskinFoolfish", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "PrismaticGuppy", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(calamity2, "SunkenSailfish", shop, ref nextSlot);
-					}
-					if (Main.hardMode)
-					{
-						if (player.ZoneSnow)
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "FishofEleum", shop, ref nextSlot, 1, 10f);
-						}
-						if (player.ZoneSkyHeight)
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "FishofFlight", shop, ref nextSlot);
-							NPCHelper.SafelySetCrossModItem(calamity2, "SunbeamFish", shop, ref nextSlot, 1, 10f);
-						}
-						if (NPCHelper.ZoneAnyUnderground(player) && player.ZoneHallow)
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "FishofLight", shop, ref nextSlot);
-						}
-						if (NPCHelper.ZoneAnyUnderground(player) && (player.ZoneCorrupt || player.ZoneCrimson))
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "FishofNight", shop, ref nextSlot);
-						}
-					}
-					if (player.ZoneRockLayerHeight)
-					{
-						NPCHelper.SafelySetCrossModItem(calamity2, "GlimmeringGemfish", shop, ref nextSlot);
-					}
-					if (player.ZoneOverworldHeight)
-					{
-						NPCHelper.SafelySetCrossModItem(calamity2, "StuffedFish", shop, ref nextSlot);
-						if (Main.bloodMoon)
-						{
-							NPCHelper.SafelySetCrossModItem(calamity2, "Xerocodile", shop, ref nextSlot, 1, 2f);
-						}
-					}
-				}
-				if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
-				{
-					if (player.ZoneUnderworldHeight || player.ZoneRockLayerHeight || true)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "MagmaGill", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(thorium, "FlamingCrackGut", shop, ref nextSlot);
-					}
-				}
+				Condition astral = new ("In Astral Infection and Hardmode",
+					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "astral"));
+				
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/AldebaranAlewife"),
+					astral, Condition.Hardmode);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/ProcyonidPrawn"),
+					astral, Condition.Hardmode);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/ProcyonidPrawn"),
+					astral, Condition.Hardmode);
+
+				Condition crags = new("In Brimstone Crag",
+					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "crags"));
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/BrimstoneFish"),
+					crags);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/Bloodfin"),
+					crags, new Condition("After defeating Providence", () => (bool)calamity2Fish.Call("GetBossDowned", "providence")));
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/ChaoticFish"),
+					crags, Condition.Hardmode);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/CoastalDemonfish"),
+					crags);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/CragBullhead"),
+					crags);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/Shadowfish"),
+					crags);
+
+				Condition sunkensea = new("In Sunken Sea",
+					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "sunkensea"));
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/CoralskinFoolfish"),
+					sunkensea);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/PrismaticGuppy"),
+					sunkensea);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/SunkenSailfish"),
+					sunkensea);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItemWithPrice(calamity2Fish, "CalamityMod/FishofEleum", 1f, 10f),
+					Condition.InSnow, Condition.Hardmode);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItemWithPrice(calamity2Fish, "CalamityMod/FishofFlight", 1f, 10f),
+					Condition.InSpace, Condition.Hardmode);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/SunbeamFish"),
+					Condition.InSpace, Condition.Hardmode);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/FishofLight"),
+					Condition.InHallow, ShopConditions.AnyUnderground, Condition.Hardmode);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/FishofNight"),
+					Condition.InEvilBiome, ShopConditions.AnyUnderground, Condition.Hardmode);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/GlimmeringGemfish"),
+					Condition.InRockLayerHeight);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(calamity2Fish, "CalamityMod/StuffedFish"),
+					Condition.InOverworldHeight);
+
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItemWithPrice(calamity2Fish, "CalamityMod/Xerocodile", 1f, 2f),
+					Condition.InOverworldHeight, Condition.BloodMoon);
 			}
-			//
-			// Fishing rods
-			//
-			if (sellFishingRods && NPCHelper.StatusShopCycle() == 3)
+
+			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium2Fish) && ShopConditions.TownNPCsCrossModSupport.IsMet())
 			{
-				shop.item[nextSlot].SetDefaults(ItemID.ReinforcedFishingPole);
-				shop.item[nextSlot].shopCustomPrice = 50000;
-				nextSlot++;
-				if ((NPC.downedBoss2 && WorldGen.crimson) || NPC.downedMoonlord)//EoW or BoC and Crimson world. Or defeated Moon Lord
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.Fleshcatcher);
-					shop.item[nextSlot].shopCustomPrice = 150000;
-					nextSlot++;
-				}
-				if ((NPC.downedBoss2 && !WorldGen.crimson) || NPC.downedMoonlord)//EoW or BoC and Corruption world. Or defeated Moon Lord
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FisherofSouls);
-					shop.item[nextSlot].shopCustomPrice = 150000;
-					nextSlot++;
-				}
-				if (Main.bloodMoon)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.BloodFishingRod);//Chum Caster
-					shop.item[nextSlot].shopCustomPrice = 250000;
-					nextSlot++;
-				}
-				if (NPC.downedBoss1 && player.ZoneDesert)//EoC and in desert
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.ScarabFishingRod);
-					shop.item[nextSlot].shopCustomPrice = 250000;
-					nextSlot++;
-				}
-				if (NPC.downedQueenBee)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FiberglassFishingPole);
-					shop.item[nextSlot].shopCustomPrice = 250000;
-					nextSlot++;
-				}
-				if (NPC.downedBoss3)//Skeletron
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.MechanicsRod);
-					shop.item[nextSlot].shopCustomPrice = 300000;
-					nextSlot++;
-				}
-				if (NPC.downedBoss3 && NPCHelper.CountTownNPCs() > 8)//Skeletron and more than 8 NPCs
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.SittingDucksFishingRod);
-					shop.item[nextSlot].shopCustomPrice = 400000;
-					nextSlot++;
-				}
-				if (Main.hardMode)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.HotlineFishingHook);
-					shop.item[nextSlot].shopCustomPrice = 450000;
-					nextSlot++;
-				}
-				if (player.anglerQuestsFinished >= 30)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.GoldenFishingRod);
-					shop.item[nextSlot].shopCustomPrice = 500000;
-					nextSlot++;
-				}
-				if (ModLoader.TryGetMod("CalamityMod", out Mod calamity3) && townNPCsCrossModSupport)
-				{
-					NPCHelper.SafelySetCrossModItem(calamity3, "WulfrumRod", shop, ref nextSlot);
-					if ((bool)calamity3.Call("GetBossDowned", "desertscourge"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "NavyFishingRod", shop, ref nextSlot);
-					}
-					if ((bool)calamity3.Call("GetBossDowned", "hivemind") || (bool)calamity3.Call("GetBossDowned", "perforator"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "HeronRod", shop, ref nextSlot);
-					}
-					if ((bool)calamity3.Call("GetInZone", player, "crags"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "SlurperPole", shop, ref nextSlot);
-					}
-					if (NPC.downedPlantBoss)
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "FeralDoubleRod", shop, ref nextSlot);
-					}
-					if (NPC.downedGolemBoss)
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "RiftReeler", shop, ref nextSlot);
-					}
-					if ((bool)calamity3.Call("GetBossDowned", "providence"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "EarlyBloomRod", shop, ref nextSlot);
-					}
-					if ((bool)calamity3.Call("GetBossDowned", "devourerofgods"))
-					{
-						NPCHelper.SafelySetCrossModItem(calamity3, "TheDevourerofCods", shop, ref nextSlot);
-					}
-				}
-				if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && townNPCsCrossModSupport)
-				{
-					int diverman = NPC.FindFirstNPC(thorium.Find<ModNPC>("Diverman").Type);
-					if (diverman >= 0)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "MarineCatcher", shop, ref nextSlot);
-					}
-					if (player.ZoneBeach)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "CartlidgedCatcher", shop, ref nextSlot);
-					}
-					if (NPC.downedBoss3)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "GraniteControlRod", shop, ref nextSlot);
-						NPCHelper.SafelySetCrossModItem(thorium, "ChampionCatcher", shop, ref nextSlot);
-					}
-					if (Main.hardMode)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "GeodeGatherer", shop, ref nextSlot);
-					}
-					// Bruh, Thorium doesn't have downed boss mod calls.
-					if (diverman >= 0 && NPC.downedPlantBoss)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "RlyehLostRod", shop, ref nextSlot);
-					}
-					if (player.anglerQuestsFinished >= 30 && NPC.downedPlantBoss)
-					{
-						NPCHelper.SafelySetCrossModItem(thorium, "TerrariumFisher", shop, ref nextSlot);
-					}
-				}
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(thorium2Fish, "ThoriumMod/MagmaGill"),
+					ShopConditions.InCavernsOrUnderworld);
+				npcShop2Fish.Add(NPCHelper.SafelyGetCrossModItem(thorium2Fish, "ThoriumMod/FlamingCrackGut"),
+					ShopConditions.InCavernsOrUnderworld);
 			}
+
+			npcShop2Fish.Register();
+
 			//
-			// Other
-			//
-			if (sellExtraItems && NPCHelper.StatusShopCycle() == 4)
+			// Fishing Rods
+			// 
+			var npcShop3Rods = new NPCShop(Type, shop3Rods)
+				.Add(new Item(ItemID.ReinforcedFishingPole) { shopCustomPrice = 50000 })
+				.Add(new Item(ItemID.Fleshcatcher) { shopCustomPrice = 150000 },
+					new Condition("After defeating Brain of Cthulhu in a Crimson world or after defeating Moon Lord",
+					() => Condition.DownedBrainOfCthulhu.IsMet() || Condition.DownedMoonLord.IsMet()))
+				.Add(new Item(ItemID.FisherofSouls) { shopCustomPrice = 150000 },
+					new Condition("After defeating Eater of Worlds in a Corruption world or after defeating Moon Lord",
+					() => Condition.DownedEaterOfWorlds.IsMet() || Condition.DownedMoonLord.IsMet()))
+				.Add(new Item(ItemID.BloodFishingRod) { shopCustomPrice = 250000 }, Condition.BloodMoon)
+				.Add(new Item(ItemID.ScarabFishingRod) { shopCustomPrice = 250000 }, Condition.DownedEyeOfCthulhu, Condition.InDesert)
+				.Add(new Item(ItemID.FiberglassFishingPole) { shopCustomPrice = 250000 }, Condition.DownedQueenBee)
+				.Add(new Item(ItemID.MechanicsRod) { shopCustomPrice = 300000 }, Condition.DownedSkeletron)
+				.Add(new Item(ItemID.SittingDucksFishingRod) { shopCustomPrice = 400000 },
+					Condition.DownedSkeletron,
+					new Condition(ShopConditions.CountTownNPCsS(9), ShopConditions.CountTownNPCsFb(9)))
+				.Add(new Item(ItemID.HotlineFishingHook) { shopCustomPrice = 450000 }, Condition.Hardmode)
+				.Add(new Item(ItemID.GoldenFishingRod) { shopCustomPrice = 500000 }, Condition.AnglerQuestsFinishedOver(30));
+
+			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity3Rods) && ShopConditions.TownNPCsCrossModSupport.IsMet())
 			{
-				if (player.anglerQuestsFinished >= 1)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FishingPotion);
-					shop.item[nextSlot].shopCustomPrice = 7500;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ItemID.CratePotion);
-					shop.item[nextSlot].shopCustomPrice = 6000;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ItemID.SonarPotion);
-					shop.item[nextSlot].shopCustomPrice = 5000;
-					nextSlot++;
-				}
-				if (player.anglerQuestsFinished >= 2)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.FishingBobber);
-					shop.item[nextSlot].shopCustomPrice = 25000;
-					nextSlot++;
-				}
-				if (player.anglerQuestsFinished >= 5) 
-				{
-					// 0 Full Moon
-					// 1 Waning Gibbous
-					// 2 Third Quarter
-					// 3 Waning Crescent
-					// 4 New Moon
-					// 5 Waxing Crescent
-					// 6 First Quarter
-					// 7 Waxing Gibbous
-					if (Main.moonPhase == 0)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.ChumBucket);
-						shop.item[nextSlot].shopCustomPrice = 2500;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 1)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.Sextant);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 2)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.AnglerEarring);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 3)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.FishermansGuide);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 4)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.LavaFishingHook);
-						shop.item[nextSlot].shopCustomPrice = 100000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 5)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 6)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.WeatherRadio);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 7)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.TackleBox);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-				}
-				if (player.anglerQuestsFinished >= 10)
-				{
-					if (Main.moonPhase == 4)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.ChumBucket);
-						shop.item[nextSlot].shopCustomPrice = 2500;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 5)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.Sextant);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 6)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.AnglerEarring);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 7)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.FishermansGuide);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 0)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.LavaFishingHook);
-						shop.item[nextSlot].shopCustomPrice = 100000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 1)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 2)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.WeatherRadio);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 3)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.TackleBox);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-				}
-				if (player.anglerQuestsFinished >= 15)
-				{
-					if (Main.moonPhase == 2)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.ChumBucket);
-						shop.item[nextSlot].shopCustomPrice = 2500;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 3)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.Sextant);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 4)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.AnglerEarring);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 5)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.FishermansGuide);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 6)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.LavaFishingHook);
-						shop.item[nextSlot].shopCustomPrice = 100000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 7)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 0)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.WeatherRadio);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 1)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.TackleBox);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-				}
-				if (player.anglerQuestsFinished >= 20)
-				{
-					if (Main.moonPhase == 6)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.ChumBucket);
-						shop.item[nextSlot].shopCustomPrice = 2500;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 7)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.Sextant);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 0)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.AnglerEarring);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 1)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.FishermansGuide);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 2)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.LavaFishingHook);
-						shop.item[nextSlot].shopCustomPrice = 100000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 3)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 4)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.WeatherRadio);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-					if (Main.moonPhase == 5)
-					{
-						shop.item[nextSlot].SetDefaults(ItemID.TackleBox);
-						shop.item[nextSlot].shopCustomPrice = 50000;
-						nextSlot++;
-					}
-				}
-				if (player.anglerQuestsFinished >= 10)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.AnglerHat);
-					shop.item[nextSlot].shopCustomPrice = 10000;
-					nextSlot++;
-				}
-				if (player.anglerQuestsFinished >= 15)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.AnglerVest);
-					shop.item[nextSlot].shopCustomPrice = 10000;
-					nextSlot++;
-				}
-				if (player.anglerQuestsFinished >= 20)
-				{
-					shop.item[nextSlot].SetDefaults(ItemID.AnglerPants);
-					shop.item[nextSlot].shopCustomPrice = 10000;
-					nextSlot++;
-				}
-				if (sellModdedItems)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<RecyclingMachine>());
-					shop.item[nextSlot].shopCustomPrice = 5000;
-					nextSlot++;
-				}
-				if (sellModdedItems && NPC.CountNPCS(NPCID.Clothier) > 0)
-				{
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Fisherman_Vanity_Shirt>());
-					shop.item[nextSlot].shopCustomPrice = 50000;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(ModContent.ItemType<Fisherman_Vanity_Pants>());
-					shop.item[nextSlot].shopCustomPrice = 50000;
-					nextSlot++;
-				}
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/WulfrumRod"));
+
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/NavyFishingRod"),
+					new Condition("After defeating Desert Scourge", () => (bool)calamity3Rods.Call("GetBossDowned", "desertscourge")));
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/HeronRod"),
+					new Condition("After defeating Hive Mind or Perforators", () => (bool)calamity3Rods.Call("GetBossDowned", "hivemind") || (bool)calamity3Rods.Call("GetBossDowned", "perforator")));
+
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/SlurperPole"),
+					new Condition("In Brimstone Crag", () => (bool)calamity3Rods.Call("GetInZone", Main.LocalPlayer, "crags")));
+
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/FeralDoubleRod"),
+					Condition.DownedPlantera);
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/RiftReeler"),
+					Condition.DownedGolem);
+
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/EarlyBloomRod"),
+					new Condition("After defeating Providence", () => (bool)calamity2Fish.Call("GetBossDowned", "providence")));
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(calamity3Rods, "CalamityMod/TheDevourerofCods"),
+					new Condition("After defeating Devourer of Gods", () => (bool)calamity2Fish.Call("GetBossDowned", "devourerofgods")));
 			}
+
+			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium3Rods) && ShopConditions.TownNPCsCrossModSupport.IsMet())
+			{
+				if (thorium3Rods.TryFind<ModNPC>("Diverman", out ModNPC diverman))
+				{
+					npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/MagmaGill"),
+						Condition.NpcIsPresent(NPC.FindFirstNPC(diverman.Type)));
+				}
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/CartlidgedCatcher"),
+					Condition.InBeach);
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/GraniteControlRod"),
+					Condition.DownedSkeletron);
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/ChampionCatcher"),
+					Condition.DownedSkeletron);
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer"),
+					Condition.Hardmode);
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer"),
+					new Condition("After defeating Forgotten One", () => (bool)thorium3Rods.Call("GetDownedBoss", "ForgottenOne")));
+				npcShop3Rods.Add(NPCHelper.SafelyGetCrossModItem(thorium3Rods, "ThoriumMod/TerrariumFisher"),
+					Condition.AnglerQuestsFinishedOver(30), Condition.DownedCultist);
+			}
+
+			npcShop3Rods.Register();
+
+			//
+			// Extra Items
+			// 
+			var npcShop4Extra = new NPCShop(Type, shop4Extra)
+				.Add(new Item(ModContent.ItemType<RecyclingMachine>()) { shopCustomPrice = 5000 }, ShopConditions.SellModdedItems)
+				.Add(new Item(ItemID.FishingPotion) { shopCustomPrice = 15000 }, Condition.AnglerQuestsFinishedOver(1))
+				.Add(new Item(ItemID.CratePotion) { shopCustomPrice = 12000 }, Condition.AnglerQuestsFinishedOver(1))
+				.Add(new Item(ItemID.SonarPotion) { shopCustomPrice = 10000 }, Condition.AnglerQuestsFinishedOver(1))
+				.Add(new Item(ItemID.FishingBobber) { shopCustomPrice = 50000 }, Condition.AnglerQuestsFinishedOver(3));
+
+			Item chumBucket = new(ItemID.ChumBucket) { shopCustomPrice = 2500 };
+			Item sextant = new(ItemID.Sextant) { shopCustomPrice = 100000 };
+			Item anglerEarring = new(ItemID.AnglerEarring) { shopCustomPrice = 100000 };
+			Item fishermansGuide = new(ItemID.FishermansGuide) { shopCustomPrice = 100000 };
+			Item lavaFishingHook = new(ItemID.LavaFishingHook) { shopCustomPrice = 200000 };
+			Item highTestFishingLine = new(ItemID.HighTestFishingLine) { shopCustomPrice = 100000 };
+			Item weatherRadio = new(ItemID.WeatherRadio) { shopCustomPrice = 100000 };
+			Item tackleBox = new(ItemID.TackleBox) { shopCustomPrice = 100000 };
+
+			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseFull);
+			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaningGibbous);
+			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseThirdQuarter);
+			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaningCrescent);
+			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseNew, Condition.DownedEowOrBoc);
+			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaxingCrescent);
+			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseFirstQuarter);
+			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaxingGibbous);
+
+			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseFull, Condition.DownedEowOrBoc);
+			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaningGibbous);
+			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseThirdQuarter);
+			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaningCrescent);
+			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseNew);
+			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaxingCrescent);
+			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseFirstQuarter);
+			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaxingGibbous);
+
+			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseFull);
+			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaningGibbous);
+			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseThirdQuarter);
+			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaningCrescent);
+			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseNew);
+			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaxingCrescent);
+			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseFirstQuarter, Condition.DownedEowOrBoc);
+			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaxingGibbous);
+
+			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseFull);
+			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaningGibbous);
+			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseThirdQuarter, Condition.DownedEowOrBoc);
+			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaningCrescent);
+			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseNew);
+			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaxingCrescent);
+			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseFirstQuarter);
+			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaxingGibbous);
+
+			npcShop4Extra.Add(ItemID.AnglerHat, Condition.AnglerQuestsFinishedOver(10));
+			npcShop4Extra.Add(ItemID.AnglerVest, Condition.AnglerQuestsFinishedOver(15));
+			npcShop4Extra.Add(ItemID.AnglerPants, Condition.AnglerQuestsFinishedOver(20));
+
+			npcShop4Extra.Add(ModContent.ItemType<Fisherman_Vanity_Shirt>(), Condition.NpcIsPresent(NPCID.Clothier), ShopConditions.SellModdedItems);
+			npcShop4Extra.Add(ModContent.ItemType<Fisherman_Vanity_Pants>(), Condition.NpcIsPresent(NPCID.Clothier), ShopConditions.SellModdedItems);
+
+			npcShop4Extra.Register();
 		}
 
 		public override bool CanGoToStatue(bool toKingStatue)
@@ -1290,11 +833,13 @@ namespace FishermanNPC.NPCs.TownNPCs
 		{
 			multiplier = 16f;
 		}
-		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
+		public override void DrawTownAttackGun(ref Texture2D item, ref Rectangle itemFrame, ref float scale, ref int horizontalHoldoutOffset)
 		{
-			item = ItemID.Harpoon;
+			Main.GetItemDrawFrame(ItemID.Harpoon, out Texture2D itemTexture, out Rectangle itemRectangle);
+			item = itemTexture;
+			itemFrame = itemRectangle;
 			scale = 1f;
-			closeness = 7;
+			horizontalHoldoutOffset = 7;
 		}
 	}
 }

@@ -59,16 +59,19 @@ namespace FishermanNPC.NPCs.TownNPCs
 					break;
 			}
 		}
-		public override void SetupShop(int type, Chest shop, ref int nextSlot)
+		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
 		{
 			int shopPriceScaling = ModContent.GetInstance<FishermanNPCConfigServer>().ShopPriceScaling;
 			float shopMulti = (shopPriceScaling / 100f);
-			if (type == ModContent.NPCType<Fisherman>())
+			if (npc.type == ModContent.NPCType<Fisherman>())
 			{
-				foreach (Item item in shop.item)
+				foreach (Item item in items)
 				{
-					int shopPrice = item.shopCustomPrice ?? 0; //Some hackery with changing the int? type into int
-					item.shopCustomPrice = (int?)Math.Round(shopPrice * shopMulti);
+					if (item is not null)
+					{
+						int shopPrice = item.shopCustomPrice ?? item.value;
+						item.shopCustomPrice = (int?)Math.Round(shopPrice * shopMulti);
+					}
 				}
 			}
 		}

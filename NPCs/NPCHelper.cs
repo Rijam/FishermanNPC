@@ -252,6 +252,24 @@ namespace FishermanNPC.NPCs
 		}
 
 		/// <summary>
+		/// Safely returns the Item of the ModItem from the given mod.
+		/// </summary>
+		/// <param name="mod">The mod that the item is from.</param>
+		/// <param name="itemString">The class name of the item.</param>
+		/// <returns>Item if found, null if not found.</returns>
+		public static Item SafelyGetCrossModItemWithPrice(Mod mod, string itemString, float priceDiv = 1f, float priceMulti = 1f)
+		{
+			mod.TryFind<ModItem>(itemString, out ModItem outItem);
+			if (outItem != null)
+			{
+				outItem.Item.shopCustomPrice = (int)Math.Round(outItem.Item.value / priceDiv * priceMulti);
+				return outItem.Item;
+			}
+			ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelyGetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+			return null;
+		}
+
+		/// <summary>
 		/// Counts all of the Town NPCs in the world. Town Pets, Old Man, Traveling Merchant, and Skeleton Merchant are not included.
 		/// </summary>
 		public static int CountTownNPCs()
@@ -270,5 +288,31 @@ namespace FishermanNPC.NPCs
 			}
 			return counter;
 		}
+	}
+
+	public static class ShopConditions
+	{
+#pragma warning disable CA2211 // Non-constant fields should not be visible
+
+		public static Condition SellModdedItems = new("\'Sell Fisherman NPC Modded Items\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellModdedItems);
+		public static Condition SellBait = new("\'Sell Bait\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellBait);
+		public static Condition SellFish = new("\'Sell Fish\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFish);
+		public static Condition SellFishingRods = new("\'Sell Fishing Rods\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods);
+		public static Condition SellExtraItems = new("\'Sell Extra Items\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems);
+		public static Condition TownNPCsCrossModSupport = new("\'Fisherman Cross Mod Support\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport);
+		
+		public static Condition AnyUnderground = new("In the Underground, Caverns, Underworld", () => NPCHelper.ZoneAnyUnderground(Main.LocalPlayer));
+		public static Condition AnyUndergroundOrHardmode = new("In the Underground, Caverns, Underworld, or Hardmode", () => AnyUnderground.IsMet() || Main.hardMode);
+		public static Condition AnyUndergroundNotDesert = new("In the Underground, Caverns, Underworld, and not in the Desert", () => AnyUnderground.IsMet() && !Main.LocalPlayer.ZoneDesert);
+		public static Condition InCavernsOrUnderworld = new("In the Underground, Caverns, Underworld", () => Condition.InRockLayerHeight.IsMet() || Condition.InUnderworldHeight.IsMet());
+		public static Condition DownedBocOrEoWCrimsonOrHardmode = new("After defeating Brain of Cthulhu, in a Crimson World, or in Hardmode", () => Condition.DownedBrainOfCthulhu.IsMet() || Main.hardMode);
+		public static Condition DownedBocOrEoWCorruptionOrHardmode = new("After defeating Eater of Worlds, in a Corruption World, or in Hardmode", () => Condition.DownedEaterOfWorlds.IsMet() || Main.hardMode);
+		public static Condition InJungleOrHardmode = new("In the Jungle or Hardmode", () => Main.LocalPlayer.ZoneJungle || Main.hardMode);
+		public static Condition InUnderworldOrHardmode = new("In the Underworld or Hardmode", () => Main.LocalPlayer.ZoneUnderworldHeight || Main.hardMode);
+
+		public static string CountTownNPCsS(int number) => $"When there are {number} or more Town NPCs in the world";
+		public static Func<bool> CountTownNPCsFb(int number) => () => NPCHelper.CountTownNPCs() >= number;
+
+#pragma warning restore CA2211 // Non-constant fields should not be visible
 	}
 }
