@@ -7,8 +7,11 @@ https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
 Mod version: v0.1.27
 	- Added Shimmered variant of the Fisherman.
-	- Fisherman now sells Fishing Bobber after 2 or more Angler quests have been completed.
+	- Fisherman now sells Fishing Bobber after 3 or more Angler quests have been completed.
+	- Increased the prices for many of the "Extras" items.
+	- Lava Fishing Hook is now only sold after the Eater of Worlds/Brain of Cthulhu have been defeated.
 	- Seeds from recycling Seaweed are more common now.
+	- Changed the availability of the R'lyeh's Lost Rod and Terrarium Whale Catcher	(Thorium) to better match when they are obtained.
 	- Made cross mod dialog even safer.
 
 Known issues:

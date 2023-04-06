@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using FishermanNPC.NPCs.TownNPCs;
 using Terraria.Localization;
+using System.Linq;
 
 namespace FishermanNPC.NPCs
 {
@@ -158,121 +159,115 @@ namespace FishermanNPC.NPCs
 			return player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight || player.ZoneUnderworldHeight;
 		}
 
-		/// <summary>
-		/// Safely returns the integer of the ModItem from the given mod.
-		/// </summary>
-		/// <param name="mod">The mod that the item is from.</param>
-		/// <param name="itemString">The class name of the item.</param>
-		/// <returns>int if found, 0 if not found.</returns>
-		public static int SafelyGetCrossModItem(Mod mod, string itemString)
-		{
-			mod.TryFind<ModItem>(itemString, out ModItem outItem);
-			if (outItem != null)
-			{
-				return outItem.Type;
-			}
-			ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelyGetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
-			return 0;
-		}
+        /// <summary>
+        /// Safely returns the integer of the ModItem from the given mod.
+        /// </summary>
+        /// <param name="mod">The mod that the item is from.</param>
+        /// <param name="itemString">The class name of the item.</param>
+        /// <returns>int if found, 0 if not found.</returns>
+        public static int SafelyGetCrossModItem(Mod mod, string itemString)
+        {
+            mod.TryFind<ModItem>(itemString, out ModItem outItem);
+            if (outItem != null)
+            {
+                return outItem.Type;
+            }
+            ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelyGetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+            return 0;
+        }
 
-		/// <summary>
-		/// Safely sets the shop item of the ModItem from the given slot in the given slot.
-		/// Will not set the shop item if the ModItem is not found.
-		/// The price of the item will be the customPrice.
-		/// </summary>
-		/// <param name="mod">The mod that the item is from.</param>
-		/// <param name="itemString">The class name of the item.</param>
-		/// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
-		/// <param name="nextSlot">The ref nextSlot. Pass ref nextSlot in most cases.</param>
-		/// <param name="customPrice">The custom price of the item.</param>
-		public static void SafelySetCrossModItem(Mod mod, string itemString, Chest shop, ref int nextSlot, int customPrice)
-		{
-			mod.TryFind<ModItem>(itemString, out ModItem outItem);
-			if (outItem != null)
-			{
-				shop.item[nextSlot].SetDefaults(outItem.Type);
-				shop.item[nextSlot].shopCustomPrice = customPrice;
-				nextSlot++;
-			}
-			else
-			{
-				ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
-			}
-		}
+        /// <summary>
+        /// Safely sets the shop item of the ModItem from the given slot in the given slot.
+        /// Will not set the shop item if the ModItem is not found.
+        /// The price of the item will be the value.
+        /// </summary>
+        /// <param name="mod">The mod that the item is from.</param>
+        /// <param name="itemString">The class name of the item.</param>
+        /// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
+        public static void SafelySetCrossModItem(Mod mod, string itemString, NPCShop shop, params Condition[] condition)
+        {
+            mod.TryFind<ModItem>(itemString, out ModItem outItem);
+            if (outItem != null)
+            {
+                shop.Add(outItem.Type, condition.Append(ShopConditions.TownNPCsCrossModSupport).ToArray());
+            }
+            else
+            {
+                ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+            }
+        }
 
-		/// <summary>
-		/// Safely sets the shop item of the ModItem from the given slot in the given slot.
-		/// Will not set the shop item if the ModItem is not found.
-		/// The price of the item will be the item's value / 5 / priceDiv.
-		/// </summary>
-		/// <param name="mod">The mod that the item is from.</param>
-		/// <param name="itemString">The class name of the item.</param>
-		/// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
-		/// <param name="nextSlot">The ref nextSlot. Pass ref nextSlot in most cases.</param>
-		/// <param name="priceDiv">The price will be divided by this amount.</param>
-		public static void SafelySetCrossModItem(Mod mod, string itemString, Chest shop, ref int nextSlot, float priceDiv)
-		{
-			mod.TryFind<ModItem>(itemString, out ModItem outItem);
-			if (outItem != null)
-			{
-				shop.item[nextSlot].SetDefaults(outItem.Type);
-				shop.item[nextSlot].shopCustomPrice = (int)Math.Round(shop.item[nextSlot].value / 5 / priceDiv);
-				nextSlot++;
-			}
-			else
-			{
-				ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
-			}
-		}
+        /// <summary>
+        /// Safely sets the shop item of the ModItem from the given slot in the given slot.
+        /// Will not set the shop item if the ModItem is not found.
+        /// The price of the item will be the customPrice.
+        /// </summary>
+        /// <param name="mod">The mod that the item is from.</param>
+        /// <param name="itemString">The class name of the item.</param>
+        /// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
+        /// <param name="customPrice">The custom price of the item.</param>
+        public static void SafelySetCrossModItem(Mod mod, string itemString, NPCShop shop, int customPrice, params Condition[] condition)
+        {
+            mod.TryFind<ModItem>(itemString, out ModItem outItem);
+            if (outItem != null)
+            {
+                shop.Add(new Item(outItem.Type) { shopCustomPrice = customPrice }, condition.Append(ShopConditions.TownNPCsCrossModSupport).ToArray());
+            }
+            else
+            {
+                ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+            }
+        }
 
-		/// <summary>
-		/// Safely sets the shop item of the ModItem from the given slot in the given slot.
-		/// Will not set the shop item if the ModItem is not found.
-		/// The price of the item will be the item's (value / priceDiv) * priceMulti.
-		/// </summary>
-		/// <param name="mod">The mod that the item is from.</param>
-		/// <param name="itemString">The class name of the item.</param>
-		/// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
-		/// <param name="nextSlot">The ref nextSlot. Pass ref nextSlot in most cases.</param>
-		/// <param name="priceDiv">The price will be divided by this amount.</param>
-		/// <param name="priceMulti">The price will be multiplied by this amount after the priceDiv.</param>
-		public static void SafelySetCrossModItem(Mod mod, string itemString, Chest shop, ref int nextSlot, float priceDiv = 1f, float priceMulti = 1f)
-		{
-			mod.TryFind<ModItem>(itemString, out ModItem outItem);
-			if (outItem != null)
-			{
-				shop.item[nextSlot].SetDefaults(outItem.Type);
-				shop.item[nextSlot].shopCustomPrice = (int)Math.Round(shop.item[nextSlot].value / priceDiv * priceMulti);
-				nextSlot++;
-			}
-			else
-			{
-				ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
-			}
-		}
+        /// <summary>
+        /// Safely sets the shop item of the ModItem from the given slot in the given slot.
+        /// Will not set the shop item if the ModItem is not found.
+        /// The price of the item will be the item's value / 5 / priceDiv.
+        /// </summary>
+        /// <param name="mod">The mod that the item is from.</param>
+        /// <param name="itemString">The class name of the item.</param>
+        /// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
+        /// <param name="priceDiv">The price will be divided by this amount.</param>
+        public static void SafelySetCrossModItem(Mod mod, string itemString, NPCShop shop, float priceDiv, params Condition[] condition)
+        {
+            mod.TryFind<ModItem>(itemString, out ModItem outItem);
+            if (outItem != null)
+            {
+                shop.Add(new Item(outItem.Type) { shopCustomPrice = (int)Math.Round(outItem.Item.value / 5 / priceDiv) }, condition.Append(ShopConditions.TownNPCsCrossModSupport).ToArray());
+            }
+            else
+            {
+                ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+            }
+        }
 
-		/// <summary>
-		/// Safely returns the Item of the ModItem from the given mod.
-		/// </summary>
-		/// <param name="mod">The mod that the item is from.</param>
-		/// <param name="itemString">The class name of the item.</param>
-		/// <returns>Item if found, null if not found.</returns>
-		public static Item SafelyGetCrossModItemWithPrice(Mod mod, string itemString, float priceDiv = 1f, float priceMulti = 1f)
-		{
-			mod.TryFind<ModItem>(itemString, out ModItem outItem);
-			if (outItem != null)
-			{
-				outItem.Item.shopCustomPrice = (int)Math.Round(outItem.Item.value / priceDiv * priceMulti);
-				return outItem.Item;
-			}
-			ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelyGetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
-			return null;
-		}
+        /// <summary>
+        /// Safely sets the shop item of the ModItem from the given slot in the given slot.
+        /// Will not set the shop item if the ModItem is not found.
+        /// The price of the item will be the item's (value / priceDiv) * priceMulti.
+        /// </summary>
+        /// <param name="mod">The mod that the item is from.</param>
+        /// <param name="itemString">The class name of the item.</param>
+        /// <param name="shop">The Chest shop of the Town NPC. Pass shop in most cases.</param>
+        /// <param name="priceDiv">The price will be divided by this amount.</param>
+        /// <param name="priceMulti">The price will be multiplied by this amount after the priceDiv.</param>
+        public static void SafelySetCrossModItem(Mod mod, string itemString, NPCShop shop, float priceDiv, float priceMulti, params Condition[] condition)
+        {
+            mod.TryFind<ModItem>(itemString, out ModItem outItem);
+            if (outItem != null)
+            {
+                shop.Add(new Item(outItem.Type) { shopCustomPrice = (int)Math.Round(outItem.Item.value / priceDiv * priceMulti) }, condition.Append(ShopConditions.TownNPCsCrossModSupport).ToArray());
+            }
+            else
+            {
+                ModContent.GetInstance<FishermanNPC>().Logger.WarnFormat("SafelySetCrossModItem(): ModItem type \"{0}\" from \"{1}\" was not found.", itemString, mod);
+            }
+        }
 
-		/// <summary>
-		/// Counts all of the Town NPCs in the world. Town Pets, Old Man, Traveling Merchant, and Skeleton Merchant are not included.
-		/// </summary>
-		public static int CountTownNPCs()
+        /// <summary>
+        /// Counts all of the Town NPCs in the world. Town Pets, Old Man, Traveling Merchant, and Skeleton Merchant are not included.
+        /// </summary>
+        public static int CountTownNPCs()
 		{
 			int counter = 0;
 			for (int i = 0; i < Main.maxNPCs; i++)
@@ -294,23 +289,23 @@ namespace FishermanNPC.NPCs
 	{
 #pragma warning disable CA2211 // Non-constant fields should not be visible
 
-		public static Condition SellModdedItems = new("\'Sell Fisherman NPC Modded Items\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellModdedItems);
-		public static Condition SellBait = new("\'Sell Bait\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellBait);
-		public static Condition SellFish = new("\'Sell Fish\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFish);
-		public static Condition SellFishingRods = new("\'Sell Fishing Rods\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods);
-		public static Condition SellExtraItems = new("\'Sell Extra Items\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems);
-		public static Condition TownNPCsCrossModSupport = new("\'Fisherman Cross Mod Support\' config is enabled", () => ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport);
+		public static Condition SellModdedItems = new("Mods.FishermanNPC.Conditions.SellModdedItems", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellModdedItems);
+		public static Condition SellBait = new("Mods.FishermanNPC.Conditions.SellBait", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellBait);
+		public static Condition SellFish = new("Mods.FishermanNPC.Conditions.SellFish", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFish);
+		public static Condition SellFishingRods = new("Mods.FishermanNPC.Conditions.SellFishingRods", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellFishingRods);
+		public static Condition SellExtraItems = new("Mods.FishermanNPC.Conditions.SellExtraItems", () => ModContent.GetInstance<FishermanNPCConfigServer>().SellExtraItems);
+		public static Condition TownNPCsCrossModSupport = new("Mods.FishermanNPC.Conditions.TownNPCsCrossModSupport", () => ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport);
 		
-		public static Condition AnyUnderground = new("In the Underground, Caverns, Underworld", () => NPCHelper.ZoneAnyUnderground(Main.LocalPlayer));
-		public static Condition AnyUndergroundOrHardmode = new("In the Underground, Caverns, Underworld, or Hardmode", () => AnyUnderground.IsMet() || Main.hardMode);
-		public static Condition AnyUndergroundNotDesert = new("In the Underground, Caverns, Underworld, and not in the Desert", () => AnyUnderground.IsMet() && !Main.LocalPlayer.ZoneDesert);
-		public static Condition InCavernsOrUnderworld = new("In the Underground, Caverns, Underworld", () => Condition.InRockLayerHeight.IsMet() || Condition.InUnderworldHeight.IsMet());
-		public static Condition DownedBocOrEoWCrimsonOrHardmode = new("After defeating Brain of Cthulhu, in a Crimson World, or in Hardmode", () => Condition.DownedBrainOfCthulhu.IsMet() || Main.hardMode);
-		public static Condition DownedBocOrEoWCorruptionOrHardmode = new("After defeating Eater of Worlds, in a Corruption World, or in Hardmode", () => Condition.DownedEaterOfWorlds.IsMet() || Main.hardMode);
-		public static Condition InJungleOrHardmode = new("In the Jungle or Hardmode", () => Main.LocalPlayer.ZoneJungle || Main.hardMode);
-		public static Condition InUnderworldOrHardmode = new("In the Underworld or Hardmode", () => Main.LocalPlayer.ZoneUnderworldHeight || Main.hardMode);
+		public static Condition AnyUnderground = new("Mods.FishermanNPC.Conditions.AnyUnderground", () => NPCHelper.ZoneAnyUnderground(Main.LocalPlayer));
+		public static Condition AnyUndergroundOrHardmode = new("Mods.FishermanNPC.Conditions.AnyUndergroundOrHardmode", () => AnyUnderground.IsMet() || Main.hardMode);
+		public static Condition AnyUndergroundNotDesert = new("Mods.FishermanNPC.Conditions.AnyUndergroundNotDesert", () => AnyUnderground.IsMet() && !Main.LocalPlayer.ZoneDesert);
+		public static Condition InCavernsOrUnderworld = new("Mods.FishermanNPC.Conditions.InCavernsOrUnderworld", () => Condition.InRockLayerHeight.IsMet() || Condition.InUnderworldHeight.IsMet());
+		public static Condition DownedBocOrEoWCrimsonOrHardmode = new("Mods.FishermanNPC.Conditions.DownedBocOrEoWCrimsonOrHardmode", () => Condition.DownedBrainOfCthulhu.IsMet() || Main.hardMode);
+		public static Condition DownedBocOrEoWCorruptionOrHardmode = new("Mods.FishermanNPC.Conditions.DownedBocOrEoWCorruptionOrHardmode", () => Condition.DownedEaterOfWorlds.IsMet() || Main.hardMode);
+		public static Condition InJungleOrHardmode = new("Mods.FishermanNPC.Conditions.InJungleOrHardmode", () => Main.LocalPlayer.ZoneJungle || Main.hardMode);
+		public static Condition InUnderworldOrHardmode = new("Mods.FishermanNPC.Conditions.InUnderworldOrHardmode", () => Main.LocalPlayer.ZoneUnderworldHeight || Main.hardMode);
 
-		public static string CountTownNPCsS(int number) => $"When there are {number} or more Town NPCs in the world";
+		public static string CountTownNPCsS(int number) => Language.GetTextValue("Mods.FishermanNPC.Conditions.CountTownNPCsS", number);
 		public static Func<bool> CountTownNPCsFb(int number) => () => NPCHelper.CountTownNPCs() >= number;
 
 #pragma warning restore CA2211 // Non-constant fields should not be visible

@@ -106,6 +106,45 @@ Mods: {
 			None: None
 		}
 
+		Conditions: {
+			SellModdedItems: "\'Sell Fisherman NPC Modded Items\' config is enabled"
+			SellBait: "\'Sell Bait\' config is enabled"
+			SellFish: "\'Sell Fish\' config is enabled"
+			SellFishingRods: "\'Sell Fishing Rods\' config is enabled"
+			SellExtraItems: "\'Sell Extra Items\' config is enabled"
+			TownNPCsCrossModSupport: "\'Fisherman Cross Mod Support\' config is enabled"
+
+			AnyUnderground: "In the Underground, Caverns, Underworld"
+			AnyUndergroundOrHardmode: "In the Underground, Caverns, Underworld, or Hardmode"
+			AnyUndergroundNotDesert: "In the Underground, Caverns, Underworld, and not in the Desert"
+			InCavernsOrUnderworld: "In the Underground, Caverns, Underworld"
+			DownedBocOrEoWCrimsonOrHardmode: "After defeating Brain of Cthulhu, in a Crimson World, or in Hardmode"
+			DownedBocOrEoWCorruptionOrHardmode: "After defeating Eater of Worlds, in a Corruption World, or in Hardmode"
+			InJungleOrHardmode: "In the Jungle or Hardmode"
+			InUnderworldOrHardmode: "In the Underworld or Hardmode"
+			
+			CountTownNPCsS: "When there are {0} or more Town NPCs in the world"
+
+			NotInDesert: "Not in the desert"
+			BocOrMoonLord: "After defeating Brain of Cthulhu in a Crimson world or after defeating Moon Lord"
+			EowOrMoonLord: "After defeating Eater of Worlds in a Corruption world or after defeating Moon Lord"
+
+			Calamity: {
+				CragAstralOrSulphur: "In Brimstone Crag, Astral Infection, or Sulphurous Sea"
+				DownedOldDuke: "After defeating The Old Duke"
+				AstralAndHardmode: "In Astral Infection and Hardmode"
+				InCrag: "In Brimstone Crag"
+				InSunkenSea: "In Sunken Sea"
+				DownedDesertScourge: "After defeating Desert Scourge"
+				DownedHiveMindOrPerforators: "After defeating Hive Mind or Perforators"
+				DownedProvidence: "After defeating Providence"
+				DownedDoG: "After defeating Devourer of Gods"
+			}
+			Thorium: {
+				DownedForgottenOne: "After defeating Forgotten One"
+			}
+		}
+
 		NPCs.Fisherman.DisplayName: Fisherman
 
 		NPCDialog: {
