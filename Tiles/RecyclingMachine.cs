@@ -21,7 +21,7 @@ namespace FishermanNPC.Tiles
 			TileObjectData.newTile.Origin = new Point16(1, 2);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(171, 87, 0), Language.GetText("Mods.FishermanNPC.Tiles.RecyclingMachine.MapEntry"));
+			AddMapEntry(new Color(171, 87, 0), CreateMapEntryName());
 		}
 
 		public override bool RightClick(int i, int j)

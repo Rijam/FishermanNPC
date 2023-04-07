@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using FishermanNPC.NPCs.TownNPCs;
+using FishermanNPC.NPCs;
 
 namespace FishermanNPC.Items.Fishing
 {
@@ -35,6 +37,11 @@ namespace FishermanNPC.Items.Fishing
 			Item.bait = 18;
 			Item.value = 250;
 			Item.rare = ItemRarityID.Blue;
+			Item.useAnimation = 15;
+			Item.useTime = 15;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.autoReuse = true;
+			Item.makeNPC = ModContent.NPCType<MealwormCritter>();
 		}
 
 		public override void SetStaticDefaults()
@@ -53,6 +60,11 @@ namespace FishermanNPC.Items.Fishing
 			Item.bait = 32;
 			Item.value = 500;
 			Item.rare = ItemRarityID.Green;
+			Item.useAnimation = 15;
+			Item.useTime = 15;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.autoReuse = true;
+			Item.makeNPC = ModContent.NPCType<RedWormCritter>();
 		}
 
 		public override void SetStaticDefaults()
