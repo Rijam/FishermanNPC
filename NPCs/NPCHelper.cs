@@ -78,7 +78,7 @@ namespace FishermanNPC.NPCs
 		/// <returns>string</returns>
 		public static string DialogPath(string npc)
 		{
-			return "Mods." + mod + ".NPCDialog." + npc + ".";
+			return "Mods." + mod + ".NPCs." + npc + ".NPCDialog.";
 		}
 
 		/// <summary>

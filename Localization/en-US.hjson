@@ -1,4 +1,3 @@
-
 Mods: {
 	FishermanNPC: {
 		Config: {
@@ -142,86 +141,106 @@ Mods: {
 		}
 
 		NPCs: {
-			Fisherman.DisplayName: Fisherman
-			MealwormCritter.DisplayName: Mealworm
-			RedWormCritter.DisplayName: Red Worm
-		}
-
-		NPCDialog: {
-			// {0} will be replaced with other text (usually the name of another NPC). It is important that you keep {0} somewhere in the string.
-			// If a line starts with {0}, the line must be in quotes.
 			Fisherman: {
-				Default1: Greetings. Care to do some fishin'?
-				Default2: I got all the supplies you'd need if you want to do some fishin'.
-				Default3: Fishing rods? Bait? Hooks? You want it?
-				Default4: Make sure you have bait on your hook.
-				Default5: There are all sorts of strange fish in these waters; see what you can catch!
-				Default6: Ahoy there. My name is {0}.
-				Rare1: Hm... I seem to have misplaced my rod...
-				Rare2: You were paying way too much for worms. I'm your new worm guy.
-				Hurt: That's gonna leave a mark.
-				DayTime: A nice sunny day today.
-				DayTimeRaining: Rain is the perfect time to do some fishin'!
-				NightTime: Time to get some shut-eye.
-				NightTimeRaining: Careful out there. There's a nasty storm out tonight!
-				Homeless: Could you provide me with a vessel of some sort? A man needs a place to sleep!
-				HasHome: Now I can really set up shop! Make sure you purchase some goods!
-				PlayerHasWings: Aye, I saw a large fish with wings once...
-				PlayerHasLadyBug: I wouldn't use that lady bug as bait if I were you. There are tales of an evil curse being put on you if you do...
-				Party1: That's the biggest catch I've seen yet! Time to celebrate.
-				Party2: I cooked me up some Bumblebee Tuna. Those things are tasty!
-				BloodMoon: I hear that there are some crazy creatures swimming in the water tonight. Fish them up!
-				HowDidIGetHere: Some sort of storm must've pushed me off course. I know I didn't intend on being here at this time.
-				SellNothing: A mysterious force told me not to sell anything. They said to check the "config", whatever that is.
-				AnglerInfo: "{0} is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed {1} for him."
-				// The space at the end is important here. Unless your language doesn't need spaces or something.
-				AnglerQuest1: "So far you have completed {1} quests for {0} the Angler. "
-				AnglerQuest2: I think it is time for you to start!
-				AnglerQuest3: Keep at it!
-				AnglerQuest4: Great job! Keep going!
-				AnglerQuest5: Nice job, son! You have completed {1} quests for {0} the Angler. Why not keep going?
-				AnglerQuest6: Nice job, lass! You have completed {1} quests for {0} the Angler. Why not keep going?
-				AnglerHappiness: No I'm not {0} the Angler's father, but I'll gladly watch over him!
-				PirateHappiness: I wouldn't trust {0} the Pirate. I've had my fair share of run-ins with pirates.
-				PrincessHappiness: "{0} the Princess has offered to get me a fancy new vessel. How kind of her!"
-				TruffleNormal: I occasionally take Glowing Mushrooms to use as bait. I don't think {0} knows that I do that, so don't tell 'em!
-				TruffleHappiness: I'm friends with {0} the Truffle. Glowing Mushrooms make good bait!
-				NurseHappiness: I dislike {0} the Nurse. She always bugs me for check-ups that I don't need.
-				MechanicHappiness: "{0} the Mechanic is always here to help me when me ship needs repairs."
-				ThoriumMod.Diverman: Now {0} is the kind of guy I respect!
+				DisplayName: Fisherman
 
-				CalamityMod: {
-					SeaKing: Amidias is such an interesting person. I hope he doesn't mind me fishin'.
-					Warn1: Careful with mermaids, son, not all of them are friendly.
-					Warn2: Careful with mermaids, lass, not all of them are friendly.
+				TownNPCMood: {
+					Content: Everything is swell.
+					NoHome: Could you provide me with a vessel of some sort? A man needs a place to sleep!
+					LoveSpace: I enjoy the open space, just like the vast ocean.
+					FarFromHome: Man overboard! I am too far from my home!
+					DislikeCrowded: I would prefer some more personal space.
+					HateCrowded: Fishing is supposed to be relaxing, but I can't focus with everyone around here!
+					LikeBiome: There are plenty of fish to catch in {BiomeName}.
+					LoveBiome: I love {BiomeName}, it's the best place to do some fishin'!
+					DislikeBiome: The lack of water in {BiomeName} makes fishin' harder than it should be.
+					HateBiome: Davy Jones, {BiomeName} is not a safe place!
+					LikeNPC: I view {NPCName} as one of me crew members. They're a trustworthy person.
+					LikeNPC_Princess: "{NPCName} has offered to get me a fancy new vessel. How kind of her!"
+					LoveNPC: No I'm not {NPCName}'s father, but I'll gladly watch over him!
+					DislikeNPC: I don't like being around {NPCName}. They are not the kind of person I associate myself with.
+					HateNPC: I hate {NPCName}. They insult me and my trade.
+					Princess_LovesNPC: "{NPCName} catches all sorts of tasty fish for the town!"
 				}
 
-				SGAmod.Sharkvern: A Shark-what? That is truly a freak of nature.
-				FargosMutant.Mutant: The wings that {0} have remind me of something else...
-				NoFishingQuests.AnglerShop: It seems like {0} has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
-				PbonesUtilities.MysteriousTrader: I heard rumors of a blue hooded man who sells valuables...
-				TorchSeller.TorchMan: really lightens my spirits when I'm around them.
-				BossesAsNPCs.DukeFishron: Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
+				NPCDialog: {
+					# {0} will be replaced with other text (usually the name of another NPC). It is important that you keep {0} somewhere in the string.
+					# If a line starts with {0}, the line must be in quotes.
+					Default1: Greetings. Care to do some fishin'?
+					Default2: I got all the supplies you'd need if you want to do some fishin'.
+					Default3: Fishing rods? Bait? Hooks? You want it?
+					Default4: Make sure you have bait on your hook.
+					Default5: There are all sorts of strange fish in these waters; see what you can catch!
+					Default6: Ahoy there. My name is {0}.
+					Rare1: Hm... I seem to have misplaced my rod...
+					Rare2: You were paying way too much for worms. I'm your new worm guy.
+					Hurt: That's gonna leave a mark.
+					DayTime: A nice sunny day today.
+					DayTimeRaining: Rain is the perfect time to do some fishin'!
+					NightTime: Time to get some shut-eye.
+					NightTimeRaining: Careful out there. There's a nasty storm out tonight!
+					Homeless: Could you provide me with a vessel of some sort? A man needs a place to sleep!
+					HasHome: Now I can really set up shop! Make sure you purchase some goods!
+					PlayerHasWings: Aye, I saw a large fish with wings once...
+					PlayerHasLadyBug: I wouldn't use that lady bug as bait if I were you. There are tales of an evil curse being put on you if you do...
+					Party1: That's the biggest catch I've seen yet! Time to celebrate.
+					Party2: I cooked me up some Bumblebee Tuna. Those things are tasty!
+					BloodMoon: I hear that there are some crazy creatures swimming in the water tonight. Fish them up!
+					HowDidIGetHere: Some sort of storm must've pushed me off course. I know I didn't intend on being here at this time.
+					SellNothing: A mysterious force told me not to sell anything. They said to check the "config", whatever that is.
+					AnglerInfo: "{0} is after all sorts of exotic fish. You should see what he wants today. Currently, you have completed {1} for him."
+					# The space at the end is important here. Unless your language doesn't need spaces or something.
+					AnglerQuest1: "So far you have completed {1} quests for {0} the Angler. "
+					AnglerQuest2: I think it is time for you to start!
+					AnglerQuest3: Keep at it!
+					AnglerQuest4: Great job! Keep going!
+					AnglerQuest5: Nice job, son! You have completed {1} quests for {0} the Angler. Why not keep going?
+					AnglerQuest6: Nice job, lass! You have completed {1} quests for {0} the Angler. Why not keep going?
+					AnglerHappiness: No I'm not {0} the Angler's father, but I'll gladly watch over him!
+					PirateHappiness: I wouldn't trust {0} the Pirate. I've had my fair share of run-ins with pirates.
+					PrincessHappiness: "{0} the Princess has offered to get me a fancy new vessel. How kind of her!"
+					TruffleNormal: I occasionally take Glowing Mushrooms to use as bait. I don't think {0} knows that I do that, so don't tell 'em!
+					TruffleHappiness: I'm friends with {0} the Truffle. Glowing Mushrooms make good bait!
+					NurseHappiness: I dislike {0} the Nurse. She always bugs me for check-ups that I don't need.
+					MechanicHappiness: "{0} the Mechanic is always here to help me when me ship needs repairs."
+					ThoriumMod.Diverman: Now {0} is the kind of guy I respect!
 
-				RijamsMod: {
-					InterTravel: "{0} is nice and all, but I don't trust her around my stash of fish!"
-					Harpy: "{0} sometimes helps me scout ahead on my fishing journies. Very helpful!"
-					HellTrader: I let {0} try some different kinds of fish. She seemed to enjoy them!
+					CalamityMod: {
+						SeaKing: Amidias is such an interesting person. I hope he doesn't mind me fishin'.
+						Warn1: Careful with mermaids, son, not all of them are friendly.
+						Warn2: Careful with mermaids, lass, not all of them are friendly.
+					}
+
+					SGAmod.Sharkvern: A Shark-what? That is truly a freak of nature.
+					FargosMutant.Mutant: The wings that {0} have remind me of something else...
+					NoFishingQuests.AnglerShop: It seems like {0} has started to sell his own items. Don't forget about me; I still have plenty of goods available in my shop!
+					PbonesUtilities.MysteriousTrader: I heard rumors of a blue hooded man who sells valuables...
+					TorchSeller.TorchMan: really lightens my spirits when I'm around them.
+					BossesAsNPCs.DukeFishron: Duke Fishron is quite the fellow. Never thought I'd get to actually get to talk to someone like him!
+
+					RijamsMod: {
+						InterTravel: "{0} is nice and all, but I don't trust her around my stash of fish!"
+						Harpy: "{0} sometimes helps me scout ahead on my fishing journies. Very helpful!"
+						HellTrader: I let {0} try some different kinds of fish. She seemed to enjoy them!
+					}
+
+					HelpfulNPCs.Fisherman2: "{0} may be my competitor, but I can't stay mad at a fellow Fisherman."
 				}
-
-				HelpfulNPCs.Fisherman2: "{0} may be my competitor, but I can't stay mad at a fellow Fisherman."
 			}
-
-			Pirate.ExtraChat: Arr, that {0} the {$Mods.FishermanNPC.NPCs.Fisherman.DisplayName} is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 
 			Zoologist: {
-				ExtraChat: I keep telling {0} the {$Mods.FishermanNPC.NPCName.NPCs.Fisherman.DisplayName} the dangers of over-fishing and he just shrugs me off! What nerve!
-				ExtraChatTransformed: "{0} the {$Mods.FishermanNPC.NPCs.Fisherman.DisplayName} DESTROY environment!"
+				NPCDialog: {
+					ExtraChat: I keep telling {0} the dangers of over-fishing and he just shrugs me off! What nerve!
+					ExtraChatTransformed: "{0} DESTROY environment!"
+				}
 			}
 
-			Angler.ExtraChat: Yeah? What about {0} the {$Mods.FishermanNPC.NPCs.Fisherman.DisplayName}? He's alright I guess. Back to work with you!
-			Truffle.ExtraChat: "{0} the {$Mods.FishermanNPC.NPCs.Fisherman.DisplayName} is nice to me. He doesn't seem to want to eat me."
-			Princess.ExtraChat: "{0} the {$Mods.FishermanNPC.NPCs.Fisherman.DisplayName} catches all sorts of tasty fish for the town!"
+			Angler.NPCDialog.ExtraChat: Yeah? What about {0}? He's alright I guess. Back to work with you!
+			Truffle.NPCDialog.ExtraChat: "{0} is nice to me. He doesn't seem to want to eat me."
+			Princess.NPCDialog.ExtraChat: "{0} catches all sorts of tasty fish for the town!"
+			
+			MealwormCritter.DisplayName: Mealworm
+			RedWormCritter.DisplayName: Red Worm
 		}
 
 		Bestiary: {
@@ -239,26 +258,6 @@ Mods: {
 					Dislike: "{$Mods.FishermanNPC.Common.Desert}, {$NPCName.Pirate}, {$NPCName.Nurse}"
 					Hate: "{$Mods.FishermanNPC.Common.None}"
 				}
-			}
-		}
-
-		TownNPCMood: {
-			Fisherman: {
-				Content: Everything is swell.
-				NoHome: Could you provide me with a vessel of some sort? A man needs a place to sleep!
-				LoveSpace: I enjoy the open space, just like the vast ocean.
-				FarFromHome: Man overboard! I am too far from my home!
-				DislikeCrowded: I would prefer some more personal space.
-				HateCrowded: Fishing is supposed to be relaxing, but I can't focus with everyone around here!
-				LikeBiome: There are plenty of fish to catch in {BiomeName}.
-				LoveBiome: I love {BiomeName}, it's the best place to do some fishin'!
-				DislikeBiome: The lack of water in {BiomeName} makes fishin' harder than it should be.
-				HateBiome: Davy Jones, {BiomeName} is not a safe place!
-				LikeNPC: I view {NPCName} as one of me crew members. They're a trustworthy person.
-				LikeNPC_Princess: "{NPCName} has offered to get me a fancy new vessel. How kind of her!"
-				LoveNPC: No I'm not {NPCName}'s father, but I'll gladly watch over him!
-				DislikeNPC: I don't like being around {NPCName}. They are not the kind of person I associate myself with.
-				HateNPC: I hate {NPCName}. They insult me and my trade.
 			}
 		}
 
@@ -328,7 +327,7 @@ Mods: {
 
 			CaughtFisherman: {
 				DisplayName: "{$Mods.FishermanNPC.NPCs.Fisherman.DisplayName}"
-				Tooltip: "'{$Mods.FishermanNPC.NPCDialog.Fisherman.Default1}'"
+				Tooltip: "'{$Mods.FishermanNPC.NPCs.Fisherman.NPCDialog.Default1}'"
 			}
 
 			DebugAnglerQuestChanger: {

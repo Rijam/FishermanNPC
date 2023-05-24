@@ -13,6 +13,7 @@ namespace FishermanNPC.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
+			TileID.Sets.CritterCageLidStyle[Type] = 3; // Match the Worm Cage.
 			Main.critterCage = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileTable[Type] = true;
@@ -42,10 +43,12 @@ namespace FishermanNPC.Tiles
 			}*/
 		}
 
-		// Vanilla Cages draw into the ground and stretch up when stacked. TODO
+		// Vanilla Cages draw into the ground and stretch up when stacked.
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
-			base.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref tileFrameX, ref tileFrameY);
+			// This code slightly lowers the draw position.
+			// TileID.Sets.CritterCageLidStyle[] automatically handles the top.
+			offsetY = 2;
 		}
 	}
 
@@ -53,6 +56,7 @@ namespace FishermanNPC.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
+			TileID.Sets.CritterCageLidStyle[Type] = 3; // Match the Worm Cage.
 			Main.critterCage = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileTable[Type] = true;
@@ -82,10 +86,12 @@ namespace FishermanNPC.Tiles
 			}*/
 		}
 
-		// Vanilla Cages draw into the ground and stretch up when stacked. TODO
+		// Vanilla Cages draw into the ground and stretch up when stacked.
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
-			base.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref tileFrameX, ref tileFrameY);
+			// This code slightly lowers the draw position.
+			// TileID.Sets.CritterCageLidStyle[] automatically handles the top.
+			offsetY = 2;
 		}
 	}
 
@@ -93,6 +99,7 @@ namespace FishermanNPC.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
+			TileID.Sets.CritterCageLidStyle[Type] = 3; // Match the Worm Cage.
 			Main.critterCage = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileTable[Type] = true;
@@ -107,10 +114,12 @@ namespace FishermanNPC.Tiles
 			DustType = DustID.Glass;
 		}
 
-		// Vanilla Cages draw into the ground and stretch up when stacked. TODO
+		// Vanilla Cages draw into the ground and stretch up when stacked.
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
 		{
-			base.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref tileFrameX, ref tileFrameY);
+			// This code slightly lowers the draw position.
+			// TileID.Sets.CritterCageLidStyle[] automatically handles the top.
+			offsetY = 2;
 		}
 	}
 }

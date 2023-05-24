@@ -152,3 +152,7 @@
 	* Made cross mod dialog even safer.
 	* Added Red Worm and Mealworm critters.
 	* Added Red Worm Cage, Mealworm Cage, and Plastic Worm Lure Cage.
+
+0.2.1 - Update 28 (May 24, 2023)
+	* Improved the Cage tiles to better match the vanilla offsets.
+	* Updated TownNPCMood localizations and dialog localization paths.

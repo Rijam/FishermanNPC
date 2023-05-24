@@ -5,16 +5,9 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.2.0
-	- Added Shimmered variant of the Fisherman.
-	- Fisherman now sells Fishing Bobber after 3 or more Angler quests have been completed.
-	- Increased the prices for many of the "Extras" items.
-	- Lava Fishing Hook is now only sold after the Eater of Worlds/Brain of Cthulhu have been defeated.
-	- Seeds from recycling Seaweed are more common now.
-	- Changed the availability of the R'lyeh's Lost Rod and Terrarium Whale Catcher	(Thorium) to better match when they are obtained.
-	- Made cross mod dialog even safer.
-	- Added Red Worm and Mealworm critters.
-	- Added Red Worm Cage, Mealworm Cage, and Plastic Worm Lure Cage.
+Mod version: v0.2.1
+	- Improved the Cage tiles to better match the vanilla offsets.
+	- Updated TownNPCMood localizations and dialog localization paths.
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

@@ -18,7 +18,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 				case NPCID.Pirate:
 					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Pirate") + "ExtraChat", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Pirate") + "ExtraChat", Main.npc[fisherman].FullName);
 						//Arr, that {Name} the Fisherman is the type to steal me crew's waters and then get me crew into trouble with the authorities. Do not trust such a man.
 					}
 					break;
@@ -27,11 +27,11 @@ namespace FishermanNPC.NPCs.TownNPCs
 					{
 						if (Main.bloodMoon || Main.moonPhase == 0)
 						{
-							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChatTransformed", Main.npc[fisherman].GivenName);
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChatTransformed", Main.npc[fisherman].FullName);
 						}
 						else
 						{
-							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat", Main.npc[fisherman].GivenName);
+							chat = Language.GetTextValue(NPCHelper.DialogPath("Zoologist") + "ExtraChat", Main.npc[fisherman].FullName);
 							//I keep telling {Name} the Fisherman the dangers of over-fishing and he just shrugs me off! What nerve!
 						}
 					}
@@ -39,21 +39,21 @@ namespace FishermanNPC.NPCs.TownNPCs
 				case NPCID.Angler:
 					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Angler") + "ExtraChat", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Angler") + "ExtraChat", Main.npc[fisherman].FullName);
 						//Yeah? What about {Name} the Fisherman? He's alright I guess. Back to work with you!
 					}
 					break;
 				case NPCID.Truffle:
 					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Truffle") + "ExtraChat", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Truffle") + "ExtraChat", Main.npc[fisherman].FullName);
 						//{Name} the Fisherman is nice to me. He doesn't seem to want to eat me.
 					}
 					break;
 				case NPCID.Princess:
 					if (Main.rand.NextBool(6) && fishermanCount > 0)
 					{
-						chat = Language.GetTextValue(NPCHelper.DialogPath("Princess") + "ExtraChat", Main.npc[fisherman].GivenName);
+						chat = Language.GetTextValue(NPCHelper.DialogPath("Princess") + "ExtraChat", Main.npc[fisherman].FullName);
 						//{Name} the Fisherman catches all sorts of tasty fish for the town!
 					}
 					break;

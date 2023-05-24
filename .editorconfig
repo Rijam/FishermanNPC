@@ -2,3 +2,9 @@
 
 # IDE0055: Fix formatting
 dotnet_diagnostic.IDE0055.severity = none
+
+# VSSpell002: Ignore Word
+dotnet_diagnostic.VSSpell002.severity = silent
+
+# VSSpell001: Spell Check
+dotnet_diagnostic.VSSpell001.severity = silent
