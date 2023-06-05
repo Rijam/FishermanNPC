@@ -5,9 +5,10 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
 
-Mod version: v0.2.1
-	- Improved the Cage tiles to better match the vanilla offsets.
-	- Updated TownNPCMood localizations and dialog localization paths.
+Mod version: v0.2.2
+	- Updated config localization.
+	- Added support for Item Checklist Blacklist.
+	- Added buff immunities to the Fisherman.
 
 Known issues:
 	- Fisherman sells Pylons for free (tML bug I assume)

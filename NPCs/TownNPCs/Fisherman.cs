@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
@@ -70,6 +71,16 @@ namespace FishermanNPC.NPCs.TownNPCs
 				new Profiles.DefaultNPCProfile(Texture, NPCHeadLoader.GetHeadSlot(HeadTexture), Texture + "_Alt"),
 				new Profiles.DefaultNPCProfile(GetType().Namespace.Replace('.', '/') + "/Shimmered/" + Name, ShimmerHeadIndex, GetType().Namespace.Replace('.', '/') + "/Shimmered/" + Name + "_Alt")
 			);
+
+			// Specify the debuffs it is immune to
+			NPCDebuffImmunityData debuffData = new()
+			{
+				SpecificallyImmuneTo = new int[]
+				{
+					BuffID.Confused, // Most NPCs have this
+				}
+			};
+			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 		}
 
 		public override void SetDefaults()

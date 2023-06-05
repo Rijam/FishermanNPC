@@ -1,6 +1,7 @@
 using FishermanNPC.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,6 +22,11 @@ namespace FishermanNPC
 				// Actual special thanks to Confection Rebaked for having the correct format.
 				wikithis.Call("AddModURL", this, "terrariamods.wiki.gg$User:Rijam/Fisherman_NPC");
 				wikithis.Call("AddWikiTexture", this, ModContent.Request<Texture2D>("FishermanNPC/icon_small"));
+			}
+
+			if (ModLoader.TryGetMod("ItemCheckBlacklist", out Mod itemCheckBlacklist))
+			{
+				itemCheckBlacklist.Call("ItemCheckBlacklist", new List<int>() { ModContent.ItemType<Items.DebugAnglerQuestChanger>(), ModContent.ItemType<Items.CaughtFisherman>() });
 			}
 		}
 
