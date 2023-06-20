@@ -8,10 +8,9 @@ using Terraria.ModLoader.Config;
 namespace FishermanNPC
 {
 	/// <summary>
-	/// ExampleConfigServer has Server-wide effects. Things that happen on the server, on the world, or influence autoload go here
+	/// FishermanNPCConfigServer has Server-wide effects. Things that happen on the server, on the world, or influence autoload go here
 	/// ConfigScope.ServerSide ModConfigs are SHARED from the server to all clients connecting in MP.
 	/// </summary>
-	[Label("$Mods.FishermanNPC.Config.Server.LabelBig")]
 	//Fisherman NPC Server Options
 	public class FishermanNPCConfigServer : ModConfig
     {

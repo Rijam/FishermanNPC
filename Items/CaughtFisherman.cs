@@ -13,6 +13,10 @@ namespace FishermanNPC.Items
 	//and code adapted from Alchemist NPC (BrewerHorcrux.cs and similar)
 	public class CaughtFisherman : ModItem
 	{
+		public override bool IsLoadingEnabled(Mod mod)
+		{
+			return ModContent.GetInstance<FishermanNPCConfigServer>().CatchNPCs;
+		}
 		public override string Texture => "FishermanNPC/NPCs/TownNPCs/Fisherman";
 		public override void SetStaticDefaults()
 		{
@@ -20,6 +24,8 @@ namespace FishermanNPC.Items
 			// Tooltip.SetDefault("'" + Language.GetText(NPCs.NPCHelper.DialogPath("Fisherman") + "Default1") + "'");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 25));
 			Item.ResearchUnlockCount = 3;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.FleshBlock;
+			ItemID.Sets.AnimatesAsSoul[Type] = true;
 		}
 
 		public override void SetDefaults()

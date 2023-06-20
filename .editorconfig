@@ -1,4 +1,13 @@
-﻿[*.cs]
+﻿# All files
+[*]
+indent_style = tab
+
+# C# Files
+[*.cs]
+indent_style = tab
+tab_width = 4
+indent_size = 4
+end_of_line = crlf
 
 # IDE0055: Fix formatting
 dotnet_diagnostic.IDE0055.severity = none

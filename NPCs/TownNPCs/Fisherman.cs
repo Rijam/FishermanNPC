@@ -1,6 +1,3 @@
-using FishermanNPC.Items.Fishing;
-using FishermanNPC.Items.Armor.Vanity;
-using FishermanNPC.Items.Placeable;
 using FishermanNPC.Projectiles;
 using System;
 using Terraria;
@@ -21,10 +18,6 @@ namespace FishermanNPC.NPCs.TownNPCs
 	[AutoloadHead]
 	public class Fisherman : ModNPC
 	{
-		private const string shop1Bait = "Bait";
-		private const string shop2Fish = "Fish";
-		private const string shop3Rods = "Rods";
-		private const string shop4Extra = "Extra";
 		private static int ShimmerHeadIndex;
 		private static Profiles.StackedNPCProfile NPCProfile;
 
@@ -511,10 +504,10 @@ namespace FishermanNPC.NPCs.TownNPCs
 			{
 				switch (NPCHelper.StatusShopCycle())
 				{
-					case 1: shop = shop1Bait; break;
-					case 2: shop = shop2Fish; break;
-					case 3: shop = shop3Rods; break;
-					case 4: shop = shop4Extra; break;
+					case 1: shop = FishermanShops.shop1Bait; break;
+					case 2: shop = FishermanShops.shop2Fish; break;
+					case 3: shop = FishermanShops.shop3Rods; break;
+					case 4: shop = FishermanShops.shop4Extra; break;
 					default: break;
 				}
 			}
@@ -530,248 +523,29 @@ namespace FishermanNPC.NPCs.TownNPCs
 			//
 			// Bait
 			//
-			var npcShop1Bait = new NPCShop(Type, shop1Bait)
-				.Add(new Item(ModContent.ItemType<PlasticWormLure>()) { shopCustomPrice = 50 }, ShopConditions.SellModdedItems)
-				.Add(new Item(ItemID.Snail) { shopCustomPrice = 2000 })
-				.Add(new Item(ItemID.ApprenticeBait) { shopCustomPrice = 2500 })
-				.Add(new Item(ItemID.HellButterfly) { shopCustomPrice = 3000 }, Condition.DownedEowOrBoc)
-				.Add(new Item(ModContent.ItemType<Mealworm>()) { shopCustomPrice = 2800 }, ShopConditions.SellModdedItems)
-				.Add(new Item(ItemID.Firefly) { shopCustomPrice = 3000 })
-				.Add(new Item(ItemID.Worm) { shopCustomPrice = 3500 })
-				.Add(new Item(ItemID.Lavafly) { shopCustomPrice = 5000 }, Condition.DownedEowOrBoc)
-				.Add(new Item(ItemID.JourneymanBait) { shopCustomPrice = 4000 }, Condition.DownedEyeOfCthulhu)
-				.Add(new Item(ModContent.ItemType<RedWorm>()) { shopCustomPrice = 4200 }, Condition.DownedEyeOfCthulhu, ShopConditions.SellModdedItems)
-				.Add(new Item(ItemID.EnchantedNightcrawler) { shopCustomPrice = 4500 }, Condition.DownedEowOrBoc)
-				.Add(new Item(ItemID.MagmaSnail) { shopCustomPrice = 7000 }, Condition.DownedSkeletron)
-				.Add(new Item(ItemID.Buggy) { shopCustomPrice = 5000 }, Condition.DownedQueenBee)
-				.Add(new Item(ItemID.MasterBait) { shopCustomPrice = 6000 }, Condition.Hardmode)
-				.Add(new Item(ModContent.ItemType<GlowingMushroomChunk>()) { shopCustomPrice = 8000 },
-					Condition.Hardmode,
-					Condition.NpcIsPresent(NPCID.Truffle),
-					ShopConditions.SellModdedItems)
-				.Add(new Item(ItemID.TruffleWorm) { shopCustomPrice = 150000 }, Condition.DownedDukeFishron);
-			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity1Bait))
-			{
-				NPCHelper.SafelySetCrossModItem(calamity1Bait, "CalamityMod/ArcturusAstroidean", npcShop1Bait,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.CragAstralOrSulphur",
-					() => (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "crags")
-						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "astral")
-						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "sulphursea")));
-
-				NPCHelper.SafelySetCrossModItem(calamity1Bait, "CalamityMod/BloodwormItem", npcShop1Bait,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedOldDuke",
-					() => (bool)calamity1Bait.Call("GetBossDowned", "oldduke")));
-			}
-			npcShop1Bait.Add(new Item(ItemID.CanOfWorms) { shopCustomPrice = 50000 });
-			npcShop1Bait.Add(new Item(ModContent.ItemType<BaitBox>()) { shopCustomPrice = 50000 }, ShopConditions.SellModdedItems);
+			var npcShop1Bait = new NPCShop(Type, FishermanShops.shop1Bait);
+			FishermanShops.BaitShop(npcShop1Bait);
 			npcShop1Bait.Register();
 
 			//
 			// Fish
 			//
-			var npcShop2Fish = new NPCShop(Type, shop2Fish)
-				.Add(ItemID.ArmoredCavefish, ShopConditions.AnyUndergroundOrHardmode)
-				.Add(ItemID.AtlanticCod, Condition.InSnow)
-				.Add(ItemID.Bass, new Condition("Mods.FishermanNPC.Conditions.NotInDesert", () => !Main.LocalPlayer.ZoneDesert))
-				.Add(ItemID.ChaosFish, ShopConditions.AnyUnderground, Condition.InHallow)
-				.Add(ItemID.CrimsonTigerfish, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
-				.Add(ItemID.Damselfish, Condition.InSpace)
-				.Add(ItemID.DoubleCod, ShopConditions.InJungleOrHardmode)
-				.Add(ItemID.Ebonkoi, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
-				.Add(ItemID.FlarefinKoi, ShopConditions.InUnderworldOrHardmode)
-				.Add(ItemID.Flounder, Condition.InDesert)
-				.Add(ItemID.FrostMinnow, Condition.InSnow)
-				.Add(ItemID.Hemopiranha, ShopConditions.DownedBocOrEoWCrimsonOrHardmode)
-				.Add(ItemID.Honeyfin, Condition.InJungle)
-				.Add(ItemID.NeonTetra, Condition.InJungle)
-				.Add(ItemID.Obsidifish, ShopConditions.InUnderworldOrHardmode)
-				.Add(ItemID.PrincessFish, Condition.InHallow)
-				.Add(ItemID.Prismite, Condition.Hardmode)
-				.Add(ItemID.RedSnapper, Condition.InBeach)
-				.Add(ItemID.RockLobster, Condition.InDesert)
-				.Add(ItemID.Salmon, Condition.InSpace, Condition.InOverworldHeight)
-				.Add(ItemID.Shrimp, Condition.InBeach)
-				.Add(ItemID.SpecularFish, ShopConditions.AnyUndergroundNotDesert)
-				.Add(ItemID.Stinkfish, ShopConditions.AnyUnderground)
-				.Add(ItemID.Trout, Condition.InBeach)
-				.Add(ItemID.Tuna, Condition.InBeach)
-				.Add(ItemID.VariegatedLardfish, ShopConditions.InJungleOrHardmode);
-			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity2Fish))
-			{
-				Condition astral = new ("Mods.FishermanNPC.Conditions.Calamity.AstralAndHardmode",
-					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "astral"));
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/AldebaranAlewife", npcShop2Fish, astral, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/ProcyonidPrawn", npcShop2Fish, astral, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/TwinklingPollox", npcShop2Fish, astral, Condition.Hardmode);
-
-				Condition crags = new("Mods.FishermanNPC.Conditions.Calamity.InCrag",
-					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "crags"));
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/BrimstoneFish", npcShop2Fish, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Bloodfin", npcShop2Fish, crags,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedProvidence", () => (bool)calamity2Fish.Call("GetBossDowned", "providence")));
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/ChaoticFish", npcShop2Fish, crags, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CoastalDemonfish", npcShop2Fish, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CragBullhead", npcShop2Fish, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Shadowfish", npcShop2Fish, crags);
-
-				Condition sunkensea = new("Mods.FishermanNPC.Conditions.Calamity.InSunkenSea",
-					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "sunkensea"));
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CoralskinFoolfish", npcShop2Fish, sunkensea);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/PrismaticGuppy", npcShop2Fish, sunkensea);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/SunkenSailfish", npcShop2Fish, sunkensea);
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofEleum", npcShop2Fish, 1f, 10f,
-					Condition.InSnow, Condition.Hardmode);
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofFlight", npcShop2Fish, 1f, 10f,
-					Condition.InSpace, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/SunbeamFish", npcShop2Fish,
-					Condition.InSpace, Condition.Hardmode);
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofLight", npcShop2Fish,
-					Condition.InHallow, ShopConditions.AnyUnderground, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofNight", npcShop2Fish,
-					Condition.InEvilBiome, ShopConditions.AnyUnderground, Condition.Hardmode);
-
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/GlimmeringGemfish", npcShop2Fish, Condition.InRockLayerHeight);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/StuffedFish", npcShop2Fish, Condition.InOverworldHeight);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Xerocodile", npcShop2Fish, 1f, 2f, Condition.InOverworldHeight, Condition.BloodMoon);
-			}
-
-			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium2Fish))
-			{
-				NPCHelper.SafelySetCrossModItem(thorium2Fish, "ThoriumMod/MagmaGill", npcShop2Fish, ShopConditions.InCavernsOrUnderworld);
-				NPCHelper.SafelySetCrossModItem(thorium2Fish, "ThoriumMod/FlamingCrackGut", npcShop2Fish, ShopConditions.InCavernsOrUnderworld);
-			}
-
+			var npcShop2Fish = new NPCShop(Type, FishermanShops.shop2Fish);
+			FishermanShops.FishShop(npcShop2Fish);
 			npcShop2Fish.Register();
 
 			//
 			// Fishing Rods
 			// 
-			var npcShop3Rods = new NPCShop(Type, shop3Rods)
-				.Add(new Item(ItemID.ReinforcedFishingPole) { shopCustomPrice = 50000 })
-				.Add(new Item(ItemID.Fleshcatcher) { shopCustomPrice = 150000 },
-					new Condition("Mods.FishermanNPC.Conditions.BocOrMoonLord",
-					() => Condition.DownedBrainOfCthulhu.IsMet() || Condition.DownedMoonLord.IsMet()))
-				.Add(new Item(ItemID.FisherofSouls) { shopCustomPrice = 150000 },
-					new Condition("Mods.FishermanNPC.Conditions.EowOrMoonLord",
-					() => Condition.DownedEaterOfWorlds.IsMet() || Condition.DownedMoonLord.IsMet()))
-				.Add(new Item(ItemID.BloodFishingRod) { shopCustomPrice = 250000 }, Condition.BloodMoon)
-				.Add(new Item(ItemID.ScarabFishingRod) { shopCustomPrice = 250000 }, Condition.DownedEyeOfCthulhu, Condition.InDesert)
-				.Add(new Item(ItemID.FiberglassFishingPole) { shopCustomPrice = 250000 }, Condition.DownedQueenBee)
-				.Add(new Item(ItemID.MechanicsRod) { shopCustomPrice = 300000 }, Condition.DownedSkeletron)
-				.Add(new Item(ItemID.SittingDucksFishingRod) { shopCustomPrice = 400000 },
-					Condition.DownedSkeletron,
-					new Condition(ShopConditions.CountTownNPCsS(9), ShopConditions.CountTownNPCsFb(9)))
-				.Add(new Item(ItemID.HotlineFishingHook) { shopCustomPrice = 450000 }, Condition.Hardmode)
-				.Add(new Item(ItemID.GoldenFishingRod) { shopCustomPrice = 500000 }, Condition.AnglerQuestsFinishedOver(30));
-
-			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity3Rods))
-			{
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/WulfrumRod", npcShop3Rods);
-
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/NavyFishingRod", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedDesertScourge", () => (bool)calamity3Rods.Call("GetBossDowned", "desertscourge")));
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/HeronRod", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedHiveMindOrPerforators", () => (bool)calamity3Rods.Call("GetBossDowned", "hivemind") || (bool)calamity3Rods.Call("GetBossDowned", "perforator")));
-
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/SlurperPole", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.InCrag", () => (bool)calamity3Rods.Call("GetInZone", Main.LocalPlayer, "crags")));
-
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/FeralDoubleRod", npcShop3Rods, Condition.DownedPlantera);
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/RiftReeler", npcShop3Rods, Condition.DownedGolem);
-
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/EarlyBloomRod", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedProvidence", () => (bool)calamity2Fish.Call("GetBossDowned", "providence")));
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/TheDevourerofCods", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedDoG", () => (bool)calamity2Fish.Call("GetBossDowned", "devourerofgods")));
-			}
-
-			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium3Rods))
-			{
-				if (thorium3Rods.TryFind<ModNPC>("Diverman", out ModNPC diverman))
-				{
-					NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/MagmaGill", npcShop3Rods,
-						Condition.NpcIsPresent(NPC.FindFirstNPC(diverman.Type)));
-				}
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/CartlidgedCatcher", npcShop3Rods, Condition.InBeach);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GraniteControlRod", npcShop3Rods, Condition.DownedSkeletron);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/ChampionCatcher", npcShop3Rods, Condition.DownedSkeletron);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer", npcShop3Rods, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer", npcShop3Rods,
-					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedForgottenOne", () => (bool)thorium3Rods.Call("GetDownedBoss", "ForgottenOne")));
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/TerrariumFisher", npcShop3Rods,
-					Condition.AnglerQuestsFinishedOver(30), Condition.DownedCultist);
-			}
-
+			var npcShop3Rods = new NPCShop(Type, FishermanShops.shop3Rods);
+			FishermanShops.RodsShop(npcShop3Rods);
 			npcShop3Rods.Register();
 
 			//
 			// Extra Items
 			// 
-			var npcShop4Extra = new NPCShop(Type, shop4Extra)
-				.Add(new Item(ModContent.ItemType<RecyclingMachine>()) { shopCustomPrice = 5000 }, ShopConditions.SellModdedItems)
-				.Add(new Item(ItemID.FishingPotion) { shopCustomPrice = 15000 }, Condition.AnglerQuestsFinishedOver(1))
-				.Add(new Item(ItemID.CratePotion) { shopCustomPrice = 12000 }, Condition.AnglerQuestsFinishedOver(1))
-				.Add(new Item(ItemID.SonarPotion) { shopCustomPrice = 10000 }, Condition.AnglerQuestsFinishedOver(1))
-				.Add(new Item(ItemID.FishingBobber) { shopCustomPrice = 50000 }, Condition.AnglerQuestsFinishedOver(3));
-
-			Item chumBucket = new(ItemID.ChumBucket) { shopCustomPrice = 2500 };
-			Item sextant = new(ItemID.Sextant) { shopCustomPrice = 100000 };
-			Item anglerEarring = new(ItemID.AnglerEarring) { shopCustomPrice = 100000 };
-			Item fishermansGuide = new(ItemID.FishermansGuide) { shopCustomPrice = 100000 };
-			Item lavaFishingHook = new(ItemID.LavaFishingHook) { shopCustomPrice = 200000 };
-			Item highTestFishingLine = new(ItemID.HighTestFishingLine) { shopCustomPrice = 100000 };
-			Item weatherRadio = new(ItemID.WeatherRadio) { shopCustomPrice = 100000 };
-			Item tackleBox = new(ItemID.TackleBox) { shopCustomPrice = 100000 };
-
-			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseFull);
-			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaningGibbous);
-			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseThirdQuarter);
-			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaningCrescent);
-			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseNew, Condition.DownedEowOrBoc);
-			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaxingCrescent);
-			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseFirstQuarter);
-			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(5), Condition.MoonPhaseWaxingGibbous);
-
-			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseFull, Condition.DownedEowOrBoc);
-			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaningGibbous);
-			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseThirdQuarter);
-			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaningCrescent);
-			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseNew);
-			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaxingCrescent);
-			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseFirstQuarter);
-			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(10), Condition.MoonPhaseWaxingGibbous);
-
-			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseFull);
-			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaningGibbous);
-			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseThirdQuarter);
-			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaningCrescent);
-			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseNew);
-			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaxingCrescent);
-			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseFirstQuarter, Condition.DownedEowOrBoc);
-			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(15), Condition.MoonPhaseWaxingGibbous);
-
-			npcShop4Extra.Add(anglerEarring, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseFull);
-			npcShop4Extra.Add(fishermansGuide, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaningGibbous);
-			npcShop4Extra.Add(lavaFishingHook, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseThirdQuarter, Condition.DownedEowOrBoc);
-			npcShop4Extra.Add(highTestFishingLine, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaningCrescent);
-			npcShop4Extra.Add(weatherRadio, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseNew);
-			npcShop4Extra.Add(tackleBox, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaxingCrescent);
-			npcShop4Extra.Add(chumBucket, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseFirstQuarter);
-			npcShop4Extra.Add(sextant, Condition.AnglerQuestsFinishedOver(20), Condition.MoonPhaseWaxingGibbous);
-
-			npcShop4Extra.Add(ItemID.AnglerHat, Condition.AnglerQuestsFinishedOver(10));
-			npcShop4Extra.Add(ItemID.AnglerVest, Condition.AnglerQuestsFinishedOver(15));
-			npcShop4Extra.Add(ItemID.AnglerPants, Condition.AnglerQuestsFinishedOver(20));
-
-			npcShop4Extra.Add(ModContent.ItemType<Fisherman_Vanity_Shirt>(), Condition.NpcIsPresent(NPCID.Clothier), ShopConditions.SellModdedItems);
-			npcShop4Extra.Add(ModContent.ItemType<Fisherman_Vanity_Pants>(), Condition.NpcIsPresent(NPCID.Clothier), ShopConditions.SellModdedItems);
-
+			var npcShop4Extra = new NPCShop(Type, FishermanShops.shop4Extra);
+			FishermanShops.ExtraShop(npcShop4Extra);
 			npcShop4Extra.Register();
 		}
 

@@ -161,3 +161,10 @@
 	* Updated config localization.
 	* Added support for Item Checklist Blacklist.
 	* Added buff immunities to the Fisherman.
+
+0.2.3 - Updated 30 (June 20, 2023)
+	* Updated Census support.
+	* Caught Fisherman now transform into a Flesh Block when thrown into shimmer instead of creating another version of the Town NPC.
+	* Caught Fisherman can now be ground in a Meat Grinder.
+	* Caught Fisherman now unloads if the Catch Town NPCs config is off.
+	* Added Mod Calls for adding items to the Fisherman's shops, getting the mod's conditions, and disabling the internal cross mod support for a specific mod.
