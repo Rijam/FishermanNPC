@@ -3,6 +3,7 @@ using FishermanNPC.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,15 +20,68 @@ namespace FishermanNPC
 		{
 			if (ModLoader.TryGetMod("Wikithis", out Mod wikithis) && !Main.dedServ)
 			{
-				// Special thanks to Wikithis for having an outdated mod calls description -_-
-				// Actual special thanks to Confection Rebaked for having the correct format.
-				wikithis.Call("AddModURL", this, "terrariamods.wiki.gg$User:Rijam/Fisherman_NPC");
+				wikithis.Call("AddModURL", this, "https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC/{}");
 				wikithis.Call("AddWikiTexture", this, ModContent.Request<Texture2D>("FishermanNPC/icon_small"));
 			}
 
 			if (ModLoader.TryGetMod("ItemCheckBlacklist", out Mod itemCheckBlacklist))
 			{
 				itemCheckBlacklist.Call("ItemCheckBlacklist", new List<int>() { ModContent.ItemType<Items.DebugAnglerQuestChanger>(), ModContent.ItemType<Items.CaughtFisherman>() });
+			}
+
+			if (ModLoader.TryGetMod("DialogueTweak", out Mod dialogueTweak))
+			{
+				// I couldn't get the frame to work. So ugly 8 mod calls it is.
+				// Func<Rectangle> frame = () => new(0, (NPCHelper.StatusShopCycle() - 1) * 44, 44, 44); // 184;
+				Func<Rectangle> frame = () => new(0, 0, 44, 44);
+
+				dialogueTweak.Call("ReplaceShopButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_ShopsBait",
+					() => NPCHelper.StatusShopCycle() == 1,
+					frame);
+
+				dialogueTweak.Call("ReplaceShopButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_ShopsFish",
+					() => NPCHelper.StatusShopCycle() == 2,
+					frame);
+
+				dialogueTweak.Call("ReplaceShopButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_ShopsRods",
+					() => NPCHelper.StatusShopCycle() == 3,
+					frame);
+
+				dialogueTweak.Call("ReplaceShopButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_ShopsExtras",
+					() => NPCHelper.StatusShopCycle() == 4,
+					frame);
+
+				dialogueTweak.Call("ReplaceExtraButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_CycleShops1",
+					() => NPCHelper.StatusShopCycle() == 1,
+					frame);
+
+				dialogueTweak.Call("ReplaceExtraButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_CycleShops2",
+					() => NPCHelper.StatusShopCycle() == 2,
+					frame);
+
+				dialogueTweak.Call("ReplaceExtraButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_CycleShops3",
+					() => NPCHelper.StatusShopCycle() == 3,
+					frame);
+
+				dialogueTweak.Call("ReplaceExtraButtonIcon",
+					ModContent.NPCType<Fisherman>(),
+					"FishermanNPC/NPCs/Icon_CycleShops4",
+					() => NPCHelper.StatusShopCycle() == 4,
+					frame);
 			}
 		}
 

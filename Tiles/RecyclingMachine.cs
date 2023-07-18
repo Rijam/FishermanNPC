@@ -1,4 +1,5 @@
 using FishermanNPC.NPCs;
+using FishermanNPC.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -146,7 +147,7 @@ namespace FishermanNPC.Tiles
 			}
 
 
-			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport)
+			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport && FishermanShops.ThoriumMod)
 			{
 				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
 				int scorchedBone = NPCHelper.SafelyGetCrossModItem(thorium, "ScorchedBone");
@@ -228,7 +229,7 @@ namespace FishermanNPC.Tiles
 			{
 				player.cursorItemIconID = ItemID.Coal;
 			}
-			else if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport)
+			else if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport && FishermanShops.ThoriumMod)
 			{
 				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
 				int scorchedBone = NPCHelper.SafelyGetCrossModItem(thorium, "ScorchedBone");
