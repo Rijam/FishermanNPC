@@ -3,14 +3,8 @@ He sells bait, fish, fishing rods, and other fishing related items.
 Includes configuration options to disable certain items in the Fisherman's shop and to change the shop prices.
 
 See a complete shop list and other information on this mod's wiki page!
-https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
+https://terrariamods.wiki.gg/wiki/Fisherman_NPC
 
-Mod version: v0.2.3
-	- Updated Census support.
-	- Caught Fisherman now transform into a Flesh Block when thrown into shimmer instead of creating another version of the Town NPC.
-	- Caught Fisherman can now be ground in a Meat Grinder.
-	- Caught Fisherman now unloads if the Catch Town NPCs config is off.
-	- Added Mod Calls for adding items to the Fisherman's shops, getting the mod's conditions, and disabling the internal cross mod support for a specific mod.
-
-Known issues:
-	- Fisherman sells Pylons for free (tML bug I assume)
+Mod version: v0.2.5
+	- Fixed and updated cross mod content.
+	- Moved wiki from user space to main space.

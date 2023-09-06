@@ -217,13 +217,13 @@ namespace FishermanNPC.NPCs.TownNPCs
 			shop.Add(new Item(ItemID.TruffleWorm) { shopCustomPrice = 150000 }, Condition.DownedDukeFishron);
 			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity1Bait) && CalamityMod)
 			{
-				NPCHelper.SafelySetCrossModItem(calamity1Bait, "CalamityMod/ArcturusAstroidean", shop,
+				NPCHelper.SafelySetCrossModItem(calamity1Bait, "ArcturusAstroidean", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.CragAstralOrSulphur",
 					() => (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "crags")
 						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "astral")
 						|| (bool)calamity1Bait.Call("GetInZone", Main.LocalPlayer, "sulphursea")));
 
-				NPCHelper.SafelySetCrossModItem(calamity1Bait, "CalamityMod/BloodwormItem", shop,
+				NPCHelper.SafelySetCrossModItem(calamity1Bait, "BloodwormItem", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedOldDuke",
 					() => (bool)calamity1Bait.Call("GetBossDowned", "oldduke")));
 			}
@@ -276,50 +276,48 @@ namespace FishermanNPC.NPCs.TownNPCs
 				Condition astral = new("Mods.FishermanNPC.Conditions.Calamity.AstralAndHardmode",
 					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "astral"));
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/AldebaranAlewife", shop, astral, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/ProcyonidPrawn", shop, astral, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/TwinklingPollox", shop, astral, Condition.Hardmode);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "AldebaranAlewife", shop, astral, Condition.Hardmode);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "ProcyonidPrawn", shop, astral, Condition.Hardmode);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "TwinklingPollox", shop, astral, Condition.Hardmode);
 
 				Condition crags = new("Mods.FishermanNPC.Conditions.Calamity.InCrag",
 					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "crags"));
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/BrimstoneFish", shop, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Bloodfin", shop, crags,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "Bloodfin", shop, crags,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedProvidence", () => (bool)calamity2Fish.Call("GetBossDowned", "providence")));
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/ChaoticFish", shop, crags, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CoastalDemonfish", shop, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CragBullhead", shop, crags);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Shadowfish", shop, crags);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "ChaoticFish", shop, crags, Condition.Hardmode);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CoastalDemonfish", shop, crags);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CragBullhead", shop, crags);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "Shadowfish", shop, crags);
 
 				Condition sunkensea = new("Mods.FishermanNPC.Conditions.Calamity.InSunkenSea",
 					() => (bool)calamity2Fish.Call("GetInZone", Main.LocalPlayer, "sunkensea"));
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/CoralskinFoolfish", shop, sunkensea);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/PrismaticGuppy", shop, sunkensea);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/SunkenSailfish", shop, sunkensea);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "PrismaticGuppy", shop, sunkensea);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "SunkenSailfish", shop, sunkensea);
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofEleum", shop, 1f, 10f,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "FishofEleum", shop, 1f, 10f,
 					Condition.InSnow, Condition.Hardmode);
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofFlight", shop, 1f, 10f,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "FishofFlight", shop, 1f, 10f,
 					Condition.InSpace, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/SunbeamFish", shop,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "SunbeamFish", shop,
 					Condition.InSpace, Condition.Hardmode);
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofLight", shop,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "FishofLight", shop,
 					Condition.InHallow, ShopConditions.AnyUnderground, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/FishofNight", shop,
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "FishofNight", shop,
 					Condition.InEvilBiome, ShopConditions.AnyUnderground, Condition.Hardmode);
 
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/GlimmeringGemfish", shop, Condition.InRockLayerHeight);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/StuffedFish", shop, Condition.InOverworldHeight);
-				NPCHelper.SafelySetCrossModItem(calamity2Fish, "CalamityMod/Xerocodile", shop, 1f, 2f, Condition.InOverworldHeight, Condition.BloodMoon);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "GlimmeringGemfish", shop, Condition.InRockLayerHeight);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "StuffedFish", shop, Condition.InOverworldHeight);
+				NPCHelper.SafelySetCrossModItem(calamity2Fish, "Xerocodile", shop, 1f, 2f, Condition.InOverworldHeight, Condition.BloodMoon);
 			}
 
 			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium2Fish) && ThoriumMod)
 			{
-				NPCHelper.SafelySetCrossModItem(thorium2Fish, "ThoriumMod/MagmaGill", shop, ShopConditions.InCavernsOrUnderworld);
-				NPCHelper.SafelySetCrossModItem(thorium2Fish, "ThoriumMod/FlamingCrackGut", shop, ShopConditions.InCavernsOrUnderworld);
+				NPCHelper.SafelySetCrossModItem(thorium2Fish, "MagmaGill", shop, ShopConditions.InCavernsOrUnderworld);
+				NPCHelper.SafelySetCrossModItem(thorium2Fish, "FlamingCrackGut", shop, ShopConditions.InCavernsOrUnderworld);
 			}
 
 			if (customFishShop.Count > 0)
@@ -356,22 +354,24 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 			if (ModLoader.TryGetMod("CalamityMod", out Mod calamity3Rods) && CalamityMod)
 			{
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/WulfrumRod", shop);
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "WulfrumRod", shop);
 
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/NavyFishingRod", shop,
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "NavyFishingRod", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedDesertScourge", () => (bool)calamity3Rods.Call("GetBossDowned", "desertscourge")));
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/HeronRod", shop,
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "HeronRod", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedHiveMindOrPerforators", () => (bool)calamity3Rods.Call("GetBossDowned", "hivemind") || (bool)calamity3Rods.Call("GetBossDowned", "perforator")));
 
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/SlurperPole", shop,
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "SlurperPole", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.InCrag", () => (bool)calamity3Rods.Call("GetInZone", Main.LocalPlayer, "crags")));
 
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/FeralDoubleRod", shop, Condition.DownedPlantera);
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/RiftReeler", shop, Condition.DownedGolem);
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "VerstaltiteFishingRod", shop,
+					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedCryogen", () => (bool)calamity3Rods.Call("GetBossDowned", "cryogen")));
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "FeralDoubleRod", shop, Condition.DownedPlantera);
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "RiftReeler", shop, Condition.DownedGolem);
 
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/EarlyBloomRod", shop,
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "EarlyBloomRod", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedProvidence", () => (bool)calamity3Rods.Call("GetBossDowned", "providence")));
-				NPCHelper.SafelySetCrossModItem(calamity3Rods, "CalamityMod/TheDevourerofCods", shop,
+				NPCHelper.SafelySetCrossModItem(calamity3Rods, "TheDevourerofCods", shop,
 					new Condition("Mods.FishermanNPC.Conditions.Calamity.DownedDoG", () => (bool)calamity3Rods.Call("GetBossDowned", "devourerofgods")));
 			}
 
@@ -379,16 +379,16 @@ namespace FishermanNPC.NPCs.TownNPCs
 			{
 				if (thorium3Rods.TryFind<ModNPC>("Diverman", out ModNPC diverman))
 				{
-					NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/MagmaGill", shop,
-						Condition.NpcIsPresent(NPC.FindFirstNPC(diverman.Type)));
+					NPCHelper.SafelySetCrossModItem(thorium3Rods, "MarineCatcher", shop,
+						Condition.NpcIsPresent(diverman.Type));
 				}
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/CartlidgedCatcher", shop, Condition.InBeach);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GraniteControlRod", shop, Condition.DownedSkeletron);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/ChampionCatcher", shop, Condition.DownedSkeletron);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer", shop, Condition.Hardmode);
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/GeodeGatherer", shop,
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "CartlidgedCatcher", shop, Condition.InBeach);
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "GraniteControlRod", shop, Condition.DownedSkeletron);
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ChampionCatcher", shop, Condition.DownedSkeletron);
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "GeodeGatherer", shop, Condition.Hardmode);
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "RlyehLostRod", shop,
 					new Condition("Mods.FishermanNPC.Conditions.ThoriumMod.DownedForgottenOne", () => (bool)thorium3Rods.Call("GetDownedBoss", "ForgottenOne")));
-				NPCHelper.SafelySetCrossModItem(thorium3Rods, "ThoriumMod/TerrariumFisher", shop,
+				NPCHelper.SafelySetCrossModItem(thorium3Rods, "TerrariumWhaleCatcher", shop,
 					Condition.AnglerQuestsFinishedOver(30), Condition.DownedCultist);
 			}
 

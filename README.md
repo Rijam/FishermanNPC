@@ -5,6 +5,6 @@ He sells bait, fish, fishing rods, and other fishing related items.
 Includes configuration options to disable certain items in the Fisherman's shop and to change the shop prices.
 
 See a complete shop list and other information on this mod's wiki page!
-https://terrariamods.wiki.gg/wiki/User:Rijam/Fisherman_NPC
+https://terrariamods.wiki.gg/wiki/Fisherman_NPC
 
 Steam Workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2563751792

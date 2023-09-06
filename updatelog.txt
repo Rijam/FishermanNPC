@@ -169,5 +169,10 @@
 	* Caught Fisherman now unloads if the Catch Town NPCs config is off.
 	* Added Mod Calls for adding items to the Fisherman's shops, getting the mod's conditions, and disabling the internal cross mod support for a specific mod.
 
-0.2.4 - Update 31 (? ?, 2023)
+0.2.4 - Update 31 (July 18, 2023)
 	* Added support Dialogue Panel Rework.
+	* Updated support for Wikithis.
+
+0.2.5 - Update 32 (September 6, 2023)
+	* Fixed and updated cross mod content.
+	* Moved wiki from user space to main space.
