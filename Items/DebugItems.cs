@@ -11,7 +11,8 @@ namespace FishermanNPC.Items
 	{
 		public override bool IsLoadingEnabled(Mod mod)
 		{
-			return ModContent.GetInstance<FishermanNPCConfigServer>().LoadDebugItems;
+			// return ModContent.GetInstance<FishermanNPCConfigServer>().LoadDebugItems;
+			return false;
 		}
 		public override string Texture => "Terraria/Images/Item_" + ItemID.BlueSolution;
 		public override void SetStaticDefaults()

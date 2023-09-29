@@ -146,7 +146,7 @@ namespace FishermanNPC.Tiles
 				}
 			}
 
-
+			/* Items were removed in Thorium
 			if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport && FishermanShops.ThoriumMod)
 			{
 				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
@@ -204,6 +204,7 @@ namespace FishermanNPC.Tiles
 					}
 				}
 			}
+			*/
 
 			return true;
 		}
@@ -229,6 +230,7 @@ namespace FishermanNPC.Tiles
 			{
 				player.cursorItemIconID = ItemID.Coal;
 			}
+			/* Items were removed in Thorium
 			else if (ModLoader.TryGetMod("ThoriumMod", out Mod thorium) && ModContent.GetInstance<FishermanNPCConfigServer>().TownNPCsCrossModSupport && FishermanShops.ThoriumMod)
 			{
 				int igneousRock = NPCHelper.SafelyGetCrossModItem(thorium, "IgneousRock");
@@ -246,6 +248,7 @@ namespace FishermanNPC.Tiles
 					player.cursorItemIconID = ModContent.ItemType<Items.Placeable.RecyclingMachine>();
 				}
 			}
+			*/
 			else
 			{
 				player.cursorItemIconID = ModContent.ItemType<Items.Placeable.RecyclingMachine>();

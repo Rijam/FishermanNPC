@@ -176,3 +176,9 @@
 0.2.5 - Update 32 (September 6, 2023)
 	* Fixed and updated cross mod content.
 	* Moved wiki from user space to main space.
+
+0.2.6 - Update 33 (September 28, 2023)
+	* Built for tModLoader v2023.8
+	* Removed the Angler Quest Changer debug item and it's corresponding config. Rijam's Mod has the same item if you really need it.
+	* Commented out the Recycling Machine's support for Thoriums junk items because they were removed.
+	* Allowed the config to be changed by the host in a multiplayer server.

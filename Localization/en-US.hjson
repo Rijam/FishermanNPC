@@ -122,6 +122,7 @@ Mods: {
 				}
 
 				Headers.ServerHeader: "[c/00FF00:Server Options]"
+				MultiplayerMessage: You are not the server owner so you can not change this config!
 			}
 		}
 
