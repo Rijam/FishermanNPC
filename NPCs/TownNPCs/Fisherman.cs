@@ -12,6 +12,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI;
 
 namespace FishermanNPC.NPCs.TownNPCs
 {
@@ -38,6 +39,7 @@ namespace FishermanNPC.NPCs.TownNPCs
 			NPCID.Sets.AttackAverageChance[Type] = 30;
 			NPCID.Sets.HatOffsetY[Type] = 3;
 			NPCID.Sets.ShimmerTownTransform[NPC.type] = true;
+			NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<FishermanEmote>();
 
 			// Influences how the NPC looks in the Bestiary
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
@@ -99,40 +101,27 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 		public override void HitEffect(NPC.HitInfo hitInfo)
 		{
-			if (Main.netMode != NetmodeID.Server && NPC.life < 0)
+			// Create gore when the NPC is killed.
+			if (Main.netMode != NetmodeID.Server && NPC.life <= 0)
 			{
-				if (NPC.IsShimmerVariant)
+				// Retrieve the gore types.
+				string altVariant = NPC.altTexture == 1 ? "_Alt" : "";
+				string shimmerVariant = NPC.IsShimmerVariant ? "_Shimmered" : "";
+				int hatGore = NPC.GetPartyHatGore();
+				int headGore = Mod.Find<ModGore>($"{Name}_Head{altVariant}{shimmerVariant}").Type;
+				int armGore = Mod.Find<ModGore>($"{Name}_Arm{shimmerVariant}").Type;
+				int legGore = Mod.Find<ModGore>($"{Name}_Leg{shimmerVariant}").Type;
+
+				// Spawn the gores. The positions of the arms and legs are lowered for a more natural look.
+				if (hatGore > 0)
 				{
-					if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Alt_Shimmered").Type, 1f);
-					}
-					else
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Shimmered").Type, 1f);
-					}
-					for (int k = 0; k < 2; k++)
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Arm_Shimmered").Type, 1f);
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Leg_Shimmered").Type, 1f);
-					}
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, hatGore);
 				}
-				else
-				{
-					if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head_Alt").Type, 1f);
-					}
-					else
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Head").Type, 1f);
-					}
-					for (int k = 0; k < 2; k++)
-					{
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Arm").Type, 1f);
-						Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.Find<ModGore>(Mod.Name + "/" + Name + "_Leg").Type, 1f);
-					}
-				}
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, headGore, 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.velocity, armGore);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 20), NPC.velocity, armGore);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 34), NPC.velocity, legGore);
 			}
 		}
 
@@ -475,19 +464,15 @@ namespace FishermanNPC.NPCs.TownNPCs
 
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
-			if (NPCHelper.StatusShopCycle() == 1)
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".Shop1"); //shop1 Bait
-			else if (NPCHelper.StatusShopCycle() == 2)
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".Shop2"); //shop2 Fish
-			else if (NPCHelper.StatusShopCycle() == 3)
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".Shop3"); //shop3 Rods
-			else if (NPCHelper.StatusShopCycle() == 4)
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".Shop4"); //shop4 Extra
-			else if (NPCHelper.StatusShopCycle() == 0)
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".NoShop"); //Shops are disabled!
-			else
-				button = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".Shop1"); //shop1 Bait
-
+			button = NPCHelper.StatusShopCycle() switch
+			{
+				0 => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.NoShop"), //Shops are disabled!
+				1 => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.Shop1"), //shop1 Bait
+				2 => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.Shop2"), //shop2 Fish
+				3 => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.Shop3"), //shop3 Rods
+				4 => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.Shop4"), //shop4 Extra
+				_ => Language.GetTextValue($"Mods.{Mod.Name}.UI.{Name}.Shop1"), //shop1 Bait
+			};
 			button2 = Language.GetTextValue("Mods." + Mod.Name + ".UI." + Name + ".CycleShop"); // Cycle Shop
 		}
 
@@ -495,14 +480,14 @@ namespace FishermanNPC.NPCs.TownNPCs
 		{
 			if (firstButton)
 			{
-				switch (NPCHelper.StatusShopCycle())
+				shop = NPCHelper.StatusShopCycle() switch
 				{
-					case 1: shop = FishermanShops.shop1Bait; break;
-					case 2: shop = FishermanShops.shop2Fish; break;
-					case 3: shop = FishermanShops.shop3Rods; break;
-					case 4: shop = FishermanShops.shop4Extra; break;
-					default: break;
-				}
+					1 => FishermanShops.shop1Bait,
+					2 => FishermanShops.shop2Fish,
+					3 => FishermanShops.shop3Rods,
+					4 => FishermanShops.shop4Extra,
+					_ => ""
+				};
 			}
 			if (!firstButton)
 			{
@@ -540,6 +525,13 @@ namespace FishermanNPC.NPCs.TownNPCs
 			var npcShop4Extra = new NPCShop(Type, FishermanShops.shop4Extra);
 			FishermanShops.ExtraShop(npcShop4Extra);
 			npcShop4Extra.Register();
+		}
+
+		public override int? PickEmote(Player closestPlayer, List<int> emoteList, WorldUIAnchor otherAnchor)
+		{
+			emoteList.Add(EmoteID.ItemFishingRod);
+			emoteList.Add(EmoteID.ItemCookedFish);
+			return base.PickEmote(closestPlayer, emoteList, otherAnchor);
 		}
 
 		public override bool CanGoToStatue(bool toKingStatue)

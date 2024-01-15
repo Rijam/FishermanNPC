@@ -5,6 +5,8 @@ Includes configuration options to disable certain items in the Fisherman's shop 
 See a complete shop list and other information on this mod's wiki page!
 https://terrariamods.wiki.gg/wiki/Fisherman_NPC
 
-Mod version: v0.2.5
-	- Fixed and updated cross mod content.
-	- Moved wiki from user space to main space.
+Mod version: v0.2.7
+	- Built for tModLoader v2023.11
+	- Updated some methods.
+	- Added Fisherman and Fisherwoman emotes.
+	- Fisherman now prefers to emote the Fishing Rod and Cooked Fish emote.

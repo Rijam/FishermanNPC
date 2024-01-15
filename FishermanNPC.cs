@@ -185,7 +185,7 @@ namespace FishermanNPC
 					{
 						"CalamityMod" => FishermanShops.CalamityMod = false,
 						"ThoriumMod" => FishermanShops.ThoriumMod = false,
-						_ => throw new ArgumentException($"Argument \"{args[1]}\" of Function \"{function}\" is not defined by Bosses As NPCs"),
+						_ => throw new ArgumentException($"Argument \"{args[1]}\" of Function \"{function}\" is not defined by Fisherman NPC"),
 					};
 				default:
 					throw new ArgumentException($"Function \"{function}\" is not defined by Fisherman NPC");

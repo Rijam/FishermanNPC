@@ -393,6 +393,11 @@ Mods: {
 			Like: Like
 			Dislike: Dislike
 		}
+
+		Emotes: {
+			FishermanEmote.Command: fnpcfisherman
+			FisherwomanEmote.Command: fnpcfisherwoman
+		}
 	}
 }
 

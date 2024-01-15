@@ -182,3 +182,9 @@
 	* Removed the Angler Quest Changer debug item and it's corresponding config. Rijam's Mod has the same item if you really need it.
 	* Commented out the Recycling Machine's support for Thoriums junk items because they were removed.
 	* Allowed the config to be changed by the host in a multiplayer server.
+
+0.2.7 - Update 34 (January 15, 2024)
+	* Built for tModLoader v2023.11
+	* Updated some methods.
+	* Added Fisherman and Fisherwoman emotes.
+	* Fisherman now prefers to emote the Fishing Rod and Cooked Fish emote.

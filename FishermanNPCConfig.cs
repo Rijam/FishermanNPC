@@ -91,7 +91,7 @@ namespace FishermanNPC
 			return false;
 		}
 
-		public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message)
+		public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
 		{
 			if (Main.netMode == NetmodeID.SinglePlayer)
 			{
@@ -100,8 +100,8 @@ namespace FishermanNPC
 
 			if (!IsPlayerLocalServerOwner(whoAmI))
 			{
-				//message = NetworkText.FromKey("Mods.FishermanNPC.Configs.FishermanNPCConfigServer.MultiplayerMessage");
-				message = Language.GetTextValue("Mods.FishermanNPC.Configs.FishermanNPCConfigServer.MultiplayerMessage");
+				message = NetworkText.FromKey("Mods.FishermanNPC.Configs.FishermanNPCConfigServer.MultiplayerMessage");
+				// message = Language.GetTextValue("Mods.FishermanNPC.Configs.FishermanNPCConfigServer.MultiplayerMessage");
 				return false;
 			}
 			return base.AcceptClientChanges(pendingConfig, whoAmI, ref message);

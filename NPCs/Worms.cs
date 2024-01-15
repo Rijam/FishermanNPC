@@ -16,7 +16,7 @@ namespace FishermanNPC.NPCs
 			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
 
 			// Influences how the NPC looks in the Bestiary
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
 			{
 				Position = new Vector2(0f, 2f),
 				Velocity = 1f
@@ -69,7 +69,7 @@ namespace FishermanNPC.NPCs
 			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
 
 			// Influences how the NPC looks in the Bestiary
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
 			{
 				Position = new Vector2(0f, 2f),
 				Velocity = 1f
